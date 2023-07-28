@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { Box, IconButton } from "@mui/material";
+import FacebookIcon from "@mui/icons-material/Facebook";
 
 import "./Home.css";
 import logo from "./logo.svg";
@@ -36,6 +38,16 @@ export function Home() {
 					{message}
 				</h1>
 				<Link to="/about/this/site">About</Link>
+				<Box>
+				<IconButton
+      component="a"
+      href="https://mui.com/material-ui/react-image-list/"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      <FacebookIcon style={{ fontSize: 40, color: "black" }} />
+    </IconButton>
+	</Box>
 			</div>
 		</main>
 	);

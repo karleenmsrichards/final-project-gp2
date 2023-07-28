@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { Box, IconButton } from "@mui/material";
 import Footer from "../Components/Footer";
 import FacebookIcon from "@mui/icons-material/Facebook";
+import TwitterIcon from "@mui/icons-material/Twitter";
 import "./Home.css";
 
 export function Home() {
@@ -38,7 +39,17 @@ export function Home() {
       rel="noopener noreferrer"
     >
       <FacebookIcon style={{ fontSize: 40, color: "black" }} />
+	 
     </IconButton>
+	<IconButton
+	component="a"
+	href="https://www.Twitter.com"
+	target="_blank"
+	rel="noopener noreferrer"
+	>
+	<TwitterIcon style={{ fontSize: 40, color: "blue" }} />
+	</IconButton>
+	
 	</Box>
 			</div>
 		<Footer />

@@ -5,6 +5,7 @@
 	"private": true,
 	"scripts": {
 		"prebuild": "npm run cleanup",
+		"salam": "echo salam",
 		"build": "npm run build:server && npm run build:client",
 		"postbuild": "buildinfo --output dist/static/build-info.txt",
 		"build:client": "webpack --config client/webpack/prod.config.js",
@@ -49,7 +50,7 @@
 		"cross-env": "^7.0.3",
 		"css-loader": "^6.8.1",
 		"del-cli": "^5.0.0",
-		"eslint": "^8.43.0",
+		"eslint": "^8.46.0",
 		"eslint-plugin-jsx-a11y": "^6.7.1",
 		"eslint-plugin-react": "^7.32.2",
 		"eslint-plugin-react-hooks": "^4.6.0",

@@ -39,7 +39,7 @@ export function Home() {
       rel="noopener noreferrer"
     >
       <FacebookIcon style={{ fontSize: 40, color: "black" }} />
-	 
+
     </IconButton>
 	<IconButton
 	component="a"
@@ -49,7 +49,7 @@ export function Home() {
 	>
 	<TwitterIcon style={{ fontSize: 40, color: "blue" }} />
 	</IconButton>
-	
+
 	</Box>
 			</div>
 		<Footer />

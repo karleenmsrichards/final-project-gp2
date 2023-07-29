@@ -39,18 +39,16 @@ export function Home() {
       rel="noopener noreferrer"
     >
       <FacebookIcon style={{ fontSize: 40, color: "black" }} />
-
-    </IconButton>
-	<IconButton
-	component="a"
-	href="https://www.Twitter.com"
-	target="_blank"
-	rel="noopener noreferrer"
+	</IconButton>
+			<IconButton
+		component="a"
+		href="https://www.Twitter.com"
+		target="_blank"
+		rel="noopener noreferrer"
 	>
 	<TwitterIcon style={{ fontSize: 40, color: "blue" }} />
-	</IconButton>
-
-	</Box>
+			</IconButton>
+				</Box>
 			</div>
 		<Footer />
 		</main>

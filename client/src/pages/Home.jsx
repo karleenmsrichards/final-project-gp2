@@ -25,25 +25,22 @@ export function Home() {
 	}, []);
 
 	return (
-		<main role="main">
-			<div>
-				<h1 className="message" data-qa="message">
+		<Box sx={{ py:10 }}>
+			<h1 className="message" data-qa="message">
 					{message}
-				</h1>
-				<Box>
+			</h1>
+			<Box>
 				<IconButton
-      component="a"
-      href="https://mui.com/material-ui/react-image-list/"
-      target="_blank"
-      rel="noopener noreferrer"
-    >
-      <FacebookIcon style={{ fontSize: 40, color: "black" }} />
-    </IconButton>
-	</Box>
-			</div>
-		<Footer />
-		</main>
-
+					component="a"
+					href="https://mui.com/material-ui/react-image-list/"
+					target="_blank"
+					rel="noopener noreferrer"
+				>
+					<FacebookIcon style={{ fontSize: 40, color: "black" }} />
+				</IconButton>
+			</Box>
+			<Footer />
+		</Box>
 	);
 }
 

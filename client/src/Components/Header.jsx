@@ -2,8 +2,10 @@ import { AppBar, Box, Button } from "@mui/material";
 import React, { useState, useEffect } from "react";
 import jwtDecode from "jwt-decode";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const Header = () => {
+	const navigate = useNavigate();
   const [hideSignUpButton, setHideSignUpButton] = useState(false);
   const [clientId, setClientId] = useState("");
 
@@ -25,6 +27,7 @@ const Header = () => {
     response && console.log("Encoded JWT ID token: " + response.credential);
     let userObject = jwtDecode(response.credential);
     console.log(userObject);
+	navigate("/dashboard");
   }
 
   useEffect(() => {

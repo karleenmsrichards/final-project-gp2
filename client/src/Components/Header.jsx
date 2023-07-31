@@ -10,7 +10,7 @@ const Header = () => {
   return (
     <AppBar sx={{ background: "white" }}>
       <Box sx={{ display: "flex", justifyContent: "flex-end", py: 2, px: 5, gap: 5 }}>
-        { !user ? (
+        { !user && (
           <Box>
             <Button variant="outlined" onClick={handleSignUp}>
               Sign Up
@@ -19,8 +19,6 @@ const Header = () => {
               Sign In
             </Button>
           </Box>
-        ) : (
-          <></>
         )}
         <Box id="signInDiv"></Box>
         {user && (

@@ -26,11 +26,9 @@ const useAuth = () => {
       console.log("Encoded JWT ID token: " + response.credential);
       let userObject = jwtDecode(response.credential);
       console.log(userObject);
-      // Save the token in localStorage
       localStorage.setItem("jwtToken", response.credential);
       navigate("/dashboard");
     } else {
-      // Handle the case where there is no response or no credential
       console.error("Error handling callback response:", response);
     }
   }
@@ -49,11 +47,8 @@ const useAuth = () => {
   }, []);
 
   useEffect(() => {
-    // Check if the user is already authenticated by looking for the token in localStorage
     const token = localStorage.getItem("jwtToken");
-    console.log("local");
-    if (token) {
-      // If token is found, decode it and set the user state
+    if (token !== null && token !== "") {
       const userObject = jwtDecode(token);
       setUser(userObject);
     }

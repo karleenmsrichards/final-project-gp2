@@ -9,10 +9,6 @@ const useAuth = () => {
   const [clientId, setClientId] = useState("");
 
 
-  // Function to check if the user is logged in
-  function isLoggedIn() {
-    return user !== null;
-  }
   function handleSignUp() {
     /* global google */
     google.accounts.id.initialize({

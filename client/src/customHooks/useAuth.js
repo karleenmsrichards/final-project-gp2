@@ -7,7 +7,6 @@ const useAuth = () => {
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
   const [clientId, setClientId] = useState("");
-//   const [hideSignUpButton, setHideSignUpButton] = useState(false);
 
   function handleSignUp() {
     /* global google */
@@ -29,7 +28,6 @@ const useAuth = () => {
       console.log(userObject);
       // Save the token in localStorage
       localStorage.setItem("jwtToken", response.credential);
-    //   setHideSignUpButton(true);
       navigate("/dashboard");
     } else {
       // Handle the case where there is no response or no credential

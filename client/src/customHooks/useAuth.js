@@ -12,7 +12,7 @@ const useAuth = () => {
   function handleSignUp() {
     /* global google */
     google.accounts.id.initialize({
-      client_id: clientId,
+      client_id:clientId,
       callback: handleCallbackResponse,
     });
     google.accounts.id.renderButton(document.getElementById("signInDiv"), {

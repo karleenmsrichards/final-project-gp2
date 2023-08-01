@@ -21,20 +21,17 @@ const useAuth = () => {
 		google.accounts.id.prompt();
 	}
 
-	function handleCallbackResponse(response) {
-		if (response && response.credential) {
-			console.log("Encoded JWT ID token: " + response.credential);
-			let userObject = jwtDecode(response.credential);
-			console.log(userObject);
-			// Save the token in localStorage
-			localStorage.setItem("jwtToken", response.credential);
-			navigate("/dashboard");
-		} else {
-			// Handle the case where there is no response or no credential
-			console.error("Error handling callback response:", response);
-		}
-	}
-
+  function handleCallbackResponse(response) {
+    if (response && response.credential) {
+      console.log("Encoded JWT ID token: " + response.credential);
+      let userObject = jwtDecode(response.credential);
+      console.log(userObject);
+      localStorage.setItem("jwtToken", response.credential);
+      navigate("/dashboard");
+    } else {
+      console.error("Error handling callback response:", response);
+    }
+  }
 	useEffect(() => {
 		async function fetchClientId() {
 			try {
@@ -48,16 +45,13 @@ const useAuth = () => {
 		fetchClientId();
 	}, []);
 
-	useEffect(() => {
-		// Check if the user is already authenticated by looking for the token in localStorage
-		const token = localStorage.getItem("jwtToken");
-		console.log("local");
-		if (token) {
-			// If token is found, decode it and set the user state
-			const userObject = jwtDecode(token);
-			setUser(userObject);
-		}
-	}, [navigate]);
+  useEffect(() => {
+    const token = localStorage.getItem("jwtToken");
+    if (token !== null && token !== "") {
+      const userObject = jwtDecode(token);
+      setUser(userObject);
+    }
+  }, [navigate]);
 
 	return { user, handleSignUp };
 };

@@ -5,8 +5,7 @@ import useAuth from "../customHooks/useAuth";
 
 const Header = () => {
 	const navigate = useNavigate();
-  const { user, handleSignUp } = useAuth();
-
+	const { user, handleSignUp } = useAuth();
   return (
     <AppBar sx={{ background: "white" }}>
       <Box sx={{ display: "flex", justifyContent: "flex-end", py: 2, px: 5, gap: 5 }}>

@@ -4,22 +4,22 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 const useAuth = () => {
-  const navigate = useNavigate();
-  const [user, setUser] = useState(null);
-  const [clientId, setClientId] = useState("");
+	const navigate = useNavigate();
+	const [user, setUser] = useState(null);
+	const [clientId, setClientId] = useState("");
 
-  function handleSignUp() {
-    /* global google */
-    google.accounts.id.initialize({
-      client_id: clientId,
-      callback: handleCallbackResponse,
-    });
-    google.accounts.id.renderButton(document.getElementById("signInDiv"), {
-      theme: "outline",
-      size: "large",
-    });
-    google.accounts.id.prompt();
-  }
+	function handleSignUp() {
+		/* global google */
+		google.accounts.id.initialize({
+			client_id: clientId,
+			callback: handleCallbackResponse,
+		});
+		google.accounts.id.renderButton(document.getElementById("signInDiv"), {
+			theme: "outline",
+			size: "large",
+		});
+		google.accounts.id.prompt();
+	}
 
   function handleCallbackResponse(response) {
     if (response && response.credential) {
@@ -32,19 +32,18 @@ const useAuth = () => {
       console.error("Error handling callback response:", response);
     }
   }
-
-  useEffect(() => {
-    async function fetchClientId() {
-      try {
-        const response = await axios.get("/api/clientId");
-        const { clientId } = response.data;
-        setClientId(clientId);
-      } catch (error) {
-        console.error("Error fetching client ID:", error);
-      }
-    }
-    fetchClientId();
-  }, []);
+	useEffect(() => {
+		async function fetchClientId() {
+			try {
+				const response = await axios.get("/api/clientId");
+				const { clientId } = response.data;
+				setClientId(clientId);
+			} catch (error) {
+				console.error("Error fetching client ID:", error);
+			}
+		}
+		fetchClientId();
+	}, []);
 
   useEffect(() => {
     const token = localStorage.getItem("jwtToken");
@@ -54,7 +53,7 @@ const useAuth = () => {
     }
   }, [navigate]);
 
-  return { user, handleSignUp };
+	return { user, handleSignUp };
 };
 
 export default useAuth;

@@ -24,9 +24,9 @@ export function Home() {
 	}, []);
 
 	return (
-		<Box sx={{ py:10 }}>
+		<Box sx={{ py: 10 }}>
 			<h1 className="message" data-qa="message">
-					{message}
+				{message}
 			</h1>
 			<Box>
 				<IconButton
@@ -38,14 +38,13 @@ export function Home() {
 					<FacebookIcon style={{ fontSize: 40, color: "black" }} />
 				</IconButton>
 				<IconButton
-		component="a"
-		href='https://www.Twitter.com'
-		target="_blank"
-		rel="noopener noreferrer"
-	>
-		<TwitterIcon style={{ fontSize: 40, color: "blue" }} />
-	</IconButton>
-
+					component="a"
+					href="https://www.Twitter.com"
+					target="_blank"
+					rel="noopener noreferrer"
+				>
+					<TwitterIcon style={{ fontSize: 40, color: "blue" }} />
+				</IconButton>
 			</Box>
 		</Box>
 	);

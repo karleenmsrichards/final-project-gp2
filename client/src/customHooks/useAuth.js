@@ -30,7 +30,6 @@ const useAuth = () => {
 
   function handleCallbackResponse(response) {
     if (response && response.credential) {
-      console.log("Encoded JWT ID token: " + response.credential);
       let userObject = jwtDecode(response.credential);
       console.log(userObject);
       localStorage.setItem("jwtToken", response.credential);
@@ -67,7 +66,7 @@ const useAuth = () => {
 		}
   }, [navigate]);
 
-	return { user, handleSignUp, handleSignOut, isLoggedIn, setIsLoggedIn};
+	return { user, handleSignUp, handleSignOut, isLoggedIn, setIsLoggedIn };
 };
 
 export default useAuth;

@@ -11,18 +11,27 @@ const Dashboard = () => {
 		return localStorage.getItem("jwtToken");
 	}
 
-const sendingToken=async(token)=>{
-		const response =await fetch("/api/validation", {
-				method: "POST",
-				headers: {
-					"Content-Type": "application/json",
-				},
-				body: JSON.stringify({
-					token,
-				}),
-			});
-			const data=await response.json();
-			console.log(data);
+const sendingToken = async (token) => {
+	try {
+		const response = await fetch("/api/validation", {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({
+				token,
+			}),
+		});
+		const data = await response.json();
+		if (response.ok) {
+			console.log(data.message);
+		} else {
+			handleSignOut();
+		}
+	} catch (err) {
+		console.error(err);
+		handleSignOut();
+	}
 };
 
 	useEffect(() => {

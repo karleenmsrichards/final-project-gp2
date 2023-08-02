@@ -1,44 +1,55 @@
-import { Container, Typography, Button } from "@mui/material";
-import { useState, useEffect } from "react";
+import { Container, Button, Typography } from "@mui/material";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import useAuth from "../customHooks/useAuth";
-// KHOoDam
 
 const Dashboard = () => {
 	const navigate = useNavigate();
-	const [isLoggedIn, setIsLoggedIn] = useState(false);
-	const { user } = useAuth(); // Use the useAuth hook to get the user information
+	const { user, handleSignUp, handleSignOut, isLoggedIn, setIsLoggedIn } = useAuth();
+
 	function getJwtToken() {
 		return localStorage.getItem("jwtToken");
 	}
 
+const sendingToken=async(token)=>{
+		const response =await fetch("/api/validation", {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify({
+					token,
+				}),
+			});
+			const data=await response.json();
+			console.log(data);
+};
+
 	useEffect(() => {
-		// Retrieve the token from local storage
 		const token = getJwtToken();
-		// Check if the token exists in local storage
 		if (token) {
-			// The token exists, set the isLoggedIn state to true
+			sendingToken(token);
 			setIsLoggedIn(true);
 		} else {
-			// The token doesn't exist in local storage
 			console.log("Token not found");
 		}
-	}, []);
-
-	// KHOdaM
-
-	// Check if the user is logged in based on the user information from the useAuth hook
-	// if (user) {
-	//   setIsLoggedIn(true);
-	// }else {
-	//   console.log("User not logged in");
-	// }
+	}, [isLoggedIn,user]);
 
 	return (
 		<Container sx={{ width: "400px", height: "200px", marginTop: "200px" }}>
-			<Button onClick={() => navigate("/")}>Home</Button>
-			<Typography>Dashboard</Typography>
-			{isLoggedIn ? <p> You are Logged in</p> : <p>Log In</p>}
+			{isLoggedIn ? (
+				<>
+					<Typography> Hello {user.name}</Typography>
+					<Button onClick={() => navigate("/")}>Home</Button>
+					<Button onClick={handleSignOut}>Sign Out</Button>
+				</>
+			) : (
+				<>
+					<Typography>You need Log In</Typography>
+					<Button onClick=
+					{handleSignUp}>Log in</Button>
+				</>
+			)}
 		</Container>
 	);
 };

@@ -7,6 +7,7 @@ const useAuth = () => {
 	const navigate = useNavigate();
 	const [user, setUser] = useState(null);
 	const [clientId, setClientId] = useState("");
+	const [isLoggedIn, setIsLoggedIn] = useState(false);
 
 	function handleSignUp() {
 		/* global google */
@@ -20,6 +21,12 @@ const useAuth = () => {
 		});
 		google.accounts.id.prompt();
 	}
+
+	const handleSignOut = () => {
+		localStorage.removeItem("jwtToken");
+		setIsLoggedIn(false);
+		navigate("/");
+	};
 
   function handleCallbackResponse(response) {
     if (response && response.credential) {
@@ -47,13 +54,20 @@ const useAuth = () => {
 
   useEffect(() => {
     const token = localStorage.getItem("jwtToken");
-    if (token !== null && token !== "") {
-      const userObject = jwtDecode(token);
-      setUser(userObject);
-    }
+		if (token !== null && token !== "") {
+			const userObject = jwtDecode(token);
+			const currentTime = Date.now() / 1000;
+
+			if (userObject.exp > currentTime) {
+				setUser(userObject);
+			} else {
+				setUser(null);
+				localStorage.removeItem("jwtToken");
+			}
+		}
   }, [navigate]);
 
-	return { user, handleSignUp };
+	return { user, handleSignUp, handleSignOut, isLoggedIn, setIsLoggedIn};
 };
 
 export default useAuth;

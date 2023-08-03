@@ -7,7 +7,7 @@ const dbConfig =
             database: 'bookings_development',
             username: 'postgres',
             password: null,
-            port: 5433,
+            port: 5432,
         }
     };
 

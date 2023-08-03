@@ -1,0 +1,10 @@
+{
+  "development": {
+    "username": "node_application",
+    "password": null,
+    "database": "project_development",
+    "host": "127.0.0.1",
+    "port": 5433,
+    "dialect": "postgres"
+  }
+}

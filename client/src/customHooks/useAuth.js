@@ -28,16 +28,18 @@ const useAuth = () => {
 		navigate("/");
 	};
 
-  function handleCallbackResponse(response) {
-    if (response && response.credential) {
-      let userObject = jwtDecode(response.credential);
-      console.log(userObject);
-      localStorage.setItem("jwtToken", response.credential);
-      navigate("/dashboard");
-    } else {
-      console.error("Error handling callback response:", response);
-    }
-  }
+	function handleCallbackResponse(response) {
+		if (response && response.credential) {
+			let userObject = jwtDecode(response.credential);
+			localStorage.setItem("jwtToken", response.credential);
+			setIsLoggedIn(true);
+			navigate("/dashboard");
+		} else {
+			console.error("Error handling callback response:", response);
+		}
+	}
+
+
 	useEffect(() => {
 		async function fetchClientId() {
 			try {
@@ -51,20 +53,24 @@ const useAuth = () => {
 		fetchClientId();
 	}, []);
 
-  useEffect(() => {
-    const token = localStorage.getItem("jwtToken");
+	useEffect(() => {
+		const token = localStorage.getItem("jwtToken");
 		if (token !== null && token !== "") {
 			const userObject = jwtDecode(token);
 			const currentTime = Date.now() / 1000;
 
 			if (userObject.exp > currentTime) {
 				setUser(userObject);
+				setIsLoggedIn(true);
 			} else {
 				setUser(null);
 				localStorage.removeItem("jwtToken");
+				setIsLoggedIn(false);
 			}
+		} else {
+			setIsLoggedIn(false);
 		}
-  }, [navigate]);
+	}, [navigate]);
 
 	return { user, handleSignUp, handleSignOut, isLoggedIn, setIsLoggedIn };
 };

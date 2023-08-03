@@ -1,0 +1,9 @@
+{
+  "development": {
+    "username": "postgres",
+    "database": "bookings_development",
+    "host": "127.0.0.1",
+    "port": 5433,
+    "dialect": "postgres"
+  }
+}

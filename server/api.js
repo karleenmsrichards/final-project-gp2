@@ -3,7 +3,10 @@ import logger from "./utils/logger";
 const dotenv = require("dotenv");
 const { OAuth2Client } = require("google-auth-library");
 dotenv.config();
+let {User, initUser} = require('./lib/sequelize/models/users')
+let {getSequelize} = require('./lib/sequelize/connectionFactory')
 
+const sequelize = getSequelize('development');
 const router = Router();
 
 router.get("/", (_, res) => {
@@ -21,6 +24,18 @@ router.get("/clientId", (req, res) => {
 	} catch (error) {
 		logger.error("Error fetching clientId:", error.message);
 		res.status(500).json({ error: "Internal server error Heni" });
+	}
+});
+
+router.get("/jarrodtest", async (req, res) => {
+	try {
+		await sequelize.sync();
+		initUser(sequelize);
+		await User.sync()
+		await User.create({id:9997796, name: 'bob', email: 'bob@gmail.com', role: 'standard'});
+		res.json({ result: 'user created' }).status(200);
+	} catch (error) {
+		res.status(500).json({ error: error });
 	}
 });
 

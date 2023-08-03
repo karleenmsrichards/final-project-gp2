@@ -1,17 +1,18 @@
 const {Sequelize} = require("sequelize");
 
-const dbConfig = {
-    development: {
-        host: '127.0.0.1',
-        database: 'project_development',
-        username: 'postgres',
-        password: null,
-        port: 5433,
-    }
-};
+const dbConfig =
+    {
+        development: {
+            host: '127.0.0.1',
+            database: 'bookings_development',
+            username: 'postgres',
+            password: null,
+            port: 5433,
+        }
+    };
 
 function getSequelize(env) {
-    config = dbConfig[env]
+    let config = dbConfig[env]
     return new Sequelize(
         config['database'],
         config['username'],
@@ -33,4 +34,4 @@ async function sequelizeSetupAll(env) {
     return {User}
 }
 
-module.exports = { getSequelize, sequelizeSetupAll }
+module.exports = {getSequelize, sequelizeSetupAll}

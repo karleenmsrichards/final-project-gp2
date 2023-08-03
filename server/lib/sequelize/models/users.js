@@ -16,7 +16,7 @@ function initUser(sequelizeConnection) {
         updatedAt: DataTypes.DATE,
     }, {
         sequelize: sequelizeConnection,
-        modelName: "users2",
+        modelName: "Users",
     });
 }
 

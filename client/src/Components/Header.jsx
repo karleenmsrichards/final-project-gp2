@@ -1,4 +1,4 @@
-import { AppBar, Box, Button } from "@mui/material";
+import { AppBar, Box, Button, Tab, Tabs, Typography } from "@mui/material";
 import React from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import useAuth from "../customHooks/useAuth";
@@ -9,22 +9,39 @@ const Header = () => {
 	const { handleSignUp, handleSignOut, isLoggedIn } = useAuth();
 
 	return (
-		<AppBar sx={{ background: "white" }}>
+		<AppBar sx={{ background: "white", color: "black" }}>
 			<Box
 				sx={{
 					display: "flex",
-					justifyContent: "flex-end",
-					py: 2,
-					px: 5,
+					justifyContent: "space-between",
+					alignItems: "center",
 					gap: 5,
 				}}
+				px={{ xs: 2, md: 5 }}
 			>
+				<Tabs
+					sx={{
+						display: "flex",
+						justifyContent: "space-evenly",
+						borderBottom: 1,
+						borderColor: "divider",
+						flexGrow: 1,
+					}}
+					selectionFollowsFocus
+				>
+					<Typography variant="h5" sx={{ fontWeight: "bolder", pt: 1 }}>
+						BOOKME
+					</Typography>
+					<Tab label="Find" sx={{ color: "black" }} />
+					<Tab label="Book" sx={{ color: "black" }} />
+					<Tab label="Become supplier" sx={{ color: "black" }} />
+				</Tabs>
 				{location.pathname === "/" && (
 					<>
 						{!isLoggedIn ? (
-							<Box id="signInDiv">
-								<Button variant="outlined" onClick={handleSignUp}>
-									Sign In
+							<Box id="signInDiv" sx={{ mr: 1 }}>
+								<Button variant="contained" onClick={handleSignUp}>
+									Sign Up / Sign In
 								</Button>
 							</Box>
 						) : (
@@ -35,7 +52,7 @@ const Header = () => {
 								>
 									Dashboard
 								</Button>
-								<Button variant="outlined" onClick={handleSignOut}>
+								<Button variant="contained" onClick={handleSignOut}>
 									Sign Out
 								</Button>
 							</>
@@ -47,7 +64,7 @@ const Header = () => {
 						<Button variant="outlined" onClick={() => navigate("/")}>
 							Home
 						</Button>
-						<Button variant="outlined" onClick={handleSignOut}>
+						<Button variant="contained" onClick={handleSignOut}>
 							Sign Out
 						</Button>
 					</>

@@ -10,6 +10,7 @@ const Header = () => {
 
 	return (
 		<AppBar sx={{ background: "white", color: "black", position:"static" }}>
+
 			<Box
 				sx={{
 					display: "flex",

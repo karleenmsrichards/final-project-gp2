@@ -30,16 +30,15 @@ const useAuth = () => {
 
 	function handleCallbackResponse(response) {
 		if (response && response.credential) {
-			// console.log("Encoded JWT ID token: " + response.credential);
 			let userObject = jwtDecode(response.credential);
-			// console.log(userObject);
 			localStorage.setItem("jwtToken", response.credential);
-			setIsLoggedIn(true); // Update isLoggedIn to true after successful login
+			setIsLoggedIn(true);
 			navigate("/dashboard");
 		} else {
 			console.error("Error handling callback response:", response);
 		}
 	}
+
 
 	useEffect(() => {
 		async function fetchClientId() {
@@ -62,14 +61,14 @@ const useAuth = () => {
 
 			if (userObject.exp > currentTime) {
 				setUser(userObject);
-				setIsLoggedIn(true); // Update isLoggedIn to true if valid token is present
+				setIsLoggedIn(true);
 			} else {
 				setUser(null);
 				localStorage.removeItem("jwtToken");
-				setIsLoggedIn(false); // Update isLoggedIn to false if token is expired
+				setIsLoggedIn(false);
 			}
 		} else {
-			setIsLoggedIn(false); // Update isLoggedIn to false if no token is found
+			setIsLoggedIn(false);
 		}
 	}, [navigate]);
 

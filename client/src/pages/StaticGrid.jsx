@@ -7,14 +7,13 @@ const Home = () => {
       sx={{
         display: "grid",
         gridTemplateColumns: "repeat(4, 1fr)",
-        gridTemplateRows: "1fr 1fr", // Define two rows with equal height
+        gridTemplateRows: "1fr 1fr",
         padding:"70px",
 
       }}
     >
-      {/* First column - One item */}
       <Box sx={{ gridColumn: "1 / span 1", gridRow: "1 / span 2" }}>
-        {/* Your image and text content for the first column */}
+
         <div className="grid-img-container">
           <p className="grid-tag">Makeup</p>
           <img
@@ -24,10 +23,7 @@ const Home = () => {
           />
         </div>
       </Box>
-
-      {/* Second column - Two items */}
       <Box sx={{ gridColumn: "2 / span 2", gridRow: "1 / span 2" }}>
-        {/* Your first image and text content for the second column */}
         <div className="grid-img-container-1">
         <p className="grid-tag">Turor</p>
           <img
@@ -38,7 +34,6 @@ const Home = () => {
         </div>
       </Box>
       <Box sx={{ gridColumn: "2 / span 2", gridRow: "2 / span 2" }}>
-        {/* Your second image and text content for the second column */}
         <div className="grid-img-container">
         <p className="grid-tag">Mechanic</p>
           <img
@@ -48,10 +43,7 @@ const Home = () => {
           />
         </div>
       </Box>
-
-      {/* Third column - One item */}
       <Box sx={{ gridColumn: "3 / span 1", gridRow: "1 / span 2" }}>
-        {/* Your image and text content for the third column */}
         <div className="grid-img-container">
         <p className="grid-tag">Cleaner</p>
           <img
@@ -61,10 +53,7 @@ const Home = () => {
           />
         </div>
       </Box>
-
-      {/* Fourth column - Two items */}
       <Box sx={{ gridColumn: "4 / span 2", gridRow: "1 / span 2" }}>
-        {/* Your first image and text content for the fourth column */}
         <div className="grid-img-container-1">
         <p className="grid-tag">Chef</p>
           <img
@@ -75,7 +64,6 @@ const Home = () => {
         </div>
       </Box>
       <Box sx={{ gridColumn: "4 / span 2", gridRow: "2 / span 2" }}>
-        {/* Your second image and text content for the fourth column */}
         <div className="grid-img-container">
         <p className="grid-tag">Photograph</p>
           <img

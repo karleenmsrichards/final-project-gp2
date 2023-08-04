@@ -9,13 +9,15 @@ const Header = () => {
 	const { handleSignUp, handleSignOut, isLoggedIn } = useAuth();
 
 	return (
-		<AppBar sx={{ background: "white", color: "black" }}>
+		<AppBar sx={{ background: "white", color: "black", position:"static" }}>
+
 			<Box
 				sx={{
 					display: "flex",
 					justifyContent: "space-between",
 					alignItems: "center",
 					gap: 5,
+					py:2,
 				}}
 				px={{ xs: 2, md: 5 }}
 			>
@@ -23,7 +25,6 @@ const Header = () => {
 					sx={{
 						display: "flex",
 						justifyContent: "space-evenly",
-						borderBottom: 1,
 						borderColor: "divider",
 						flexGrow: 1,
 					}}
@@ -34,7 +35,9 @@ const Header = () => {
 					</Typography>
 					<Tab label="Find" sx={{ color: "black" }} />
 					<Tab label="Book" sx={{ color: "black" }} />
+					{isLoggedIn &&
 					<Tab label="Become supplier" sx={{ color: "black" }} />
+					}
 				</Tabs>
 				{location.pathname === "/" && (
 					<>

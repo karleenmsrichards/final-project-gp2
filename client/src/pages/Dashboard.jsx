@@ -19,6 +19,7 @@ const Dashboard = () => {
 				},
 				body: JSON.stringify({
 					token,
+					role: "customer",
 				}),
 			});
 			const data = await response.json();

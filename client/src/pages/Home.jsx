@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react";
-import { Box, IconButton } from "@mui/material";
-import FacebookIcon from "@mui/icons-material/Facebook";
-import TwitterIcon from "@mui/icons-material/Twitter";
+import { Box } from "@mui/material";
 import "./Home.css";
 import StaticGrid from "./StaticGrid";
+import HomeCardGrid from "../Mui-Components/HomeCardGrid";
 
 export function Home() {
 	const [message, setMessage] = useState("Loading...");
@@ -26,28 +25,8 @@ export function Home() {
 
 	return (
 		<Box sx={{ py: 10 }}>
-			<h1 className="message" data-qa="message">
-				{message}
-			</h1>
 			<StaticGrid />
-			<Box>
-				<IconButton
-					component="a"
-					href="https://mui.com/material-ui/react-image-list/"
-					target="_blank"
-					rel="noopener noreferrer"
-				>
-					<FacebookIcon style={{ fontSize: 40, color: "black" }} />
-				</IconButton>
-				<IconButton
-					component="a"
-					href="https://www.Twitter.com"
-					target="_blank"
-					rel="noopener noreferrer"
-				>
-					<TwitterIcon style={{ fontSize: 40, color: "blue" }} />
-				</IconButton>
-			</Box>
+			<HomeCardGrid />
 		</Box>
 	);
 }

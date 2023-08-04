@@ -2,7 +2,8 @@ import { Router } from "express";
 import logger from "./utils/logger";
 const dotenv = require("dotenv");
 const { OAuth2Client } = require("google-auth-library");
-const { Users, Tokens } = require("./sequelize/models");
+const { Users } = require("./sequelize/models");
+const { persistNewUser } =require("./controller/apiController");
 
 dotenv.config();
 
@@ -22,12 +23,13 @@ router.get("/clientId", (req, res) => {
 		res.json({ clientId }).status(200);
 	} catch (error) {
 		logger.error("Error fetching clientId:", error.message);
-		res.status(500).json({ error: "Internal server error" });
+		res.status(500).json({ error });
 	}
 });
 
+
 router.post("/validation", async (req, res) => {
-	const { token } = req.body;
+	const { token,role } = req.body;
 	try {
 		const client = new OAuth2Client();
 		const ticket = await client.verifyIdToken({
@@ -38,8 +40,7 @@ router.post("/validation", async (req, res) => {
 		const { name, email } = payload;
 		let user = await Users.findOne({ where: { email } });
 		if (!user) {
-			const newUser = await Users.create({ name, email, role });
-			await Tokens.create({ token, user_id: newUser.id });
+			persistNewUser(name, email, role, token);
 		} else {
 			res.status(200).json({ message: "success" });
 		}

@@ -3,6 +3,7 @@ import { Box, IconButton } from "@mui/material";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import TwitterIcon from "@mui/icons-material/Twitter";
 import "./Home.css";
+import StaticGrid from "./StaticGrid";
 
 export function Home() {
 	const [message, setMessage] = useState("Loading...");
@@ -28,6 +29,7 @@ export function Home() {
 			<h1 className="message" data-qa="message">
 				{message}
 			</h1>
+			<StaticGrid />
 			<Box>
 				<IconButton
 					component="a"

@@ -16,7 +16,7 @@ router.get("/", (_, res) => {
 
 router.get("/clientId", (req, res) => {
 	try {
-		const clientId = process.env.REACT_APP_CLIENT_ID;
+		const clientId = process.env.CLIENT_ID;
 		if (!clientId) {
 			throw new Error("Client ID not found.");
 		}
@@ -34,7 +34,7 @@ router.post("/validation", async (req, res) => {
 		const client = new OAuth2Client();
 		const ticket = await client.verifyIdToken({
 			idToken: token,
-			audience: process.env.REACT_APP_CLIENT_ID,
+			audience: process.env.CLIENT_ID,
 		});
 		const payload = ticket.getPayload();
 		const { name, email } = payload;

@@ -28,7 +28,9 @@ export default function ProductHero() {
 				align="center"
 				variant="h5"
 				sx={{ mb: 4, mt: { xs: 4, sm: 10 } }}
-			>Specialists in All Areas</Typography>
+			>
+				Specialists in All Areas
+			</Typography>
 			<Button
 				color="secondary"
 				variant="contained"

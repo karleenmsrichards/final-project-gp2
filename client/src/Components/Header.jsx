@@ -9,15 +9,14 @@ const Header = () => {
 	const { handleSignUp, handleSignOut, isLoggedIn } = useAuth();
 
 	return (
-		<AppBar sx={{ background: "white", color: "black", position:"static" }}>
-
+		<AppBar sx={{ background: "white", color: "black", position: "static" }}>
 			<Box
 				sx={{
 					display: "flex",
 					justifyContent: "space-between",
 					alignItems: "center",
 					gap: 5,
-					py:2,
+					py: 2,
 				}}
 				px={{ xs: 2, md: 5 }}
 			>
@@ -35,9 +34,9 @@ const Header = () => {
 					</Typography>
 					<Tab label="Find" sx={{ color: "black" }} />
 					<Tab label="Book" sx={{ color: "black" }} />
-					{isLoggedIn &&
-					<Tab label="Become supplier" sx={{ color: "black" }} />
-					}
+					{isLoggedIn && (
+						<Tab label="Become supplier" sx={{ color: "black" }} />
+					)}
 				</Tabs>
 				{location.pathname === "/" && (
 					<>
@@ -64,12 +63,22 @@ const Header = () => {
 				)}
 				{location.pathname === "/dashboard" && (
 					<>
-						<Button variant="outlined" onClick={() => navigate("/")}>
-							Home
-						</Button>
-						<Button variant="contained" onClick={handleSignOut}>
-							Sign Out
-						</Button>
+						{isLoggedIn ? (
+							<>
+								<Button variant="outlined" onClick={() => navigate("/")}>
+									Home
+								</Button>
+								<Button variant="contained" onClick={handleSignOut}>
+									Sign Out
+								</Button>
+							</>
+						) : (
+							<Box id="signInDiv" sx={{ mr: 1 }}>
+								<Button variant="contained" onClick={handleSignUp}>
+									Sign Up / Sign In
+								</Button>
+							</Box>
+						)}
 					</>
 				)}
 			</Box>

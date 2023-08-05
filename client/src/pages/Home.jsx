@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { Box } from "@mui/material";
-import "./Home.css";
-import StaticGrid from "./StaticGrid";
+import StaticGrid from "../Components/StaticGrid";
 import HomeCardGrid from "../Mui-Components/HomeCardGrid";
+import Hero from "../Components/Hero";
 
 export function Home() {
 	const [message, setMessage] = useState("Loading...");
@@ -24,7 +24,8 @@ export function Home() {
 	}, []);
 
 	return (
-		<Box sx={{ py: 10 }}>
+		<Box sx={{ py: 2 }}>
+			<Hero />
 			<StaticGrid />
 			<HomeCardGrid />
 		</Box>

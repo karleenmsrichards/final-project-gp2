@@ -3,7 +3,7 @@ import logger from "./utils/logger";
 const dotenv = require("dotenv");
 const { OAuth2Client } = require("google-auth-library");
 const { Users } = require("./sequelize/models");
-const { persistNewUser } =require("./controller/apiController");
+const { persistNewUser } = require("./controller/apiController");
 
 dotenv.config();
 
@@ -27,9 +27,8 @@ router.get("/clientId", (req, res) => {
 	}
 });
 
-
 router.post("/validation", async (req, res) => {
-	const { token,role } = req.body;
+	const { token, role } = req.body;
 	try {
 		const client = new OAuth2Client();
 		const ticket = await client.verifyIdToken({

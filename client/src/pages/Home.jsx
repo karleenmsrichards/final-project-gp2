@@ -5,31 +5,32 @@ import HomeCardGrid from "../Mui-Components/HomeCardGrid";
 import Hero from "../Components/Hero";
 
 export function Home() {
-	const [message, setMessage] = useState("Loading...");
+  /* eslint-disable-next-line */
+  const [message, setMessage] = useState("Loading...");
 
-	useEffect(() => {
-		fetch("/api")
-			.then((res) => {
-				if (!res.ok) {
-					throw new Error(res.statusText);
-				}
-				return res.json();
-			})
-			.then((body) => {
-				setMessage(body.message);
-			})
-			.catch((err) => {
-				console.error(err);
-			});
-	}, []);
+  useEffect(() => {
+    fetch("/api")
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error(res.statusText);
+        }
+        return res.json();
+      })
+      .then((body) => {
+        setMessage(body.message);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }, []);
 
-	return (
-		<Box sx={{ py: 2 }}>
-			<Hero />
-			<StaticGrid />
-			<HomeCardGrid />
-		</Box>
-	);
+  return (
+    <Box sx={{ py: 2 }}>
+      <Hero />
+      <StaticGrid />
+      <HomeCardGrid />
+    </Box>
+  );
 }
 
 export default Home;

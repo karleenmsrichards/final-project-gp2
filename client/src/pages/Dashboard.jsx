@@ -3,8 +3,8 @@ import { useEffect } from "react";
 import useAuth from "../customHooks/useAuth";
 
 const Dashboard = () => {
-    const { user, handleSignUp, handleSignOut, isLoggedIn, setIsLoggedIn } =
-        useAuth();
+    const { user, handleSignUp, handleSignOut, isLoggedIn, setIsLoggedIn } = useAuth();
+
 
     function getJwtToken() {
         return localStorage.getItem("jwtToken");
@@ -36,16 +36,19 @@ const Dashboard = () => {
 
     const handleDeleteProfile = async () => {
         try {
-			console.log("Delete button clicked!");
-            const response = await fetch("/api/delete-profile", {
+            const token = getJwtToken();
+            const res = await fetch("/api/delete-profile", {
                 method: "DELETE",
                 headers: {
                     "Content-Type": "application/json",
-
                 },
+				body: JSON.stringify({
+                    token,
+                }),
             });
-            if (response.ok) {
-                console.log("Profile deleted successfully.");
+			const newData = await res.json();
+            if (res.ok) {
+                console.log(newData);
             } else {
                 console.log("Error deleting profile.");
             }
@@ -55,7 +58,7 @@ const Dashboard = () => {
     };
 
     useEffect(() => {
-        const token = getJwtToken();
+       const token = getJwtToken();
         if (token) {
             sendingToken(token);
             setIsLoggedIn(true);

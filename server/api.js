@@ -51,32 +51,22 @@ router.post("/validation", async (req, res) => {
 });
 
 
-router.delete("/api/delete-profile", async (req, res) => {
+router.delete("/delete-profile", async(req, res) => {
 
 	try {
-
-		const { userId } = req.body;
-		if (!userId) {
+		const { token } = req.body;
+		if (!token) {
 			return res.status(400).json({ error: "userId is required" });
 		}
-
-		// Find the user by userId
-		const user = await Users.findOne({ where: { id: userId } });
+		const user = await Tokens.findOne({ where: { token: token} });
 		if (!user) {
 			return res.status(404).json({ error: "User not found" });
 		}
-		// Delete the user
-		await user.destroy();
-
-		res.status(200).json({ message: "Profile deleted successfully" });
-		// Send a success response
-		res.status(200).json({ message: "Profile deleted successfully" });
-
+		// await user.destroy();
+		res.status(200).json(user);
 
 	} catch(error) {
-		// Handle error and send an error response
 		res.status(500).json({ error: "Error deleting profile" });
-
 	}
 });
 

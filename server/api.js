@@ -29,6 +29,7 @@ router.get("/clientId", (req, res) => {
 
 
 router.post("/validation", async (req, res) => {
+
 	const { token,role } = req.body;
 	try {
 		const client = new OAuth2Client();
@@ -48,5 +49,39 @@ router.post("/validation", async (req, res) => {
 		res.status(400).json({ error: "Invalid token" });
 	}
 });
+
+
+router.delete("/api/delete-profile", async (req, res) => {
+
+	try {
+
+		const { userId } = req.body;
+		if (!userId) {
+			return res.status(400).json({ error: "userId is required" });
+		}
+
+		// Find the user by userId
+		const user = await Users.findOne({ where: { id: userId } });
+		if (!user) {
+			return res.status(404).json({ error: "User not found" });
+		}
+		// Delete the user
+		await user.destroy();
+
+		res.status(200).json({ message: "Profile deleted successfully" });
+		// Send a success response
+		res.status(200).json({ message: "Profile deleted successfully" });
+
+
+	} catch(error) {
+		// Handle error and send an error response
+		res.status(500).json({ error: "Error deleting profile" });
+
+	}
+});
+
+
+
+
 
 export default router;

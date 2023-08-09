@@ -38,6 +38,19 @@ const useAuth = () => {
 			console.error("Error handling callback response:", response);
 		}
 	}
+	const handleDeleteProfile = async (userId) => {
+		try {
+ const response = await axios.delete("/api/delete-profile", {
+			data: { userId }, // Send userId in the request body
+		});
+
+ console.log(response.data.message); // Success message from backend
+		} catch (error) {
+		console.error("Error deleting profile:", error);
+		}
+	};
+
+
 
 
 	useEffect(() => {

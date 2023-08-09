@@ -30,7 +30,6 @@ const useAuth = () => {
 
 	function handleCallbackResponse(response) {
 		if (response && response.credential) {
-			let userObject = jwtDecode(response.credential);
 			localStorage.setItem("jwtToken", response.credential);
 			setIsLoggedIn(true);
 			navigate("/dashboard");
@@ -49,7 +48,6 @@ const useAuth = () => {
 		console.error("Error deleting profile:", error);
 		}
 	};
-
 
 
 

@@ -2,8 +2,11 @@ import { Router } from "express";
 import logger from "./utils/logger";
 const dotenv = require("dotenv");
 const { OAuth2Client } = require("google-auth-library");
-const { Users } = require("./sequelize/models");
-const { persistNewUser } =require("./controller/apiController");
+const { Users, Provider, Tokens } = require("./sequelize/models");
+const {
+	persistNewUser,
+	persistNewProvider,
+} = require("./controller/apiController");
 
 dotenv.config();
 
@@ -27,10 +30,8 @@ router.get("/clientId", (req, res) => {
 	}
 });
 
-
 router.post("/validation", async (req, res) => {
-
-	const { token,role } = req.body;
+	const { token, role } = req.body;
 	try {
 		const client = new OAuth2Client();
 		const ticket = await client.verifyIdToken({
@@ -52,16 +53,15 @@ router.post("/validation", async (req, res) => {
 
 
 router.delete("/delete-profile", async(req, res) => {
-
 	try {
 		const { token } = req.body;
 		if (!token) {
 			return res.status(400).json({ error: "userId is required" });
 		}
-		const user = await Tokens.findOne({ where: { token: token} });
-		if (!user) {
-			return res.status(404).json({ error: "User not found" });
-		}
+	const user = await Tokens.findOne({ where: { token: token } });
+		// 	if (!user) {
+		// 	return res.status(404).json({ error: "Token not found" });
+		// }
 		// await user.destroy();
 		res.status(200).json(user);
 
@@ -71,7 +71,60 @@ router.delete("/delete-profile", async(req, res) => {
 });
 
 
+router.post("/create-provider", async (req, res) => {
+	const {
+		firstName,
+		lastName,
+		email,
+		businessName,
+		profileImage,
+		phoneNumber,
+		address,
+		city,
+		country,
+		profession,
+		yearsOfExperience,
+		hourlyRate,
+		language,
+	} = req.body;
 
+	try {
+		const user = await Users.findOne({ where: { email } });
+
+		if (!user) {
+			return res.status(400).json({ error: "User not found" });
+		}
+
+		const providerExists = await Provider.findOne({
+			where: { user_id: user.id },
+		});
+
+		if (providerExists) {
+			return res.status(400).json({ error: "User is already a provider" });
+		}
+
+		const result = await persistNewProvider({
+			user_id: user.id,
+			firstName,
+			lastName,
+			email,
+			businessName,
+			profileImage,
+			phoneNumber,
+			address,
+			city,
+			country,
+			profession,
+			yearsOfExperience,
+			hourlyRate,
+			language,
+		});
+
+		res.status(201).json(result);
+	} catch (error) {
+		res.status(500).json({ error: "Internal server error" });
+	}
+});
 
 
 export default router;

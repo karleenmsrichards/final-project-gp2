@@ -2,8 +2,11 @@ import { Router } from "express";
 import logger from "./utils/logger";
 const dotenv = require("dotenv");
 const { OAuth2Client } = require("google-auth-library");
-const { Users } = require("./sequelize/models");
-const { persistNewUser } = require("./controller/apiController");
+const { Users, Provider } = require("./sequelize/models");
+const {
+	persistNewUser,
+	persistNewProvider,
+} = require("./controller/apiController");
 
 dotenv.config();
 
@@ -45,6 +48,61 @@ router.post("/validation", async (req, res) => {
 		}
 	} catch (error) {
 		res.status(400).json({ error: "Invalid token" });
+	}
+});
+
+router.post("/create-provider", async (req, res) => {
+	const {
+		firstName,
+		lastName,
+		email,
+		businessName,
+		profileImage,
+		phoneNumber,
+		address,
+		city,
+		country,
+		profession,
+		yearsOfExperience,
+		hourlyRate,
+		language,
+	} = req.body;
+
+	try {
+		const user = await Users.findOne({ where: { email } });
+
+		if (!user) {
+			return res.status(400).json({ error: "User not found" });
+		}
+
+		const providerExists = await Provider.findOne({
+			where: { user_id: user.id },
+		});
+
+		if (providerExists) {
+			return res.status(400).json({ error: "User is already a provider" });
+		}
+
+		const result = await persistNewProvider({
+			user_id: user.id,
+			firstName,
+			lastName,
+			email,
+			businessName,
+			profileImage,
+			phoneNumber,
+			address,
+			city,
+			country,
+			profession,
+			yearsOfExperience,
+			hourlyRate,
+			language,
+		});
+
+		res.status(201).json(result);
+	} catch (error) {
+		res.status(500).json({ error: "Internal server error" });
 	}
 });
 

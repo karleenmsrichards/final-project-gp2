@@ -2,7 +2,7 @@ import { Router } from "express";
 import logger from "./utils/logger";
 const dotenv = require("dotenv");
 const { OAuth2Client } = require("google-auth-library");
-const { Users } = require("./sequelize/models");
+const { Users, Provider } = require("./sequelize/models");
 const {
 	persistNewUser,
 	persistNewProvider,
@@ -52,46 +52,56 @@ router.post("/validation", async (req, res) => {
 });
 
 router.post("/create-provider", async (req, res) => {
-	const {
-		firstName,
-		lastName,
-		email,
-		businessName,
-		profileImage,
-		phoneNumber,
-		address,
-		city,
-		country,
-		profession,
-		yearsOfExperience,
-		hourlyRate,
-		language,
-	} = req.body;
+    const {
+        firstName,
+        lastName,
+        email,
+        businessName,
+        profileImage,
+        phoneNumber,
+        address,
+        city,
+        country,
+        profession,
+        yearsOfExperience,
+        hourlyRate,
+        language,
+    } = req.body;
 
-	try {
-		const user = await Users.findOne({ where: { email } });
+    try {
+        const user = await Users.findOne({ where: { email } });
 
-		const result = await persistNewProvider({
-			user_id: user ? user.id : null,
-			firstName,
-			lastName,
-			email,
-			businessName,
-			profileImage,
-			phoneNumber,
-			address,
-			city,
-			country,
-			profession,
-			yearsOfExperience,
-			hourlyRate,
-			language,
-		});
+        if (!user) {
+            return res.status(400).json({ error: "User not found" });
+        }
 
-		res.status(201).json(result);
-	} catch (error) {
-		res.status(500).json({ error: "Internal server error" });
-	}
+        const providerExists = await Provider.findOne({ where: { user_id: user.id } });
+
+        if (providerExists) {
+            return res.status(400).json({ error: "User is already a provider" });
+        }
+
+        const result = await persistNewProvider({
+            user_id: user.id,
+            firstName,
+            lastName,
+            email,
+            businessName,
+            profileImage,
+            phoneNumber,
+            address,
+            city,
+            country,
+            profession,
+            yearsOfExperience,
+            hourlyRate,
+            language,
+        });
+
+        res.status(201).json(result);
+    } catch (error) {
+        res.status(500).json({ error: "Internal server error" });
+    }
 });
 
 export default router;

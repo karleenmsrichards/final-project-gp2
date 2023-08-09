@@ -52,56 +52,58 @@ router.post("/validation", async (req, res) => {
 });
 
 router.post("/create-provider", async (req, res) => {
-    const {
-        firstName,
-        lastName,
-        email,
-        businessName,
-        profileImage,
-        phoneNumber,
-        address,
-        city,
-        country,
-        profession,
-        yearsOfExperience,
-        hourlyRate,
-        language,
-    } = req.body;
+	const {
+		firstName,
+		lastName,
+		email,
+		businessName,
+		profileImage,
+		phoneNumber,
+		address,
+		city,
+		country,
+		profession,
+		yearsOfExperience,
+		hourlyRate,
+		language,
+	} = req.body;
 
-    try {
-        const user = await Users.findOne({ where: { email } });
+	try {
+		const user = await Users.findOne({ where: { email } });
 
-        if (!user) {
-            return res.status(400).json({ error: "User not found" });
-        }
+		if (!user) {
+			return res.status(400).json({ error: "User not found" });
+		}
 
-        const providerExists = await Provider.findOne({ where: { user_id: user.id } });
+		const providerExists = await Provider.findOne({
+			where: { user_id: user.id },
+		});
 
-        if (providerExists) {
-            return res.status(400).json({ error: "User is already a provider" });
-        }
+		if (providerExists) {
+			return res.status(400).json({ error: "User is already a provider" });
+		}
 
-        const result = await persistNewProvider({
-            user_id: user.id,
-            firstName,
-            lastName,
-            email,
-            businessName,
-            profileImage,
-            phoneNumber,
-            address,
-            city,
-            country,
-            profession,
-            yearsOfExperience,
-            hourlyRate,
-            language,
-        });
+		const result = await persistNewProvider({
+			user_id: user.id,
+			firstName,
+			lastName,
+			email,
+			businessName,
+			profileImage,
+			phoneNumber,
+			address,
+			city,
+			country,
+			profession,
+			yearsOfExperience,
+			hourlyRate,
+			language,
+		});
 
-        res.status(201).json(result);
-    } catch (error) {
-        res.status(500).json({ error: "Internal server error" });
-    }
+		res.status(201).json(result);
+	} catch (error) {
+		res.status(500).json({ error: "Internal server error" });
+	}
 });
 
 export default router;

@@ -7,6 +7,16 @@ const Header = () => {
 	const navigate = useNavigate();
 	const location = useLocation();
 	const { handleSignUp, handleSignOut, isLoggedIn } = useAuth();
+	const [value, setValue] = React.useState(0);
+
+	const handleChange = (e, value)=> {
+		if (value === 0) {
+			navigate("/");
+		} else if (value ===2) {
+			navigate ("/subscription");
+		}
+		setValue(value);
+	};
 
 	return (
 		<AppBar sx={{ background: "white", color: "black", position: "static" }}>
@@ -21,6 +31,8 @@ const Header = () => {
 				px={{ xs: 2, md: 5 }}
 			>
 				<Tabs
+					value={value}
+					onChange= {handleChange}
 					sx={{
 						display: "flex",
 						justifyContent: "space-evenly",

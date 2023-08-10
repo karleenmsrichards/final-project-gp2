@@ -50,8 +50,7 @@ router.post("/validation", async (req, res) => {
 	}
 });
 
-
-router.delete("/delete-profile", async(req, res) => {
+router.delete("/delete-profile", async (req, res) => {
 	try {
 		const { token } = req.body;
 		if (!token) {
@@ -59,22 +58,23 @@ router.delete("/delete-profile", async(req, res) => {
 		} else {
 			const latestToken = await Tokens.findOne({ where: { token } });
 			if (!latestToken) {
-					res.status(404).json({ error: "Token not found" });
+				res.status(404).json({ error: "Token not found" });
 			} else {
-				await Tokens.destroy({ where:{ user_id:latestToken.user_id } });
-				await Users.destroy({ where:{ id:latestToken.user_id } });
-				const provider = await Provider.findOne({ where: { user_id:latestToken.user_id } });
-				if (provider ) {
-					await Provider.destroy({ where:{ user_id:latestToken.user_id } });
+				await Tokens.destroy({ where: { user_id: latestToken.user_id } });
+				await Users.destroy({ where: { id: latestToken.user_id } });
+				const provider = await Provider.findOne({
+					where: { user_id: latestToken.user_id },
+				});
+				if (provider) {
+					await Provider.destroy({ where: { user_id: latestToken.user_id } });
 				}
-				res.status(200).json({ message:"account deleted" });
+				res.status(200).json({ message: "Your account is deleted!" });
 			}
 		}
-	} catch(error) {
+	} catch (error) {
 		res.status(500).json({ error });
 	}
 });
-
 
 router.post("/create-provider", async (req, res) => {
 	const {
@@ -132,6 +132,5 @@ router.post("/create-provider", async (req, res) => {
 		res.status(500).json({ error: error });
 	}
 });
-
 
 export default router;

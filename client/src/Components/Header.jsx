@@ -9,13 +9,13 @@ const Header = () => {
 	const { handleSignUp, handleSignOut, isLoggedIn } = useAuth();
 	const [value, setValue] = React.useState(0);
 
-	        const homePageCode = 0
-        const subscriptionPageCode = 2
-	const handleChange = (e, value)=> {
+	const homePageCode = 0;
+	const subscriptionPageCode = 2;
+	const handleChange = (e, value) => {
 		if (value === homePageCode) {
 			navigate("/");
 		} else if (value === subscriptionPageCode) {
-			navigate ("/subscription");
+			navigate("/subscription");
 		}
 		setValue(value);
 	};
@@ -52,7 +52,6 @@ const Header = () => {
 						<Tab
 							label="Become a Provider"
 							component="a"
-						
 							sx={{ color: "black" }}
 						/>
 					)}

@@ -8,19 +8,19 @@ import SignUpForm from "./pages/SignUpForm";
 import useAuth from "./customHooks/useAuth";
 
 const App = () => {
-  const { isLoggedIn } = useAuth();
-  return (
-    <div>
-      <Header />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        {isLoggedIn && <Route path="/sign-up" element={<SignUpForm />} />}
-        <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/contact-us" element={<ContactUs />} />
-      </Routes>
-      <Footer />
-    </div>
-  );
+	const { isLoggedIn } = useAuth();
+	return (
+		<div>
+			<Header />
+			<Routes>
+				<Route path="/" element={<Home />} />
+				{isLoggedIn && <Route path="/sign-up" element={<SignUpForm />} />}
+				<Route path="/dashboard" element={<Dashboard />} />
+				<Route path="/contact-us" element={<ContactUs />} />
+			</Routes>
+			<Footer />
+		</div>
+	);
 };
 
 export default App;

@@ -57,16 +57,17 @@ const Dashboard = () => {
         }
     };
 
-    useEffect(() => {
-       const token = getJwtToken();
-        if (token) {
-            sendingToken(token);
-            setIsLoggedIn(true);
-        } else {
-            console.log("Token not found");
-            setIsLoggedIn(false);
-        }
-    }, [setIsLoggedIn]);
+	useEffect(() => {
+		const token = getJwtToken();
+		if (token) {
+			sendingToken(token);
+			setIsLoggedIn(true);
+		} else {
+			console.log("Token not found");
+			setIsLoggedIn(false);
+		}
+		/* eslint-disable-next-line */ //// missing dependency ////////
+	}, [setIsLoggedIn]);
 
     return (
         <Container sx={{ width: "400px", height: "200px", marginTop: "200px" }}>

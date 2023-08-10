@@ -47,7 +47,7 @@ router.post("/validation", async (req, res) => {
 				persistNewToken(user.id, token);
 			}
 		}
-		return res.status(200).json({ message: token });
+		return res.status(200).json({ message: "success" });
 	} catch (error) {
 		return res.status(400).json({ error: "Invalid token" });
 	}

@@ -50,7 +50,7 @@ const Header = () => {
 						<Tab
 							label="Become a Provider"
 							component="a"
-							// href="/sign-up"
+						
 							sx={{ color: "black" }}
 						/>
 					)}

@@ -5,6 +5,7 @@ import HomeCardGrid from "../Mui-Components/HomeCardGrid";
 import Hero from "../Components/Hero";
 
 export function Home() {
+	/* eslint-disable-next-line */
 	const [message, setMessage] = useState("Loading...");
 
 	useEffect(() => {

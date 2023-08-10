@@ -24,7 +24,7 @@ export async function persistNewProvider({
 	try {
 		const existingUser = await Users.findOne({ where: { email } });
 
-		if (existingUser && existingUser.role === "customer") {
+		if (existingUser?.role === "customer") {
 			existingUser.role = "provider";
 			await existingUser.save();
 		}
@@ -48,6 +48,8 @@ export async function persistNewProvider({
 
 		return { message: "Provider created successfully", provider: newProvider };
 	} catch (error) {
-		return { message: "Error creating Provider" };
+		/* eslint-disable-next-line */
+		console.log(error);
+		return { error: error };
 	}
 }

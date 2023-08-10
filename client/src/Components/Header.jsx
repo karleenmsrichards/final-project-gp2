@@ -9,11 +9,13 @@ const Header = () => {
 	const { handleSignUp, handleSignOut, isLoggedIn } = useAuth();
 	const [value, setValue] = React.useState(0);
 
-	const handleChange = (e, value) => {
-		if (value === 0) {
+	        const homePageCode = 0
+        const subscriptionPageCode = 2
+	const handleChange = (e, value)=> {
+		if (value === homePageCode) {
 			navigate("/");
-		} else if (value === 2) {
-			navigate("/subscription");
+		} else if (value === subscriptionPageCode) {
+			navigate ("/subscription");
 		}
 		setValue(value);
 	};

@@ -30,6 +30,9 @@ const Header = () => {
 				}}
 				px={{ xs: 2, md: 5 }}
 			>
+				<Typography variant="h5" sx={{ fontWeight: "bolder", pt: 1 }}>
+					BOOKME
+				</Typography>
 				<Tabs
 					value={value}
 					onChange= {handleChange}
@@ -41,16 +44,13 @@ const Header = () => {
 					}}
 					selectionFollowsFocus
 				>
-					<Typography variant="h5" sx={{ fontWeight: "bolder", pt: 1 }}>
-						BOOKME
-					</Typography>
 					<Tab label="Find" sx={{ color: "black" }} />
 					<Tab label="Book" sx={{ color: "black" }} />
 					{isLoggedIn && (
 						<Tab
 							label="Become a Provider"
 							component="a"
-							href="/sign-up"
+							// href="/sign-up"
 							sx={{ color: "black" }}
 						/>
 					)}

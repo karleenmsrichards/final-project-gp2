@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useNavigate } from "react-router-dom";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -57,6 +58,7 @@ const tiers = [
 const defaultTheme = createTheme();
 
 export default function Pricing() {
+	const navigate = useNavigate();
 	return (
 		<ThemeProvider theme={defaultTheme}>
 			<GlobalStyles
@@ -150,7 +152,7 @@ export default function Pricing() {
 									</ul>
 								</CardContent>
 								<CardActions>
-									<Button fullWidth variant={tier.buttonVariant}>
+									<Button fullWidth variant={tier.buttonVariant} onClick={()=>navigate("/sign-up")}>
 										{tier.buttonText}
 									</Button>
 								</CardActions>

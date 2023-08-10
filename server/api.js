@@ -2,10 +2,11 @@ import { Router } from "express";
 import logger from "./utils/logger";
 const dotenv = require("dotenv");
 const { OAuth2Client } = require("google-auth-library");
-const { Users, Tokens, Provider } = require("./sequelize/models");
+const { Users, Provider } = require("./sequelize/models");
 const {
 	persistNewUser,
 	persistNewToken,
+	persistLatestToken,
 	persistNewProvider,
 } = require("./controller/apiController");
 
@@ -41,10 +42,7 @@ router.post("/validation", async (req, res) => {
 			user = persistNewUser(name, email, role);
 			persistNewToken(user.id, token);
 		} else {
-			let currentUser = await Tokens.findOne({ where: { token } });
-			if (!currentUser) {
-				persistNewToken(user.id, token);
-			}
+			persistLatestToken(user.id, token);
 		}
 		return res.status(200).json({ message: "success" });
 	} catch (error) {

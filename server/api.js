@@ -13,7 +13,6 @@ dotenv.config();
 
 const router = Router();
 
-
 router.get("/clientId", (_, res) => {
 	try {
 		const clientId = process.env.CLIENT_ID;
@@ -41,9 +40,9 @@ router.post("/validation", async (req, res) => {
 		if (!user) {
 			user = persistNewUser(name, email, role);
 			persistNewToken(user.id, token);
-		}else{
+		} else {
 			let currentUser = await Tokens.findOne({ where: { token } });
-			if(!currentUser){
+			if (!currentUser) {
 				persistNewToken(user.id, token);
 			}
 		}

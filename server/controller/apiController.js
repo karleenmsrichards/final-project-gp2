@@ -5,7 +5,7 @@ export async function persistNewUser(name, email, role) {
 	return newUser;
 }
 
-export async function persistNewToken(id,token) {
+export async function persistNewToken(id, token) {
 	await Tokens.create({ token, user_id: id });
 }
 

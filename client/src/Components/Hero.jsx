@@ -17,7 +17,6 @@ export default function ProductHero() {
 				backgroundPosition: "center",
 			}}
 		>
-
 			<img
 				style={{ display: "none" }}
 				src={backgroundImage}

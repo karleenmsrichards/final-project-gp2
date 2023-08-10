@@ -1,30 +1,62 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import useAuth from "../customHooks/useAuth";
+import axios from "axios";
+import { TextField, Button, Container, Typography, Box } from "@mui/material";
 
 const SignUpForm = () => {
+  const navigate = useNavigate();
   const { user } = useAuth();
-  ///////////remove before committing
-  console.log(user);
+
 
   const [signUpData, setSignUpData] = useState({
     firstName: null,
-    surname: null,
-    businessName: null,
+    lastName: null,
     email: null,
+    businessName: null,
     phoneNumber: null,
     address: null,
     city: null,
     country: null,
     profession: null,
     yearsOfExperience: null,
+    hourlyRate: null,
     language: null,
-    maxSessionLength: null,
-    maxGuestsPerSession: null,
   });
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log("Submitted Form:", signUpData);
+
+    try {
+      const response = await axios.post("/api/create-provider", signUpData);
+
+      if (response) {
+        setSignUpData({
+          firstName: user.given_name,
+          lastName: user.family_name,
+          email: user.email,
+          businessName: null,
+          phoneNumber: null,
+          address: null,
+          city: null,
+          country: null,
+          profession: null,
+          yearsOfExperience: null,
+          hourlyRate: 0,
+          language: null,
+        });
+        alert("You are now a Provider");
+        navigate("/dashboard");
+      }
+    } catch (error) {
+      if (error?.response?.data?.error) {
+        const errorMessage = error.response.data.error;
+        alert(`Error: ${errorMessage}`);
+      } else {
+        alert("An error occurred while submitting the form.");
+      }
+      console.error("Error submitting form:", error);
+    }
   };
 
   const handleChange = (event) => {
@@ -40,149 +72,169 @@ const SignUpForm = () => {
       setSignUpData((prevData) => ({
         ...prevData,
         firstName: user.given_name,
-        surname: user.family_name,
+        lastName: user.family_name,
         email: user.email,
+        hourlyRate: 0,
       }));
     }
   }, [user]);
 
   return (
-    <form onSubmit={handleSubmit}>
-      <fieldset>
-        <legend>Sign Up as a Provider</legend>
-        <label>
-          First Name:
-          <input
-            type="text"
-            name="firstName"
-            defaultValue={signUpData.firstName}
-            disabled
-            ////////////// add required
-          />
-        </label>
-        <label>
-  Surname:
-          <input
-            type="text"
-            name="surname"
-            defaultValue={signUpData.surname}
-            disabled
-          />
-        </label>
-
-        <label>
-  Business Name:
-          <input
-            type="text"
-            name="businessName"
-            value={signUpData.businessName}
-            onChange={handleChange}
-          />
-        </label>
-
-        <label>
-  Email:
-          <input
-            type="email"
-            name="email"
-            defaultValue={signUpData.email}
-            disabled
-          />
-        </label>
-
-        <label>
-  Phone Number:
-          <input
-          ////////////// Reviewer please determine if this type is suitable ///////
-            type="text"
-            name="phoneNumber"
-            value={signUpData.phoneNumber}
-            onChange={handleChange}
-          />
-        </label>
-
-        <label>
-  Address:
-          <input
-            type="text"
-            name="address"
-            value={signUpData.address}
-            onChange={handleChange}
-          />
-        </label>
-
-        <label>
-  City:
-          <input
-            type="text"
-            name="city"
-            value={signUpData.city}
-            onChange={handleChange}
-          />
-        </label>
-        <label>
-  Country:
-          <input
-            type="text"
-            name="country"
-            value={signUpData.country}
-            onChange={handleChange}
-          />
-        </label>
-
-        <label>
-  Profession:
-          <input
-            type="text"
-            name="profession"
-            value={signUpData.profession}
-            onChange={handleChange}
-          />
-        </label>
-
-        <label>
-  Years of Experience:
-          <input
-            type="number"
-            name="yearsOfExperience"
-            value={signUpData.yearsOfExperience}
-            onChange={handleChange}
-          />
-        </label>
-
-        <label>
-  Language:
-          <input
-            type="text"
-            name="language"
-            value={signUpData.language}
-            onChange={handleChange}
-          />
-        </label>
-
-        <label>
-  Maximum Length of Session:
-          <input
-            type="text"
-            name="maxSessionLength"
-            value={signUpData.maxSessionLength}
-            onChange={handleChange}
-          />
-        </label>
-
-        <label>
-  Maximum Guests per Session:
-          <input
-            type="number"
-            name="maxGuestsPerSession"
-            value={signUpData.maxGuestsPerSession}
-            onChange={handleChange}
-          />
-        </label>
-
-        <button type="submit">Submit</button>
-      </fieldset>
-    </form>
+    <Container maxWidth="sm" style={{ margin: "100px auto" }}>
+      <form onSubmit={handleSubmit}>
+        <fieldset>
+          <Typography variant="h5" gutterBottom>
+          Sign Up as a Provider
+          </Typography>
+          <Box mt={2}>
+            <Typography variant="p" gutterBottom>
+          First Name
+            </Typography>
+            <TextField
+              variant="outlined"
+              name="firstName"
+              value={signUpData.firstName}
+              onChange={handleChange}
+              disabled
+              fullWidth
+            />
+          </Box>
+          <Box mt={2}>
+            <Typography variant="p" gutterBottom>
+          Surname
+            </Typography>
+            <TextField
+              variant="outlined"
+              name="lastName"
+              value={signUpData.lastName}
+              onChange={handleChange}
+              disabled
+              fullWidth
+            />
+          </Box>
+          <Box mt={2}>
+            <Typography variant="p" gutterBottom>
+          Email
+            </Typography>
+            <TextField
+              variant="outlined"
+              name="email"
+              value={signUpData.email}
+              onChange={handleChange}
+              disabled
+              fullWidth
+            />
+          </Box>
+          <Box mt={2}>
+            <TextField
+              label="Business Name"
+              variant="outlined"
+              name="businessName"
+              value={signUpData.businessName}
+              onChange={handleChange}
+              fullWidth
+            />
+          </Box>
+          <Box mt={2}>
+            <TextField
+              label="Language *"
+              variant="outlined"
+              name="language"
+              value={signUpData.language}
+              onChange={handleChange}
+              fullWidth
+            />
+          </Box>
+          <Box mt={2}>
+            <TextField
+              label="Profile Image"
+              variant="outlined"
+              name="profileImage"
+              value={signUpData.profileImage}
+              onChange={handleChange}
+              fullWidth
+            />
+          </Box>
+          <Box mt={2}>
+            <TextField
+              label="Phone Number *"
+              variant="outlined"
+              name="phoneNumber"
+              value={signUpData.phoneNumber}
+              onChange={handleChange}
+              fullWidth
+            />
+          </Box>
+          <Box mt={2}>
+            <TextField
+              label="Address *"
+              variant="outlined"
+              name="address"
+              value={signUpData.address}
+              onChange={handleChange}
+              fullWidth
+            />
+          </Box>
+          <Box mt={2}>
+            <TextField
+              label="City *"
+              variant="outlined"
+              name="city"
+              value={signUpData.city}
+              onChange={handleChange}
+              fullWidth
+            />
+          </Box>
+          <Box mt={2}>
+            <TextField
+              label="Country *"
+              variant="outlined"
+              name="country"
+              value={signUpData.country}
+              onChange={handleChange}
+              fullWidth
+            />
+          </Box>
+          <Box mt={2}>
+            <TextField
+              label="Profession *"
+              variant="outlined"
+              name="profession"
+              value={signUpData.profession}
+              onChange={handleChange}
+              fullWidth
+            />
+          </Box>
+          <Box mt={2}>
+            <TextField
+              label="Years of Experience *"
+              variant="outlined"
+              name="yearsOfExperience"
+              value={signUpData.yearsOfExperience}
+              onChange={handleChange}
+              fullWidth
+            />
+          </Box>
+          <Box mt={2}>
+            <Typography variant="p" gutterBottom>
+        Hourly rate
+            </Typography>
+            <TextField
+              variant="outlined"
+              name="hourlyRate"
+              value={signUpData.hourlyRate}
+              disabled
+              fullWidth
+            />
+          </Box>
+          <Box mt={2}>
+            <Button type="submit" variant="contained" color="primary" style={{ backgroundColor: "#F3263B" }}>
+            Submit
+            </Button>
+          </Box>
+        </fieldset>
+      </form>
+    </Container>
   );
 };
 

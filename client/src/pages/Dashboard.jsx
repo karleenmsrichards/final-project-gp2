@@ -43,8 +43,8 @@ const Dashboard = () => {
       console.log("Token not found");
       setIsLoggedIn(false);
     }
-    /* eslint-disable-next-line *///// missing dependency ////////
-  }, [setIsLoggedIn]);
+    /* eslint-disable-next-line */ //// missing dependency ////////
+	}, [setIsLoggedIn]);
 
   return (
     <Container sx={{ width: "400px", height: "200px", marginTop: "200px" }}>

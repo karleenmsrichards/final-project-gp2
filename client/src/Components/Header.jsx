@@ -42,6 +42,24 @@ const Header = () => {
               sx={{ color: "black" }}
             />
           )}
+          {/* pending appContext decision */}
+          {/* {isLoggedIn && !isProvider && (
+            <Tab
+              label="Become a Provider"
+              component="a"
+              href="/sign-up"
+              sx={{ color: "black" }}
+            />
+          )}
+
+          {isLoggedIn && isProvider && (
+            <Tab
+              label="Update Provider Profile"
+              component="a"
+              href="/update-profile"
+              sx={{ color: "black" }}
+            />
+          )} */}
         </Tabs>
         {location.pathname === "/" && (
           <>

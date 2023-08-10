@@ -2,19 +2,21 @@ import * as React from "react";
 import Typography from "../Mui-Components/Typography";
 import ProductHeroLayout from "../Mui-Components/ProductHeroLayout";
 import Button from "../Mui-Components/Buttons";
+import useAuth from "../customHooks/useAuth";
 
 const backgroundImage =
 	"https://images.unsplash.com/photo-1553484771-11998c592b9c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1770&q=80";
 export default function ProductHero() {
+	const { handleSignUp } = useAuth();
+
 	return (
 		<ProductHeroLayout
 			sxBackground={{
 				backgroundImage: `url(${backgroundImage})`,
-				backgroundColor: "#7FC7D9", // Average color of the background image.
+				backgroundColor: "#7FC7D9",
 				backgroundPosition: "center",
 			}}
 		>
-			{/* Increase the network loading priority of the background image. */}
 			<img
 				style={{ display: "none" }}
 				src={backgroundImage}
@@ -36,7 +38,7 @@ export default function ProductHero() {
 				variant="contained"
 				size="large"
 				component="a"
-				href="#"
+				onClick={handleSignUp}
 				sx={{ minWidth: 200 }}
 			>
 				Register

@@ -5,6 +5,8 @@ const { OAuth2Client } = require("google-auth-library");
 const { Users, Provider } = require("./sequelize/models");
 const {
 	persistNewUser,
+	persistNewToken,
+	persistLatestToken,
 	persistNewProvider,
 } = require("./controller/apiController");
 
@@ -12,12 +14,7 @@ dotenv.config();
 
 const router = Router();
 
-router.get("/", (_, res) => {
-	logger.debug("Welcoming everyone...");
-	res.json({ message: "Hello Halden 😝, our project has been deployed!" });
-});
-
-router.get("/clientId", (req, res) => {
+router.get("/clientId", (_, res) => {
 	try {
 		const clientId = process.env.CLIENT_ID;
 		if (!clientId) {
@@ -42,10 +39,12 @@ router.post("/validation", async (req, res) => {
 		const { name, email } = payload;
 		let user = await Users.findOne({ where: { email } });
 		if (!user) {
-			persistNewUser(name, email, role, token);
+			user = persistNewUser(name, email, role);
+			persistNewToken(user.id, token);
 		} else {
-			res.status(200).json({ message: "success" });
+			persistLatestToken(user.id, token);
 		}
+		res.status(200).json({ message: "success" });
 	} catch (error) {
 		res.status(400).json({ error: "Invalid token" });
 	}
@@ -80,7 +79,7 @@ router.post("/create-provider", async (req, res) => {
 		});
 
 		if (providerExists) {
-			return res.status(400).json({ error: "User is already a provider" });
+			return res.status(400).json({ error: "User is already a Provider" });
 		}
 
 		const result = await persistNewProvider({
@@ -102,7 +101,9 @@ router.post("/create-provider", async (req, res) => {
 
 		res.status(201).json(result);
 	} catch (error) {
-		res.status(500).json({ error: "Internal server error" });
+		/* eslint-disable-next-line */
+		console.log(error);
+		res.status(500).json({ error: error });
 	}
 });
 

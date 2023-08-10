@@ -8,6 +8,7 @@ const useAuth = () => {
 	const [user, setUser] = useState(null);
 	const [clientId, setClientId] = useState("");
 	const [isLoggedIn, setIsLoggedIn] = useState(false);
+	const [isProvider, setIsProvider] = useState(false);
 
 	function handleSignUp() {
 		/* global google */
@@ -70,7 +71,15 @@ const useAuth = () => {
 		}
 	}, [navigate]);
 
-	return { user, handleSignUp, handleSignOut, isLoggedIn, setIsLoggedIn };
+	return {
+		user,
+		handleSignUp,
+		handleSignOut,
+		isLoggedIn,
+		setIsLoggedIn,
+		isProvider,
+		setIsProvider,
+	};
 };
 
 export default useAuth;

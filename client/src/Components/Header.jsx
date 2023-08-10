@@ -9,11 +9,11 @@ const Header = () => {
 	const { handleSignUp, handleSignOut, isLoggedIn } = useAuth();
 	const [value, setValue] = React.useState(0);
 
-	const handleChange = (e, value)=> {
+	const handleChange = (e, value) => {
 		if (value === 0) {
 			navigate("/");
-		} else if (value ===2) {
-			navigate ("/subscription");
+		} else if (value === 2) {
+			navigate("/subscription");
 		}
 		setValue(value);
 	};
@@ -35,7 +35,7 @@ const Header = () => {
 				</Typography>
 				<Tabs
 					value={value}
-					onChange= {handleChange}
+					onChange={handleChange}
 					sx={{
 						display: "flex",
 						justifyContent: "space-evenly",

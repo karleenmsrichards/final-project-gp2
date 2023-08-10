@@ -17,7 +17,6 @@ import Link from "@mui/material/Link";
 import GlobalStyles from "@mui/material/GlobalStyles";
 import Container from "@mui/material/Container";
 
-
 const tiers = [
 	{
 		title: "Free",
@@ -152,7 +151,11 @@ export default function Pricing() {
 									</ul>
 								</CardContent>
 								<CardActions>
-									<Button fullWidth variant={tier.buttonVariant} onClick={()=>navigate("/sign-up")}>
+									<Button
+										fullWidth
+										variant={tier.buttonVariant}
+										onClick={() => navigate("/sign-up")}
+									>
 										{tier.buttonText}
 									</Button>
 								</CardActions>

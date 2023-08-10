@@ -4,6 +4,7 @@ import HomeCardGrid from "../Mui-Components/HomeCardGrid";
 import Hero from "../Components/Hero";
 
 export function Home() {
+
 	return (
 		<Box sx={{ py: 2 }}>
 			<Hero />

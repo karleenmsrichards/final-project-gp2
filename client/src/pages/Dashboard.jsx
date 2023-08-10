@@ -43,6 +43,7 @@ const Dashboard = () => {
 			console.log("Token not found");
 			setIsLoggedIn(false);
 		}
+		/* eslint-disable-next-line */ //// missing dependency ////////
 	}, [setIsLoggedIn]);
 
 	return (

@@ -7,6 +7,18 @@ const Header = () => {
 	const navigate = useNavigate();
 	const location = useLocation();
 	const { handleSignUp, handleSignOut, isLoggedIn } = useAuth();
+	const [value, setValue] = React.useState(0);
+
+	const homePageCode = 0;
+	const subscriptionPageCode = 2;
+	const handleChange = (e, value) => {
+		if (value === homePageCode) {
+			navigate("/");
+		} else if (value === subscriptionPageCode) {
+			navigate("/subscription");
+		}
+		setValue(value);
+	};
 
 	return (
 		<AppBar sx={{ background: "white", color: "black", position: "static" }}>
@@ -20,7 +32,12 @@ const Header = () => {
 				}}
 				px={{ xs: 2, md: 5 }}
 			>
+				<Typography variant="h5" sx={{ fontWeight: "bolder", pt: 1 }}>
+					BOOKME
+				</Typography>
 				<Tabs
+					value={value}
+					onChange={handleChange}
 					sx={{
 						display: "flex",
 						justifyContent: "space-evenly",
@@ -29,16 +46,12 @@ const Header = () => {
 					}}
 					selectionFollowsFocus
 				>
-					<Typography variant="h5" sx={{ fontWeight: "bolder", pt: 1 }}>
-						BOOKME
-					</Typography>
 					<Tab label="Find" sx={{ color: "black" }} />
 					<Tab label="Book" sx={{ color: "black" }} />
 					{isLoggedIn && (
 						<Tab
 							label="Become a Provider"
 							component="a"
-							href="/sign-up"
 							sx={{ color: "black" }}
 						/>
 					)}

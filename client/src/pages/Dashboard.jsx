@@ -1,15 +1,13 @@
-import { Container, Button, Typography } from "@mui/material";
+import { Container, Typography } from "@mui/material";
 import { useEffect } from "react";
 import useAuth from "../customHooks/useAuth";
 
 const Dashboard = () => {
 	const {
 		user,
-		handleSignUp,
 		handleSignOut,
 		isLoggedIn,
 		setIsLoggedIn,
-		handleDeleteProfile,
 		getJwtToken,
 	} = useAuth();
 
@@ -52,15 +50,9 @@ const Dashboard = () => {
 	return (
 		<Container sx={{ width: "400px", height: "200px", marginTop: "200px" }}>
 			{isLoggedIn ? (
-				<>
 					<Typography> Hello {user.name}</Typography>
-					<Button onClick={handleDeleteProfile}>Delete Profile</Button>
-				</>
 			) : (
-				<>
 					<Typography>You need Log In</Typography>
-					<Button onClick={handleSignUp}>Log in</Button>
-				</>
 			)}
 		</Container>
 	);

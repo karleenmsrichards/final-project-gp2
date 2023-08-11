@@ -49,18 +49,14 @@ const Header = () => {
 					<Tab label="Find" sx={{ color: "black" }} />
 					<Tab label="Book" sx={{ color: "black" }} />
 					{isLoggedIn && (
-						<Tab
-							label="Become a Provider"
-							component="a"
-							sx={{ color: "black" }}
-						/>
+						<Tab label="Become supplier" sx={{ color: "black" }} />
 					)}
 					{/* pending appContext decision */}
 					{/* {isLoggedIn && !isProvider && (
             <Tab
               label="Become a Provider"
               component="a"
-              href="/sign-up"
+
               sx={{ color: "black" }}
             />
           )}

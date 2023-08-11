@@ -2,7 +2,7 @@ import { Router } from "express";
 import logger from "./utils/logger";
 const dotenv = require("dotenv");
 const { OAuth2Client } = require("google-auth-library");
-const { Users, Provider } = require("./sequelize/models");
+const { Users, Provider, Tokens } = require("./sequelize/models");
 const {
 	persistNewUser,
 	persistNewToken,
@@ -50,6 +50,32 @@ router.post("/validation", async (req, res) => {
 		res.status(200).json({ message: "success!" });
 	} catch (error) {
 		res.status(500).json({ message: "Invalid token!" });
+	}
+});
+
+router.delete("/delete-profile", async (req, res) => {
+	try {
+		const { token } = req.body;
+		if (!token) {
+			res.status(400).json({ error: "userId is required" });
+		} else {
+			const latestToken = await Tokens.findOne({ where: { token } });
+			if (!latestToken) {
+				res.status(404).json({ error: "Token not found" });
+			} else {
+				await Tokens.destroy({ where: { user_id: latestToken.user_id } });
+				await Users.destroy({ where: { id: latestToken.user_id } });
+				const provider = await Provider.findOne({
+					where: { user_id: latestToken.user_id },
+				});
+				if (provider) {
+					await Provider.destroy({ where: { user_id: latestToken.user_id } });
+				}
+				res.status(200).json({ message: "Your account is deleted!" });
+			}
+		}
+	} catch (error) {
+		res.status(500).json({ error });
 	}
 });
 

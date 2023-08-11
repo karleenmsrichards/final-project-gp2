@@ -10,6 +10,10 @@ const useAuth = () => {
 	const [isLoggedIn, setIsLoggedIn] = useState(false);
 	const [isProvider, setIsProvider] = useState(false);
 
+	function getJwtToken() {
+		return localStorage.getItem("jwtToken");
+	}
+
 	function handleSignUp() {
 		/* global google */
 		google.accounts.id.initialize({
@@ -38,7 +42,29 @@ const useAuth = () => {
 			console.error("Error handling callback response:", response);
 		}
 	}
-
+	const handleDeleteProfile = async () => {
+		try {
+			const token = getJwtToken();
+			const response = await fetch("/api/delete-profile", {
+				method: "DELETE",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify({
+					token,
+				}),
+			});
+			const data = await response.json();
+			if (response.ok) {
+				alert(data.message);
+				handleSignOut();
+			} else {
+				console.log(data.error);
+			}
+		} catch (error) {
+			console.error("An error occurred:", error);
+		}
+	};
 	useEffect(() => {
 		async function fetchClientId() {
 			try {
@@ -79,6 +105,8 @@ const useAuth = () => {
 		setIsLoggedIn,
 		isProvider,
 		setIsProvider,
+		handleDeleteProfile,
+		getJwtToken,
 	};
 };
 

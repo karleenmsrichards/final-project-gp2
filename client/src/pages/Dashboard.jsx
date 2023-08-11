@@ -3,12 +3,15 @@ import { useEffect } from "react";
 import useAuth from "../customHooks/useAuth";
 
 const Dashboard = () => {
-	const { user, handleSignUp, handleSignOut, isLoggedIn, setIsLoggedIn } =
-		useAuth();
-
-	function getJwtToken() {
-		return localStorage.getItem("jwtToken");
-	}
+	const {
+		user,
+		handleSignUp,
+		handleSignOut,
+		isLoggedIn,
+		setIsLoggedIn,
+		handleDeleteProfile,
+		getJwtToken,
+	} = useAuth();
 
 	const sendingToken = async (token) => {
 		try {
@@ -64,6 +67,7 @@ const Dashboard = () => {
 			{isLoggedIn ? (
 				<>
 					<Typography> Hello {user.name}</Typography>
+					<Button onClick={handleDeleteProfile}>Delete Profile</Button>
 				</>
 			) : (
 				<>

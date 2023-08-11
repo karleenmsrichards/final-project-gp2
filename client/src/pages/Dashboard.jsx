@@ -25,6 +25,19 @@ const Dashboard = () => {
 			const data = await response.json();
 			if (response.ok) {
 				console.log(data.message);
+				fetch("/api/dashboard")
+					.then((res) => {
+						if (!res.ok) {
+							throw new Error(res.message);
+						}
+						return res.json();
+					})
+					.then((data) => {
+						console.log(data);
+					})
+					.catch((err) => {
+						console.error(err);
+					});
 			} else {
 				handleSignOut();
 			}

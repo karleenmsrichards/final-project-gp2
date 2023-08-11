@@ -29,6 +29,9 @@ router.get("/clientId", (_, res) => {
 
 router.post("/validation", async (req, res) => {
 	const { token, role } = req.body;
+	if (!token) {
+		res.status(400).json({ message: "Missing token!" });
+	}
 	try {
 		const client = new OAuth2Client();
 		const ticket = await client.verifyIdToken({
@@ -44,9 +47,9 @@ router.post("/validation", async (req, res) => {
 		} else {
 			persistLatestToken(user.id, token);
 		}
-		res.status(200).json({ message: "success" });
+		res.status(200).json({ message: "success!" });
 	} catch (error) {
-		res.status(400).json({ error: "Invalid token" });
+		res.status(500).json({ message: "Invalid token!" });
 	}
 });
 
@@ -104,6 +107,15 @@ router.post("/create-provider", async (req, res) => {
 		/* eslint-disable-next-line */
 		console.log(error);
 		res.status(500).json({ error: error });
+	}
+});
+
+router.get("/dashboard", async (req, res) => {
+	try {
+		const providers = await Provider.findAll();
+		res.status(200).json(providers);
+	} catch (error) {
+		res.status(500).json(error);
 	}
 });
 

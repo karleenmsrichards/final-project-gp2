@@ -1,11 +1,4 @@
-import {
-	Container,
-	Button,
-	Typography,
-	Box,
-	Grid,
-	CardMedia,
-} from "@mui/material";
+import { Button, Typography, Box, Grid, CardMedia } from "@mui/material";
 import { useEffect, useState } from "react";
 import useAuth from "../customHooks/useAuth";
 

@@ -73,8 +73,7 @@ function NewsletterSignup() {
 							right: 0,
 							bottom: 0,
 							width: "100%",
-							background:
-								"",
+							background: "",
 						}}
 					/>
 					<Box

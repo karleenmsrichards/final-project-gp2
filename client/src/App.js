@@ -8,7 +8,6 @@ import Subscription from "./pages/Subscription";
 import SignUpForm from "./pages/SignUpForm";
 import useAuth from "./customHooks/useAuth";
 
-
 const App = () => {
 	const { isLoggedIn } = useAuth();
 	return (

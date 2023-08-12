@@ -9,7 +9,6 @@ import SignUpForm from "./pages/SignUpForm";
 import useAuth from "./customHooks/useAuth";
 import Newsletter from "./Components/Newsletter";
 
-
 const App = () => {
 	const { isLoggedIn } = useAuth();
 	return (

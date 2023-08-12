@@ -19,7 +19,7 @@ function NewsletterSignup() {
 		setOpen(false);
 	};
 	return (
-		<Container component="section" sx={{ mt: 10, display: "flex", mb:5 }}>
+		<Container component="section" sx={{ mt: 10, display: "flex", mb: 5 }}>
 			<Grid container>
 				<Grid item xs={12} md={6} sx={{ zIndex: 1 }}>
 					<Box

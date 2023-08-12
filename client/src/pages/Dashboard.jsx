@@ -1,4 +1,11 @@
-import { Container, Button, Typography, Box, Grid, CardMedia } from "@mui/material";
+import {
+	Container,
+	Button,
+	Typography,
+	Box,
+	Grid,
+	CardMedia,
+} from "@mui/material";
 import { useEffect, useState } from "react";
 import useAuth from "../customHooks/useAuth";
 
@@ -10,6 +17,7 @@ const Dashboard = () => {
 		isLoggedIn,
 		setIsLoggedIn,
 		getJwtToken,
+		handleDeleteProfile,
 	} = useAuth();
 
 	const sendingToken = async (token) => {

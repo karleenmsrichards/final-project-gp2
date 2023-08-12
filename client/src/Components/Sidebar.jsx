@@ -18,20 +18,20 @@ import useAuth from "../customHooks/useAuth";
 export default function TemporaryDrawer() {
 	const navigate = useNavigate();
 	const { handleSignOut, handleDeleteProfile } = useAuth();
-	const [state, setState] = React.useState({
-		right: false,
-	});
+	const [right, setRight] = React.useState(
+		false
+	);
 
-	const toggleDrawer = (open) => (event) => {
-		if (
-			event.type === "keydown" &&
-			(event.key === "Tab" || event.key === "Shift")
-		) {
-			return;
-		}
+	function toggleDrawer(open) {
+		return (event) => {
+			if (event.type === "keydown" &&
+				(event.key === "Tab" || event.key === "Shift")) {
+				return;
+			}
 
-		setState({ ...state, right: open });
-	};
+			setRight(  open );
+		};
+	}
 
 	const getIconByLabel = (label) => {
 		switch (label) {
@@ -90,7 +90,7 @@ export default function TemporaryDrawer() {
 	return (
 		<>
 			<Avatar onClick={toggleDrawer(true)} alt="profile picture" />
-			<Drawer anchor="right" open={state.right} onClose={toggleDrawer(false)}>
+			<Drawer anchor="right" open={right} onClose={toggleDrawer(false)}>
 				{list()}
 			</Drawer>
 		</>

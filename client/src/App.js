@@ -7,6 +7,8 @@ import Dashboard from "./pages/Dashboard";
 import Subscription from "./pages/Subscription";
 import SignUpForm from "./pages/SignUpForm";
 import useAuth from "./customHooks/useAuth";
+import Newsletter from "./Components/Newsletter";
+
 
 const App = () => {
 	const { isLoggedIn } = useAuth();
@@ -20,6 +22,7 @@ const App = () => {
 				<Route path="/contact-us" element={<ContactUs />} />
 				<Route path="/subscription" element={<Subscription />} />
 			</Routes>
+			<Newsletter />
 			<Footer />
 		</div>
 	);

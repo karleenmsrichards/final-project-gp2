@@ -33,7 +33,11 @@ const Header = () => {
 				}}
 				px={{ xs: 2, md: 5 }}
 			>
-				<Typography variant="h5" sx={{ fontWeight: "bolder", pt: 1 }}>
+				<Typography
+					variant="h5"
+					sx={{ fontWeight: "bolder", pt: 1, cursor: "pointer" }}
+					onClick={() => navigate("/")}
+				>
 					BOOKME
 				</Typography>
 				<Tabs

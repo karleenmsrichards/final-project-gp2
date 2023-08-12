@@ -18,18 +18,18 @@ import useAuth from "../customHooks/useAuth";
 export default function TemporaryDrawer() {
 	const navigate = useNavigate();
 	const { handleSignOut, handleDeleteProfile } = useAuth();
-	const [right, setRight] = React.useState(
-		false
-	);
+	const [right, setRight] = React.useState(false);
 
 	function toggleDrawer(open) {
 		return (event) => {
-			if (event.type === "keydown" &&
-				(event.key === "Tab" || event.key === "Shift")) {
+			if (
+				event.type === "keydown" &&
+				(event.key === "Tab" || event.key === "Shift")
+			) {
 				return;
 			}
 
-			setRight(  open );
+			setRight(open);
 		};
 	}
 

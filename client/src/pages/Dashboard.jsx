@@ -1,4 +1,4 @@
-import { Button, Typography, Box, Grid, CardMedia } from "@mui/material";
+import { Container, Button, Typography, Box, Grid, CardMedia } from "@mui/material";
 import { useEffect, useState } from "react";
 import useAuth from "../customHooks/useAuth";
 
@@ -6,11 +6,9 @@ const Dashboard = () => {
 	const [providers, setProviders] = useState([]);
 	const {
 		user,
-		handleSignUp,
 		handleSignOut,
 		isLoggedIn,
 		setIsLoggedIn,
-		handleDeleteProfile,
 		getJwtToken,
 	} = useAuth();
 
@@ -230,10 +228,7 @@ const Dashboard = () => {
 					</Grid>
 				</>
 			) : (
-				<>
-					<Typography>You need Log In</Typography>
-					<Button onClick={handleSignUp}>Log in</Button>
-				</>
+				<Typography>You need Log In</Typography>
 			)}
 		</Box>
 	);

@@ -3,13 +3,8 @@ import { useEffect } from "react";
 import useAuth from "../customHooks/useAuth";
 
 const Dashboard = () => {
-	const {
-		user,
-		handleSignOut,
-		isLoggedIn,
-		setIsLoggedIn,
-		getJwtToken,
-	} = useAuth();
+	const { user, handleSignOut, isLoggedIn, setIsLoggedIn, getJwtToken } =
+		useAuth();
 
 	const sendingToken = async (token) => {
 		try {
@@ -50,9 +45,9 @@ const Dashboard = () => {
 	return (
 		<Container sx={{ width: "400px", height: "200px", marginTop: "200px" }}>
 			{isLoggedIn ? (
-					<Typography> Hello {user.name}</Typography>
+				<Typography> Hello {user.name}</Typography>
 			) : (
-					<Typography>You need Log In</Typography>
+				<Typography>You need Log In</Typography>
 			)}
 		</Container>
 	);

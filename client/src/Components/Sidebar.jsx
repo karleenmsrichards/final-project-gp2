@@ -16,80 +16,83 @@ import { useNavigate } from "react-router-dom";
 import useAuth from "../customHooks/useAuth";
 
 export default function TemporaryDrawer() {
-  const navigate = useNavigate();
-  const { handleSignOut, handleDeleteProfile } = useAuth();
-  const [state, setState] = React.useState({
-    right: false,
-  });
+	const navigate = useNavigate();
+	const { handleSignOut, handleDeleteProfile } = useAuth();
+	const [state, setState] = React.useState({
+		right: false,
+	});
 
-  const toggleDrawer = (open) => (event) => {
-    if (event.type === "keydown" && (event.key === "Tab" || event.key === "Shift")) {
-      return;
-    }
+	const toggleDrawer = (open) => (event) => {
+		if (
+			event.type === "keydown" &&
+			(event.key === "Tab" || event.key === "Shift")
+		) {
+			return;
+		}
 
-    setState({ ...state, right: open });
-  };
+		setState({ ...state, right: open });
+	};
 
-  const getIconByLabel = (label) => {
-    switch (label) {
-      case "Dashboard":
-        return <DashboardIcon />;
-      case "Home":
-        return <HomeIcon />;
-      case "Delete Account":
-        return <DeleteIcon />;
-      case "Sign Out":
-        return <SignOutIcon />;
-      default:
-        return null;
-    }
-  };
+	const getIconByLabel = (label) => {
+		switch (label) {
+			case "Dashboard":
+				return <DashboardIcon />;
+			case "Home":
+				return <HomeIcon />;
+			case "Delete Account":
+				return <DeleteIcon />;
+			case "Sign Out":
+				return <SignOutIcon />;
+			default:
+				return null;
+		}
+	};
 
-  const list = () => (
-    <Box
-      sx={{ width: 250 }}
-      role="presentation"
-      onClick={toggleDrawer(false)}
-      onKeyDown={toggleDrawer(false)}
-    >
-      <Divider />
-      <List>
-          <>
-          <ListItem key="Dashboard" disablePadding>
-            <ListItemButton onClick={()=>navigate("/dashboard")}>
-              <ListItemIcon>{getIconByLabel("Dashboard")}</ListItemIcon>
-              <ListItemText primary={"Dashboard"} />
-            </ListItemButton>
-          </ListItem>
-           <ListItem key="Home" disablePadding>
-           <ListItemButton onClick={()=>navigate("/")}>
-             <ListItemIcon>{getIconByLabel("Home")}</ListItemIcon>
-             <ListItemText primary="Home" />
-           </ListItemButton>
-         </ListItem>
-           <ListItem key="Delete Account" disablePadding>
-           <ListItemButton onClick={handleDeleteProfile}>
-             <ListItemIcon>{getIconByLabel("Delete Account")}</ListItemIcon>
-             <ListItemText primary="Delete Account" />
-           </ListItemButton>
-         </ListItem>
-           <ListItem key="Sign Out" disablePadding>
-           <ListItemButton onClick={handleSignOut}>
-             <ListItemIcon>{getIconByLabel("Sign Out")}</ListItemIcon>
-             <ListItemText primary="Sign Out" />
-           </ListItemButton>
-         </ListItem>
-         </>
-      </List>
-    </Box>
-  );
+	const list = () => (
+		<Box
+			sx={{ width: 250 }}
+			role="presentation"
+			onClick={toggleDrawer(false)}
+			onKeyDown={toggleDrawer(false)}
+		>
+			<Divider />
+			<List>
+				<>
+					<ListItem key="Dashboard" disablePadding>
+						<ListItemButton onClick={() => navigate("/dashboard")}>
+							<ListItemIcon>{getIconByLabel("Dashboard")}</ListItemIcon>
+							<ListItemText primary={"Dashboard"} />
+						</ListItemButton>
+					</ListItem>
+					<ListItem key="Home" disablePadding>
+						<ListItemButton onClick={() => navigate("/")}>
+							<ListItemIcon>{getIconByLabel("Home")}</ListItemIcon>
+							<ListItemText primary="Home" />
+						</ListItemButton>
+					</ListItem>
+					<ListItem key="Delete Account" disablePadding>
+						<ListItemButton onClick={handleDeleteProfile}>
+							<ListItemIcon>{getIconByLabel("Delete Account")}</ListItemIcon>
+							<ListItemText primary="Delete Account" />
+						</ListItemButton>
+					</ListItem>
+					<ListItem key="Sign Out" disablePadding>
+						<ListItemButton onClick={handleSignOut}>
+							<ListItemIcon>{getIconByLabel("Sign Out")}</ListItemIcon>
+							<ListItemText primary="Sign Out" />
+						</ListItemButton>
+					</ListItem>
+				</>
+			</List>
+		</Box>
+	);
 
-  return (
-    <>
-      <Avatar onClick={toggleDrawer(true)} alt="profile picture" />
-      <Drawer anchor="right" open={state.right} onClose={toggleDrawer(false)}>
-        {list()}
-      </Drawer>
-    </>
-  );
+	return (
+		<>
+			<Avatar onClick={toggleDrawer(true)} alt="profile picture" />
+			<Drawer anchor="right" open={state.right} onClose={toggleDrawer(false)}>
+				{list()}
+			</Drawer>
+		</>
+	);
 }

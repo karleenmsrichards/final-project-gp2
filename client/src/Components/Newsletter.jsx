@@ -74,7 +74,7 @@ function NewsletterSignup() {
 							bottom: 0,
 							width: "100%",
 							background:
-								"url(/static/themes/onepirate/productCTAImageDots.png)",
+								"",
 						}}
 					/>
 					<Box

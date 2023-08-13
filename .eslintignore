@@ -1,2 +1,2 @@
 dist/
-server/sequelize/migrations
+server/sequelize

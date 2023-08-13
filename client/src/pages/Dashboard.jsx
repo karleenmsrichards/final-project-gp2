@@ -1,4 +1,4 @@
-import { Container, Typography } from "@mui/material";
+import { Typography, Box } from "@mui/material";
 import { useEffect } from "react";
 import useAuth from "../customHooks/useAuth";
 
@@ -21,19 +21,6 @@ const Dashboard = () => {
 			const data = await response.json();
 			if (response.ok) {
 				console.log(data.message);
-				fetch("/api/dashboard")
-					.then((res) => {
-						if (!res.ok) {
-							throw new Error(res.message);
-						}
-						return res.json();
-					})
-					.then((data) => {
-						console.log(data);
-					})
-					.catch((err) => {
-						console.error(err);
-					});
 			} else {
 				handleSignOut();
 			}
@@ -53,16 +40,18 @@ const Dashboard = () => {
 			setIsLoggedIn(false);
 		}
 		/* eslint-disable-next-line */ //// missing dependency ////////
-	}, [setIsLoggedIn]);
+	}, [isLoggedIn]);
 
 	return (
-		<Container sx={{ width: "400px", height: "200px", marginTop: "200px" }}>
+		<Box sx={{ marginX: { xs: 1, sm: 5, md: 10, lg: 15, xl: 20 }, my: 5 }}>
 			{isLoggedIn ? (
-				<Typography> Hello {user.name}</Typography>
+				<>
+					<Typography variant="h6">Hello {user?.name}</Typography>
+				</>
 			) : (
 				<Typography>You need Log In</Typography>
 			)}
-		</Container>
+		</Box>
 	);
 };
 

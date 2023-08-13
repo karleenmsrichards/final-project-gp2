@@ -136,7 +136,7 @@ router.post("/create-provider", async (req, res) => {
 	}
 });
 
-router.get("/dashboard", async (req, res) => {
+router.get("/find", async (req, res) => {
 	try {
 		const providers = await Provider.findAll();
 		res.status(200).json(providers);

@@ -1,5 +1,5 @@
 import { AppBar, Box, Button, Tab, Tabs, Typography } from "@mui/material";
-import React from "react";
+import { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import useAuth from "../customHooks/useAuth";
 import Sidebar from "./Sidebar";
@@ -8,13 +8,16 @@ const Header = () => {
 	const navigate = useNavigate();
 	const location = useLocation();
 	const { handleSignUp, isLoggedIn } = useAuth();
-	const [value, setValue] = React.useState(0);
+	const [value, setValue] = useState(0);
 
 	const homePageCode = 0;
-	const subscriptionPageCode = 2;
+	const findPageCode = 1;
+	const subscriptionPageCode = 3;
 	const handleChange = (e, value) => {
 		if (value === homePageCode) {
 			navigate("/");
+		} else if (value === findPageCode) {
+			navigate("/find");
 		} else if (value === subscriptionPageCode) {
 			navigate("/subscription");
 		}
@@ -33,13 +36,6 @@ const Header = () => {
 				}}
 				px={{ xs: 2, md: 5 }}
 			>
-				<Typography
-					variant="h5"
-					sx={{ fontWeight: "bolder", pt: 1, cursor: "pointer" }}
-					onClick={() => navigate("/")}
-				>
-					BOOKME
-				</Typography>
 				<Tabs
 					value={value}
 					onChange={handleChange}
@@ -49,13 +45,20 @@ const Header = () => {
 						borderColor: "divider",
 						flexGrow: 1,
 					}}
+					TabIndicatorProps={{ style: { backgroundColor: "white" } }}
 					selectionFollowsFocus
 				>
-					<Tab label="Find" sx={{ color: "black" }} />
-					<Tab label="Book" sx={{ color: "black" }} />
-					{isLoggedIn && (
-						<Tab label="Become supplier" sx={{ color: "black" }} />
-					)}
+					<Tab
+						label="BOOKME"
+						sx={{
+							fontWeight: "bolder",
+							fontSize: 25,
+							color: "#000",
+						}}
+					/>
+					<Tab label="Find" sx={{ color: "#000" }} />
+					<Tab label="Book" sx={{ color: "#000" }} />
+					{isLoggedIn && <Tab label="Become supplier" sx={{ color: "#000" }} />}
 					{/* pending appContext decision */}
 					{/* {isLoggedIn && !isProvider && (
             <Tab
@@ -75,31 +78,14 @@ const Header = () => {
             />
           )} */}
 				</Tabs>
-				{location.pathname === "/" && (
-					<>
-						{!isLoggedIn ? (
-							<Box id="signInDiv" sx={{ mr: 1 }}>
-								<Button variant="contained" onClick={handleSignUp}>
-									Sign Up / Sign In
-								</Button>
-							</Box>
-						) : (
-							<Sidebar />
-						)}
-					</>
-				)}
-				{location.pathname === "/dashboard" && (
-					<>
-						{isLoggedIn ? (
-							<Sidebar />
-						) : (
-							<Box id="signInDiv" sx={{ mr: 1 }}>
-								<Button variant="contained" onClick={handleSignUp}>
-									Sign Up / Sign In
-								</Button>
-							</Box>
-						)}
-					</>
+				{!isLoggedIn ? (
+					<Box id="signInDiv" sx={{ mr: 1 }}>
+						<Button variant="contained" onClick={handleSignUp}>
+							Sign Up / Sign In
+						</Button>
+					</Box>
+				) : (
+					<Sidebar />
 				)}
 			</Box>
 		</AppBar>

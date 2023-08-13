@@ -89,7 +89,11 @@ export default function TemporaryDrawer() {
 
 	return (
 		<>
-			<Avatar onClick={toggleDrawer(true)} alt="profile picture" />
+			<Avatar
+				onClick={toggleDrawer(true)}
+				alt="profile picture"
+				sx={{ cursor: "pointer" }}
+			/>
 			<Drawer anchor="right" open={right} onClose={toggleDrawer(false)}>
 				{list()}
 			</Drawer>

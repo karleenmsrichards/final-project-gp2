@@ -7,15 +7,16 @@ import { AppContext } from "../App";
 
 const Header = () => {
 	const navigate = useNavigate();
-	const { user, isLoggedIn, isProvider, setIsProvider, providers } = useContext(AppContext);
+	const { user, isLoggedIn, isProvider, setIsProvider, providers } =
+		useContext(AppContext);
 	const { handleSignUp } = useAuth();
 	const [value, setValue] = useState(0);
 
 	useEffect(() => {
 		if (user && providers.filter((provider) => provider.id === user.id)) {
-		setIsProvider(true);
+			setIsProvider(true);
 		} else {
-		setIsProvider(false);
+			setIsProvider(false);
 		}
 	}, [user, providers, setIsProvider]);
 
@@ -25,20 +26,19 @@ const Header = () => {
 
 	const handleChange = (e, value) => {
 		if (value === homePageCode) {
-		navigate("/");
+			navigate("/");
 		} else if (value === findPageCode) {
-		navigate("/find");
+			navigate("/find");
 		} else if (value === updateProfileCode) {
-		navigate("/update-profile");
+			navigate("/update-profile");
 		} else if (value === "becomeProvider" && !isLoggedIn) {
-		alert("Please sign in to become a provider.");
+			alert("Please sign in to become a provider.");
 		} else if (value === "becomeProvider" && isLoggedIn) {
-		navigate("/sign-up");
+			navigate("/sign-up");
 		}
 
 		setValue(value);
 	};
-
 
 	return (
 		<AppBar sx={{ background: "white", color: "black", position: "static" }}>
@@ -76,12 +76,15 @@ const Header = () => {
 					<Tab label="Book" sx={{ color: "#000" }} />
 
 					<Tab
-					label={isLoggedIn && isProvider ? "Update Profile" : "Become a Provider"}
-					component="a"
-					sx={{ color: "black" }}
-					value={isLoggedIn && isProvider ? updateProfileCode : "becomeProvider"}
+						label={
+							isLoggedIn && isProvider ? "Update Profile" : "Become a Provider"
+						}
+						component="a"
+						sx={{ color: "black" }}
+						value={
+							isLoggedIn && isProvider ? updateProfileCode : "becomeProvider"
+						}
 					/>
-
 				</Tabs>
 				{!isLoggedIn ? (
 					<Box id="signInDiv" sx={{ mr: 1 }}>

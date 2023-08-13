@@ -4,11 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { AppContext } from "../App";
 
 const useAuth = () => {
-
-	const {
-		setUser,
-		clientId,
-		setIsLoggedIn } = useContext(AppContext);
+	const { setUser, clientId, setIsLoggedIn } = useContext(AppContext);
 
 	const navigate = useNavigate();
 

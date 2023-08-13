@@ -1,38 +1,39 @@
 import { Typography, Box } from "@mui/material";
-import { useCallback, useContext, useEffect  } from "react";
+import { useCallback, useContext, useEffect } from "react";
 import useAuth from "../customHooks/useAuth";
 import { AppContext } from "../App";
 
 const Dashboard = () => {
-	const {
-		user, isLoggedIn, setIsLoggedIn } = useContext(AppContext);
+	const { user, isLoggedIn, setIsLoggedIn } = useContext(AppContext);
 
-	const { handleSignOut, getJwtToken } =
-		useAuth();
+	const { handleSignOut, getJwtToken } = useAuth();
 
-		const sendingToken = useCallback(async (token) => {
+	const sendingToken = useCallback(
+		async (token) => {
 			try {
-			const response = await fetch("/api/validation", {
-				method: "POST",
-				headers: {
-				"Content-Type": "application/json",
-				},
-				body: JSON.stringify({
-				token,
-				role: "customer",
-				}),
-			});
-			const data = await response.json();
-			if (response.ok) {
-				console.log(data.message);
-			} else {
+				const response = await fetch("/api/validation", {
+					method: "POST",
+					headers: {
+						"Content-Type": "application/json",
+					},
+					body: JSON.stringify({
+						token,
+						role: "customer",
+					}),
+				});
+				const data = await response.json();
+				if (response.ok) {
+					console.log(data.message);
+				} else {
+					handleSignOut();
+				}
+			} catch (err) {
+				console.error(err);
 				handleSignOut();
 			}
-			} catch (err) {
-			console.error(err);
-			handleSignOut();
-			}
-		}, [handleSignOut]);
+		},
+		[handleSignOut]
+	);
 
 	useEffect(() => {
 		const token = getJwtToken();

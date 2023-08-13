@@ -1,11 +1,14 @@
 import { Box, Button, CardMedia, Grid } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect } from "react";
 import Typography from "../Mui-Components/Typography";
 import useAuth from "../customHooks/useAuth";
+import { AppContext } from "../App";
 
 const Find = () => {
-	const [providers, setProviders] = useState([]);
-	const { user, isLoggedIn, handleDeleteProfile } = useAuth();
+	const { isLoggedIn, providers, setProviders } = useContext(AppContext);
+
+	///////not sure why this is here
+	const { handleDeleteProfile } = useAuth();
 
 	useEffect(() => {
 		fetch("/api/find")
@@ -21,7 +24,7 @@ const Find = () => {
 			.catch((err) => {
 				console.error(err);
 			});
-	}, [isLoggedIn]);
+	}, [isLoggedIn, setProviders]);
 
 	return (
 		<Box sx={{ marginX: { xs: 1, sm: 5, md: 10, lg: 15, xl: 20 }, my: 5 }}>

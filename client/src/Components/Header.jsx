@@ -1,25 +1,42 @@
 import { AppBar, Box, Button, Tab, Tabs } from "@mui/material";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import useAuth from "../customHooks/useAuth";
 import Sidebar from "./Sidebar";
+import { AppContext } from "../App";
 
 const Header = () => {
 	const navigate = useNavigate();
-	const { handleSignUp, isLoggedIn } = useAuth();
+	const { user, isLoggedIn, isProvider, setIsProvider, providers } =
+		useContext(AppContext);
+	const { handleSignUp } = useAuth();
 	const [value, setValue] = useState(0);
+
+	useEffect(() => {
+		if (user && providers.filter((provider) => provider.id === user.id)) {
+			setIsProvider(true);
+		} else {
+			setIsProvider(false);
+		}
+	}, [user, providers, setIsProvider]);
 
 	const homePageCode = 0;
 	const findPageCode = 1;
-	const subscriptionPageCode = 3;
+	const updateProfileCode = 3;
+
 	const handleChange = (e, value) => {
 		if (value === homePageCode) {
 			navigate("/");
 		} else if (value === findPageCode) {
 			navigate("/find");
-		} else if (value === subscriptionPageCode) {
-			navigate("/subscription");
+		} else if (value === updateProfileCode) {
+			navigate("/update-profile");
+		} else if (value === "becomeProvider" && !isLoggedIn) {
+			alert("Please sign in to become a provider.");
+		} else if (value === "becomeProvider" && isLoggedIn) {
+			navigate("/sign-up");
 		}
+
 		setValue(value);
 	};
 
@@ -57,25 +74,17 @@ const Header = () => {
 					/>
 					<Tab label="Find" sx={{ color: "#000" }} />
 					<Tab label="Book" sx={{ color: "#000" }} />
-					{isLoggedIn && <Tab label="Become supplier" sx={{ color: "#000" }} />}
-					{/* pending appContext decision */}
-					{/* {isLoggedIn && !isProvider && (
-            <Tab
-              label="Become a Provider"
-              component="a"
 
-              sx={{ color: "black" }}
-            />
-          )}
-
-          {isLoggedIn && isProvider && (
-            <Tab
-              label="Update Provider Profile"
-              component="a"
-              href="/update-profile"
-              sx={{ color: "black" }}
-            />
-          )} */}
+					<Tab
+						label={
+							isLoggedIn && isProvider ? "Update Profile" : "Become a Provider"
+						}
+						component="a"
+						sx={{ color: "black" }}
+						value={
+							isLoggedIn && isProvider ? updateProfileCode : "becomeProvider"
+						}
+					/>
 				</Tabs>
 				{!isLoggedIn ? (
 					<Box id="signInDiv" sx={{ mr: 1 }}>

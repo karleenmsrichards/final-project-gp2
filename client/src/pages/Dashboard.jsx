@@ -1,34 +1,39 @@
 import { Typography, Box } from "@mui/material";
-import { useEffect } from "react";
+import { useCallback, useContext, useEffect } from "react";
 import useAuth from "../customHooks/useAuth";
+import { AppContext } from "../App";
 
 const Dashboard = () => {
-	const { user, handleSignOut, isLoggedIn, setIsLoggedIn, getJwtToken } =
-		useAuth();
+	const { user, isLoggedIn, setIsLoggedIn } = useContext(AppContext);
 
-	const sendingToken = async (token) => {
-		try {
-			const response = await fetch("/api/validation", {
-				method: "POST",
-				headers: {
-					"Content-Type": "application/json",
-				},
-				body: JSON.stringify({
-					token,
-					role: "customer",
-				}),
-			});
-			const data = await response.json();
-			if (response.ok) {
-				console.log(data.message);
-			} else {
+	const { handleSignOut, getJwtToken } = useAuth();
+
+	const sendingToken = useCallback(
+		async (token) => {
+			try {
+				const response = await fetch("/api/validation", {
+					method: "POST",
+					headers: {
+						"Content-Type": "application/json",
+					},
+					body: JSON.stringify({
+						token,
+						role: "customer",
+					}),
+				});
+				const data = await response.json();
+				if (response.ok) {
+					console.log(data.message);
+				} else {
+					handleSignOut();
+				}
+			} catch (err) {
+				console.error(err);
 				handleSignOut();
 			}
-		} catch (err) {
-			console.error(err);
-			handleSignOut();
-		}
-	};
+		},
+		[handleSignOut]
+	);
 
 	useEffect(() => {
 		const token = getJwtToken();
@@ -39,8 +44,7 @@ const Dashboard = () => {
 			console.log("Token not found");
 			setIsLoggedIn(false);
 		}
-		/* eslint-disable-next-line */ //// missing dependency ////////
-	}, [isLoggedIn]);
+	}, [isLoggedIn, setIsLoggedIn, getJwtToken, sendingToken]);
 
 	return (
 		<Box sx={{ marginX: { xs: 1, sm: 5, md: 10, lg: 15, xl: 20 }, my: 5 }}>

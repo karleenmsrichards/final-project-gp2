@@ -64,6 +64,7 @@
 		"react": "^18.2.0",
 		"react-dom": "^18.2.0",
 		"react-router-dom": "^6.14.2",
+		"sequelize-cli": "^6.6.1",
 		"style-loader": "^3.3.3",
 		"wait-on": "^7.0.1",
 		"webpack": "^5.87.0",
@@ -85,7 +86,9 @@
 		"helmet": "^7.0.0",
 		"jwt-decode": "^3.1.2",
 		"morgan": "^1.10.0",
-		"pg": "^8.11.0",
+		"pg": "^8.11.2",
+		"pg-hstore": "^2.3.4",
+		"sequelize": "^6.32.1",
 		"styled-components": "^5.3.11",
 		"winston": "^3.9.0"
 	},

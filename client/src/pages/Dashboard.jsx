@@ -1,14 +1,10 @@
-import { Container, Button, Typography } from "@mui/material";
+import { Typography, Box } from "@mui/material";
 import { useEffect } from "react";
 import useAuth from "../customHooks/useAuth";
 
 const Dashboard = () => {
-	const { user, handleSignUp, handleSignOut, isLoggedIn, setIsLoggedIn } =
+	const { user, handleSignOut, isLoggedIn, setIsLoggedIn, getJwtToken } =
 		useAuth();
-
-	function getJwtToken() {
-		return localStorage.getItem("jwtToken");
-	}
 
 	const sendingToken = async (token) => {
 		try {
@@ -19,6 +15,7 @@ const Dashboard = () => {
 				},
 				body: JSON.stringify({
 					token,
+					role: "customer",
 				}),
 			});
 			const data = await response.json();
@@ -42,21 +39,19 @@ const Dashboard = () => {
 			console.log("Token not found");
 			setIsLoggedIn(false);
 		}
-	}, [setIsLoggedIn]);
+		/* eslint-disable-next-line */ //// missing dependency ////////
+	}, [isLoggedIn]);
 
 	return (
-		<Container sx={{ width: "400px", height: "200px", marginTop: "200px" }}>
+		<Box sx={{ marginX: { xs: 1, sm: 5, md: 10, lg: 15, xl: 20 }, my: 5 }}>
 			{isLoggedIn ? (
 				<>
-					<Typography> Hello {user.name}</Typography>
+					<Typography variant="h6">Hello {user?.name}</Typography>
 				</>
 			) : (
-				<>
-					<Typography>You need Log In</Typography>
-					<Button onClick={handleSignUp}>Log in</Button>
-				</>
+				<Typography>You need Log In</Typography>
 			)}
-		</Container>
+		</Box>
 	);
 };
 

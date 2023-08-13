@@ -1,0 +1,102 @@
+import * as React from "react";
+import Box from "@mui/material/Box";
+import Drawer from "@mui/material/Drawer";
+import List from "@mui/material/List";
+import Divider from "@mui/material/Divider";
+import ListItem from "@mui/material/ListItem";
+import ListItemButton from "@mui/material/ListItemButton";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import ListItemText from "@mui/material/ListItemText";
+import DashboardIcon from "@mui/icons-material/Dashboard";
+import HomeIcon from "@mui/icons-material/Home";
+import DeleteIcon from "@mui/icons-material/Delete";
+import SignOutIcon from "@mui/icons-material/ExitToApp";
+import Avatar from "@mui/material/Avatar";
+import { useNavigate } from "react-router-dom";
+import useAuth from "../customHooks/useAuth";
+
+export default function TemporaryDrawer() {
+	const navigate = useNavigate();
+	const { handleSignOut, handleDeleteProfile } = useAuth();
+	const [right, setRight] = React.useState(false);
+
+	function toggleDrawer(open) {
+		return (event) => {
+			if (
+				event.type === "keydown" &&
+				(event.key === "Tab" || event.key === "Shift")
+			) {
+				return;
+			}
+
+			setRight(open);
+		};
+	}
+
+	const getIconByLabel = (label) => {
+		switch (label) {
+			case "Dashboard":
+				return <DashboardIcon />;
+			case "Home":
+				return <HomeIcon />;
+			case "Delete Account":
+				return <DeleteIcon />;
+			case "Sign Out":
+				return <SignOutIcon />;
+			default:
+				return null;
+		}
+	};
+
+	const list = () => (
+		<Box
+			sx={{ width: 250 }}
+			role="presentation"
+			onClick={toggleDrawer(false)}
+			onKeyDown={toggleDrawer(false)}
+		>
+			<Divider />
+			<List>
+				<>
+					<ListItem key="Dashboard" disablePadding>
+						<ListItemButton onClick={() => navigate("/dashboard")}>
+							<ListItemIcon>{getIconByLabel("Dashboard")}</ListItemIcon>
+							<ListItemText primary={"Dashboard"} />
+						</ListItemButton>
+					</ListItem>
+					<ListItem key="Home" disablePadding>
+						<ListItemButton onClick={() => navigate("/")}>
+							<ListItemIcon>{getIconByLabel("Home")}</ListItemIcon>
+							<ListItemText primary="Home" />
+						</ListItemButton>
+					</ListItem>
+					<ListItem key="Delete Account" disablePadding>
+						<ListItemButton onClick={handleDeleteProfile}>
+							<ListItemIcon>{getIconByLabel("Delete Account")}</ListItemIcon>
+							<ListItemText primary="Delete Account" />
+						</ListItemButton>
+					</ListItem>
+					<ListItem key="Sign Out" disablePadding>
+						<ListItemButton onClick={handleSignOut}>
+							<ListItemIcon>{getIconByLabel("Sign Out")}</ListItemIcon>
+							<ListItemText primary="Sign Out" />
+						</ListItemButton>
+					</ListItem>
+				</>
+			</List>
+		</Box>
+	);
+
+	return (
+		<>
+			<Avatar
+				onClick={toggleDrawer(true)}
+				alt="profile picture"
+				sx={{ cursor: "pointer" }}
+			/>
+			<Drawer anchor="right" open={right} onClose={toggleDrawer(false)}>
+				{list()}
+			</Drawer>
+		</>
+	);
+}

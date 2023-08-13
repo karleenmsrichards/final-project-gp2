@@ -8,6 +8,11 @@ const useAuth = () => {
 	const [user, setUser] = useState(null);
 	const [clientId, setClientId] = useState("");
 	const [isLoggedIn, setIsLoggedIn] = useState(false);
+	const [isProvider, setIsProvider] = useState(false);
+
+	function getJwtToken() {
+		return localStorage.getItem("jwtToken");
+	}
 
 	function handleSignUp() {
 		/* global google */
@@ -30,17 +35,36 @@ const useAuth = () => {
 
 	function handleCallbackResponse(response) {
 		if (response && response.credential) {
-			// console.log("Encoded JWT ID token: " + response.credential);
-			let userObject = jwtDecode(response.credential);
-			// console.log(userObject);
 			localStorage.setItem("jwtToken", response.credential);
-			setIsLoggedIn(true); // Update isLoggedIn to true after successful login
+			setIsLoggedIn(true);
 			navigate("/dashboard");
 		} else {
 			console.error("Error handling callback response:", response);
 		}
 	}
-
+	const handleDeleteProfile = async () => {
+		try {
+			const token = getJwtToken();
+			const response = await fetch("/api/delete-profile", {
+				method: "DELETE",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify({
+					token,
+				}),
+			});
+			const data = await response.json();
+			if (response.ok) {
+				alert(data.message);
+				handleSignOut();
+			} else {
+				console.log(data.error);
+			}
+		} catch (error) {
+			console.error("An error occurred:", error);
+		}
+	};
 	useEffect(() => {
 		async function fetchClientId() {
 			try {
@@ -62,18 +86,28 @@ const useAuth = () => {
 
 			if (userObject.exp > currentTime) {
 				setUser(userObject);
-				setIsLoggedIn(true); // Update isLoggedIn to true if valid token is present
+				setIsLoggedIn(true);
 			} else {
 				setUser(null);
 				localStorage.removeItem("jwtToken");
-				setIsLoggedIn(false); // Update isLoggedIn to false if token is expired
+				setIsLoggedIn(false);
 			}
 		} else {
-			setIsLoggedIn(false); // Update isLoggedIn to false if no token is found
+			setIsLoggedIn(false);
 		}
 	}, [navigate]);
 
-	return { user, handleSignUp, handleSignOut, isLoggedIn, setIsLoggedIn };
+	return {
+		user,
+		handleSignUp,
+		handleSignOut,
+		isLoggedIn,
+		setIsLoggedIn,
+		isProvider,
+		setIsProvider,
+		handleDeleteProfile,
+		getJwtToken,
+	};
 };
 
 export default useAuth;

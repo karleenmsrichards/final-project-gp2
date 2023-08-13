@@ -1,14 +1,16 @@
-import { useState, useEffect } from "react";
+import { useContext, useEffect } from "react";
 import jwtDecode from "jwt-decode";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { AppContext } from "../App";
 
 const useAuth = () => {
+
+	const {
+		setUser,
+		clientId,
+		setIsLoggedIn } = useContext(AppContext);
+
 	const navigate = useNavigate();
-	const [user, setUser] = useState(null);
-	const [clientId, setClientId] = useState("");
-	const [isLoggedIn, setIsLoggedIn] = useState(false);
-	const [isProvider, setIsProvider] = useState(false);
 
 	function getJwtToken() {
 		return localStorage.getItem("jwtToken");
@@ -35,8 +37,10 @@ const useAuth = () => {
 
 	function handleCallbackResponse(response) {
 		if (response && response.credential) {
+			console.log(response.credential);
 			localStorage.setItem("jwtToken", response.credential);
 			setIsLoggedIn(true);
+			document.getElementById("signInDiv").hidden = true;
 			navigate("/dashboard");
 		} else {
 			console.error("Error handling callback response:", response);
@@ -65,18 +69,18 @@ const useAuth = () => {
 			console.error("An error occurred:", error);
 		}
 	};
-	useEffect(() => {
-		async function fetchClientId() {
-			try {
-				const response = await axios.get("/api/clientId");
-				const { clientId } = response.data;
-				setClientId(clientId);
-			} catch (error) {
-				console.error("Error fetching client ID:", error);
-			}
-		}
-		fetchClientId();
-	}, []);
+	// useEffect(() => {
+	// 	async function fetchClientId() {
+	// 		try {
+	// 			const response = await axios.get("/api/clientId");
+	// 			const { clientId } = response.data;
+	// 			setClientId(clientId);
+	// 		} catch (error) {
+	// 			console.error("Error fetching client ID:", error);
+	// 		}
+	// 	}
+	// 	fetchClientId();
+	// }, [ setClientId ]);
 
 	useEffect(() => {
 		const token = localStorage.getItem("jwtToken");
@@ -95,16 +99,11 @@ const useAuth = () => {
 		} else {
 			setIsLoggedIn(false);
 		}
-	}, [navigate]);
+	}, [navigate, setIsLoggedIn, setUser]);
 
 	return {
-		user,
 		handleSignUp,
 		handleSignOut,
-		isLoggedIn,
-		setIsLoggedIn,
-		isProvider,
-		setIsProvider,
 		handleDeleteProfile,
 		getJwtToken,
 	};

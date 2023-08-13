@@ -1,12 +1,11 @@
-import { AppBar, Box, Button, Tab, Tabs, Typography } from "@mui/material";
+import { AppBar, Box, Button, Tab, Tabs } from "@mui/material";
 import { useState } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import useAuth from "../customHooks/useAuth";
 import Sidebar from "./Sidebar";
 
 const Header = () => {
 	const navigate = useNavigate();
-	const location = useLocation();
 	const { handleSignUp, isLoggedIn } = useAuth();
 	const [value, setValue] = useState(0);
 
@@ -45,7 +44,7 @@ const Header = () => {
 						borderColor: "divider",
 						flexGrow: 1,
 					}}
-					TabIndicatorProps={{ style: { backgroundColor: "white" } }}
+					TabIndicatorProps={{ style: { backgroundColor: "#fff" } }}
 					selectionFollowsFocus
 				>
 					<Tab

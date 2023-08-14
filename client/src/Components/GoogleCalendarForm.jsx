@@ -48,7 +48,7 @@ const GoogleCalendarForm = ({ userId }) => {
 					Step 1: Create a Google Appointment Schedule
 				</Typography>
 				<Link
-					href="https://support.google.com/calendar/answer/10733297?hl=en&co=GENIE.Platform%3DDesktop"
+					href="https://support.google.com/calendar/answer/10729749?hl=en"
 					target="_blank"
 					rel="noopener noreferrer"
 				>
@@ -60,7 +60,7 @@ const GoogleCalendarForm = ({ userId }) => {
 					Step 2: Find your Booking Page Embed Code
 				</Typography>
 				<Link
-					href="https://support.google.com/calendar/answer/10729749?hl=en"
+					href="https://support.google.com/calendar/answer/10733297?hl=en&co=GENIE.Platform%3DDesktop"
 					target="_blank"
 					rel="noopener noreferrer"
 				>
@@ -69,13 +69,13 @@ const GoogleCalendarForm = ({ userId }) => {
 			</Box>
 			<Box mt={4}>
 				<Typography variant="subtitle1" gutterBottom>
-					Step 3: Add your Booking Page Embed Code
+					Step 3: Add your Inline Booking Page Embed Code
 				</Typography>
 			</Box>
 			<form onSubmit={handleSubmit}>
 				<Box mt={3}>
 					<TextField
-						label="Booking Page Embed Code"
+						label="Inline Booking Page Embed Code"
 						variant="outlined"
 						name="userEmbedCode"
 						value={userEmbedCode}
@@ -84,7 +84,7 @@ const GoogleCalendarForm = ({ userId }) => {
 						multiline
 						rows={4}
 						required
-						aria-label="Booking Page Embed Code"
+						aria-label="Inline Booking Page Embed Code"
 					/>
 				</Box>
 				<Box mt={2}>

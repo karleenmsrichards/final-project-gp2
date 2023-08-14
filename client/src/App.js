@@ -21,12 +21,27 @@ const App = () => {
 	const [isProvider, setIsProvider] = useState(false);
 
 	useEffect(() => {
+		fetch("/api/find")
+			.then((res) => {
+				if (!res.ok) {
+					throw new Error(res.message);
+				}
+				return res.json();
+			})
+			.then((data) => {
+				setProviders(data);
+			})
+			.catch((err) => {
+				console.error(err);
+			});
+	}, [isLoggedIn, setProviders]);
+
+	useEffect(() => {
 		async function fetchClientId() {
 			try {
 				const response = await axios.get("/api/clientId");
 				const { clientId } = response.data;
 				setClientId(clientId);
-				console.log(clientId);
 			} catch (error) {
 				console.error("Error fetching client ID:", error);
 			}

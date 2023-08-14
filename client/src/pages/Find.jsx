@@ -1,36 +1,16 @@
 import { Box, Button, CardMedia, Grid } from "@mui/material";
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import Typography from "../Mui-Components/Typography";
-import useAuth from "../customHooks/useAuth";
 import { AppContext } from "../App";
 
 const Find = () => {
-	const { isLoggedIn, providers, setProviders } = useContext(AppContext);
-
-	///////not sure why this is here
-	const { handleDeleteProfile } = useAuth();
-
-	useEffect(() => {
-		fetch("/api/find")
-			.then((res) => {
-				if (!res.ok) {
-					throw new Error(res.message);
-				}
-				return res.json();
-			})
-			.then((data) => {
-				setProviders(data);
-			})
-			.catch((err) => {
-				console.error(err);
-			});
-	}, [isLoggedIn, setProviders]);
+	const { providers } = useContext(AppContext);
 
 	return (
 		<Box sx={{ marginX: { xs: 1, sm: 5, md: 10, lg: 15, xl: 20 }, my: 5 }}>
 			<Grid container spacing={3}>
 				{providers.map((eachProvider, index) => (
-					<Grid key={index} item xs={12}>
+					<Grid id={eachProvider.id} key={index} item xs={12}>
 						<Box
 							sx={{
 								display: "flex",

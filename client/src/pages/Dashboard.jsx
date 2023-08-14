@@ -1,13 +1,22 @@
-import { Typography, Box, Button } from "@mui/material";
-import { useCallback, useContext, useEffect } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
+import { Typography, Box, Container, Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import useAuth from "../customHooks/useAuth";
 import { AppContext } from "../App";
+import GoogleCalendarForm from "../Components/GoogleCalendarForm";
 
 const Dashboard = () => {
-	const { user, isLoggedIn, setIsLoggedIn } = useContext(AppContext);
-	const navigate = useNavigate();
+	const { user, isLoggedIn, setIsLoggedIn, providers } = useContext(AppContext);
 	const { handleSignOut, getJwtToken } = useAuth();
+	const [showGoogleCalendarForm, setShowGoogleCalendarForm] = useState(false);
+
+	const handleToggleForm = () => {
+		setShowGoogleCalendarForm((prevState) => !prevState);
+	};
+
+	const loggedInProvider = providers.find(
+		(provider) => provider.email === user?.email
+	);
 
 	const sendingToken = useCallback(
 		async (token) => {
@@ -48,15 +57,35 @@ const Dashboard = () => {
 	}, [isLoggedIn, setIsLoggedIn, getJwtToken, sendingToken]);
 
 	return (
-		<Box sx={{ marginX: { xs: 1, sm: 5, md: 10, lg: 15, xl: 20 }, my: 5 }}>
-			{isLoggedIn ? (
-				<>
-					<Typography variant="h6">Hello {user?.name}</Typography>
-				</>
-			) : (
-				<Typography>You need Log In</Typography>
+		<Container>
+			<Box sx={{ marginX: { xs: 1, sm: 5, md: 10, lg: 15, xl: 20 }, my: 5 }}>
+				{isLoggedIn ? (
+					<>
+						<Typography variant="h6">Hello {user?.name}</Typography>
+					</>
+				) : (
+					<Typography>You need Log In</Typography>
+				)}
+			</Box>
+
+			{loggedInProvider && (
+				<Box mt={2}>
+					<Button
+						type="button"
+						variant="contained"
+						color="primary"
+						style={{ backgroundColor: "#F3263B" }}
+						onClick={handleToggleForm}
+					>
+						{showGoogleCalendarForm ? "Close" : "Add Google Calendar"}
+					</Button>
+				</Box>
 			)}
-		</Box>
+
+			{showGoogleCalendarForm && (
+				<GoogleCalendarForm userId={loggedInProvider.user_id} />
+			)}
+		</Container>
 	);
 };
 

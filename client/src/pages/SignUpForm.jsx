@@ -51,6 +51,7 @@ const SignUpForm = () => {
 			if (error?.response?.data?.error) {
 				const errorMessage = error.response.data.error;
 				alert(`Error: ${errorMessage}`);
+				navigate("/");
 			} else {
 				alert("An error occurred while submitting the form.");
 			}

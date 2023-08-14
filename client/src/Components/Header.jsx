@@ -31,11 +31,11 @@ const Header = () => {
 		} else if (value === findPageCode) {
 			navigate("/find");
 		} else if (value === updateProfileCode) {
-			navigate("/update-profile");
+			navigate("/edit");
 		} else if (value === "becomeProvider" && !isLoggedIn) {
 			alert("Please sign in to become a provider.");
 		} else if (value === "becomeProvider" && isLoggedIn) {
-			navigate("/edit");
+			navigate("/sign-up");
 		}
 
 		setValue(value);

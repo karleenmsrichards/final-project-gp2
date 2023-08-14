@@ -2,39 +2,39 @@ import React from "react";
 import { Box, CardMedia, Typography } from "@mui/material";
 
 const CategoryCard = ({ title, imageSrc }) => (
-  <Box
-    sx={{
-      position: "relative",
-      width: "auto",
-      height: "100%",
-      borderRadius: "15px",
-    }}
-  >
-    <Typography
-      sx={{
-        position: "absolute",
-        bottom: "5px",
-        left: "10px",
-        backgroundColor: "white",
-        p: "5px 20px",
-        borderRadius: "50px",
-        border: "1px solid black",
-        fontSize: "15px",
-      }}
-    >
-      {title}
-    </Typography>
-    <CardMedia
-      component="img"
-      sx={{ borderRadius: "15px", height: "100%", width: "100%" }}
-      image={imageSrc}
-      alt=""
-    />
-  </Box>
+	<Box
+		sx={{
+			position: "relative",
+			width: "auto",
+			height: "100%",
+			borderRadius: "15px",
+		}}
+	>
+		<Typography
+			sx={{
+				position: "absolute",
+				bottom: "5px",
+				left: "10px",
+				backgroundColor: "white",
+				p: "5px 20px",
+				borderRadius: "50px",
+				border: "1px solid black",
+				fontSize: "15px",
+			}}
+		>
+			{title}
+		</Typography>
+		<CardMedia
+			component="img"
+			sx={{ borderRadius: "15px", height: "100%", width: "100%" }}
+			image={imageSrc}
+			alt=""
+		/>
+	</Box>
 );
 
 const Home = () => {
-  return (
+	return (
 		<Box
 			sx={{
 				display: "grid",

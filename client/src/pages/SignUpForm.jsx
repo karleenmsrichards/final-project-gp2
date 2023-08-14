@@ -6,7 +6,7 @@ import { AppContext } from "../App";
 
 const SignUpForm = () => {
 	const navigate = useNavigate();
-	const { user, setProviders, providers } = useContext(AppContext);
+	const { user, setProviders, providers, isProvider } = useContext(AppContext);
 
 	const [signUpData, setSignUpData] = useState({
 		firstName: null,
@@ -83,6 +83,7 @@ const SignUpForm = () => {
 
 	return (
 		<Container maxWidth="sm" style={{ margin: "100px auto" }}>
+			{!isProvider ?(
 			<form onSubmit={handleSubmit}>
 				<fieldset>
 					<Typography variant="h5" gutterBottom>
@@ -241,6 +242,8 @@ const SignUpForm = () => {
 					</Box>
 				</fieldset>
 			</form>
+			) : navigate("/*")
+			}
 		</Container>
 	);
 };

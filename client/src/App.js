@@ -9,6 +9,7 @@ import Subscription from "./pages/Subscription";
 import SignUpForm from "./pages/SignUpForm";
 import Find from "./pages/Find";
 import axios from "axios";
+import ProviderUtil from "./utils/ProviderUtil";
 
 export const AppContext = createContext(null);
 
@@ -25,13 +26,13 @@ const App = () => {
 				const response = await axios.get("/api/clientId");
 				const { clientId } = response.data;
 				setClientId(clientId);
-				console.log(clientId);
 			} catch (error) {
 				console.error("Error fetching client ID:", error);
 			}
 		}
 		fetchClientId();
-	}, []);
+		ProviderUtil("/api/find", setProviders);
+	}, [setProviders]);
 
 	const contextValue = {
 		user,

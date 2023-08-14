@@ -73,8 +73,6 @@ const SignUpForm = () => {
 		if (user) {
 			setSignUpData((prevData) => ({
 				...prevData,
-				firstName: user.given_name,
-				lastName: user.family_name,
 				email: user.email,
 				hourlyRate: 0,
 			}));
@@ -98,7 +96,6 @@ const SignUpForm = () => {
 							name="firstName"
 							value={signUpData.firstName}
 							onChange={handleChange}
-							disabled
 							fullWidth
 						/>
 					</Box>
@@ -111,7 +108,6 @@ const SignUpForm = () => {
 							name="lastName"
 							value={signUpData.lastName}
 							onChange={handleChange}
-							disabled
 							fullWidth
 						/>
 					</Box>
@@ -226,7 +222,6 @@ const SignUpForm = () => {
 							variant="outlined"
 							name="hourlyRate"
 							value={signUpData.hourlyRate}
-							disabled
 							fullWidth
 						/>
 					</Box>

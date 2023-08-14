@@ -34,7 +34,7 @@ const Header = () => {
 		} else if (value === "becomeProvider" && !isLoggedIn) {
 			alert("Please sign in to become a provider.");
 		} else if (value === "becomeProvider" && isLoggedIn) {
-			navigate("/sign-up");
+			navigate("/edit");
 		}
 
 		setValue(value);

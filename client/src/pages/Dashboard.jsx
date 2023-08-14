@@ -52,7 +52,6 @@ const Dashboard = () => {
 			{isLoggedIn ? (
 				<>
 					<Typography variant="h6">Hello {user?.name}</Typography>
-					<Button onClick={() => navigate("/edit")}>Edit</Button>
 				</>
 			) : (
 				<Typography>You need Log In</Typography>

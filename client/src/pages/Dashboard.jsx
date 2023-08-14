@@ -1,5 +1,6 @@
 import React, { useCallback, useContext, useEffect, useState } from "react";
 import { Typography, Box, Container, Button } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 import useAuth from "../customHooks/useAuth";
 import { AppContext } from "../App";
 import GoogleCalendarForm from "../Components/GoogleCalendarForm";
@@ -7,7 +8,6 @@ import GoogleCalendarForm from "../Components/GoogleCalendarForm";
 const Dashboard = () => {
 	const { user, isLoggedIn, setIsLoggedIn, providers } = useContext(AppContext);
 	const { handleSignOut, getJwtToken } = useAuth();
-
 	const [showGoogleCalendarForm, setShowGoogleCalendarForm] = useState(false);
 
 	const handleToggleForm = () => {

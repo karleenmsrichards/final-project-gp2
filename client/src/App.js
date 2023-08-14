@@ -9,6 +9,7 @@ import Subscription from "./pages/Subscription";
 import SignUpForm from "./pages/SignUpForm";
 import Find from "./pages/Find";
 import axios from "axios";
+import EditForm from "./pages/EditForm";
 
 export const AppContext = createContext(null);
 
@@ -72,6 +73,7 @@ const App = () => {
 					<Route path="/contact-us" element={<ContactUs />} />
 					<Route path="/subscription" element={<Subscription />} />
 					<Route path="/find" element={<Find />} />
+					<Route path="/edit" element={<EditForm />} />
 				</Routes>
 				<Footer />
 			</div>

@@ -6,7 +6,7 @@ import { TextField, Button, Container, Typography, Box } from "@mui/material";
 import { AppContext } from "../App";
 
 const EditForm = () => {
-  const [editData, setEditData] = useState({});
+	const [editData, setEditData] = useState({});
 	const navigate = useNavigate();
 	const { handleSignOut, getJwtToken } = useAuth();
 	const { user, setIsLoggedIn, isProvider } = useContext(AppContext);
@@ -27,10 +27,10 @@ const EditForm = () => {
 					});
 					const data = await response.json();
 					if (response.ok) {
-            setEditData(data);
-					}else{
-							throw new Error("Failed to update");
-          }
+						setEditData(data);
+					} else {
+						throw new Error("Failed to update");
+					}
 				} catch (error) {
 					console.error(error);
 				}
@@ -41,8 +41,6 @@ const EditForm = () => {
 			navigate("/");
 		}
 	};
-
-
 
 	const handleSubmit = async (event) => {
 		event.preventDefault();
@@ -55,7 +53,7 @@ const EditForm = () => {
 				body: JSON.stringify(editData),
 			});
 			const data = await response.json();
-      setEditData({});
+			setEditData({});
 			alert(data.message);
 			navigate("/dashboard");
 		} catch (error) {
@@ -73,7 +71,7 @@ const EditForm = () => {
 	};
 
 	useEffect(() => {
-        editHandler();
+		editHandler();
 	}, [user]);
 
 	return (

@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 import useAuth from "../customHooks/useAuth";
 import { AppContext } from "../App";
 
-
 const Dashboard = () => {
 	const { user, isLoggedIn, setIsLoggedIn } = useContext(AppContext);
 	const navigate = useNavigate();

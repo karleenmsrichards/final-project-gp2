@@ -33,7 +33,6 @@ const useAuth = () => {
 
 	function handleCallbackResponse(response) {
 		if (response && response.credential) {
-			console.log(response.credential);
 			localStorage.setItem("jwtToken", response.credential);
 			setIsLoggedIn(true);
 			document.getElementById("signInDiv").hidden = true;
@@ -65,18 +64,6 @@ const useAuth = () => {
 			console.error("An error occurred:", error);
 		}
 	};
-	// useEffect(() => {
-	// 	async function fetchClientId() {
-	// 		try {
-	// 			const response = await axios.get("/api/clientId");
-	// 			const { clientId } = response.data;
-	// 			setClientId(clientId);
-	// 		} catch (error) {
-	// 			console.error("Error fetching client ID:", error);
-	// 		}
-	// 	}
-	// 	fetchClientId();
-	// }, [ setClientId ]);
 
 	useEffect(() => {
 		const token = localStorage.getItem("jwtToken");

@@ -14,6 +14,7 @@ const Header = () => {
 
 	useEffect(() => {
 		if (user && providers.filter((provider) => provider.id === user.id)) {
+			console.log(user.id);
 			setIsProvider(true);
 		} else {
 			setIsProvider(false);
@@ -30,7 +31,7 @@ const Header = () => {
 		} else if (value === findPageCode) {
 			navigate("/find");
 		} else if (value === updateProfileCode) {
-			navigate("/update-profile");
+			navigate("/edit");
 		} else if (value === "becomeProvider" && !isLoggedIn) {
 			alert("Please sign in to become a provider.");
 		} else if (value === "becomeProvider" && isLoggedIn) {

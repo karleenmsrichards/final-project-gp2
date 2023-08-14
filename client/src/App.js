@@ -9,6 +9,7 @@ import Subscription from "./pages/Subscription";
 import SignUpForm from "./pages/SignUpForm";
 import Find from "./pages/Find";
 import axios from "axios";
+import EditForm from "./pages/EditForm";
 import ProviderUtil from "./utils/ProviderUtil";
 
 export const AppContext = createContext(null);
@@ -21,6 +22,10 @@ const App = () => {
 	const [isProvider, setIsProvider] = useState(false);
 
 	useEffect(() => {
+		ProviderUtil("/api/find", setProviders);
+	}, [setProviders]);
+
+	useEffect(() => {
 		async function fetchClientId() {
 			try {
 				const response = await axios.get("/api/clientId");
@@ -31,8 +36,7 @@ const App = () => {
 			}
 		}
 		fetchClientId();
-		ProviderUtil("/api/find", setProviders);
-	}, [setProviders]);
+	}, []);
 
 	const contextValue = {
 		user,
@@ -58,6 +62,7 @@ const App = () => {
 					<Route path="/contact-us" element={<ContactUs />} />
 					<Route path="/subscription" element={<Subscription />} />
 					<Route path="/find" element={<Find />} />
+					<Route path="/edit" element={<EditForm />} />
 				</Routes>
 				<Footer />
 			</div>

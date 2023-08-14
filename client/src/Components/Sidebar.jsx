@@ -21,11 +21,11 @@ export default function TemporaryDrawer() {
 	const { handleSignOut, handleDeleteProfile } = useAuth();
 	const { user } = useContext(AppContext);
 	const [right, setRight] = useState(false);
-	const [picture,setPicture]=useState("");
+	const [picture, setPicture] = useState("");
 
-	useEffect(()=>{
+	useEffect(() => {
 		setPicture(user?.picture);
-	},[user]);
+	}, [user]);
 
 	function toggleDrawer(open) {
 		return (event) => {
@@ -94,7 +94,7 @@ export default function TemporaryDrawer() {
 	);
 
 	return (
-			<>
+		<>
 			<Avatar
 				onClick={toggleDrawer(true)}
 				alt="profile picture"

@@ -55,7 +55,7 @@ const tiers = [
 const defaultTheme = createTheme();
 
 export default function Pricing() {
-	const { isProvider }=useContext(AppContext);
+	const { isProvider } = useContext(AppContext);
 	const navigate = useNavigate();
 
 	return (

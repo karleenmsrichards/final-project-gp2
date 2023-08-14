@@ -2,7 +2,7 @@ import { Box, Button } from "@mui/material";
 import Typography from "../Mui-Components/Typography";
 
 const RightSideCard = ({ eachProvider }) => {
-  return (
+	return (
 		<Box
 			sx={{
 				display: "flex",

@@ -50,32 +50,16 @@ const Footer = () => {
 				>
 					Help
 				</MaterialLink>
-				<MaterialLink
-					href="#"
-					underline="none"
-					sx={{ color: "black" }}
-				>
+				<MaterialLink href="#" underline="none" sx={{ color: "black" }}>
 					FAQ
 				</MaterialLink>
-				<MaterialLink
-					href="#"
-					underline="none"
-					sx={{ color: "black" }}
-				>
+				<MaterialLink href="#" underline="none" sx={{ color: "black" }}>
 					Customer
 				</MaterialLink>
-				<MaterialLink
-					href="#"
-					underline="none"
-					sx={{ color: "black" }}
-				>
+				<MaterialLink href="#" underline="none" sx={{ color: "black" }}>
 					How to guide
 				</MaterialLink>
-				<MaterialLink
-					href="#"
-					underline="none"
-					sx={{ color: "black" }}
-				>
+				<MaterialLink href="#" underline="none" sx={{ color: "black" }}>
 					Contact Us
 				</MaterialLink>
 			</Box>

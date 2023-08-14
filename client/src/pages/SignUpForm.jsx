@@ -1,4 +1,4 @@
-import React, {  useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { TextField, Button, Container, Typography, Box } from "@mui/material";
@@ -81,164 +81,165 @@ const SignUpForm = () => {
 
 	return (
 		<Container maxWidth="sm" style={{ margin: "100px auto" }}>
-			{!isProvider ?(
-			<form onSubmit={handleSubmit}>
-				<fieldset>
-					<Typography variant="h5" gutterBottom>
-						Sign Up as a Provider
-					</Typography>
-					<Box mt={2}>
-						<Typography variant="p" gutterBottom>
-							First Name
+			{!isProvider ? (
+				<form onSubmit={handleSubmit}>
+					<fieldset>
+						<Typography variant="h5" gutterBottom>
+							Sign Up as a Provider
 						</Typography>
-						<TextField
-							variant="outlined"
-							name="firstName"
-							value={signUpData.firstName}
-							onChange={handleChange}
-							fullWidth
-						/>
-					</Box>
-					<Box mt={2}>
-						<Typography variant="p" gutterBottom>
-							Surname
-						</Typography>
-						<TextField
-							variant="outlined"
-							name="lastName"
-							value={signUpData.lastName}
-							onChange={handleChange}
-							fullWidth
-						/>
-					</Box>
-					<Box mt={2}>
-						<Typography variant="p" gutterBottom>
-							Email
-						</Typography>
-						<TextField
-							variant="outlined"
-							name="email"
-							value={signUpData.email}
-							onChange={handleChange}
-							disabled
-							fullWidth
-						/>
-					</Box>
-					<Box mt={2}>
-						<TextField
-							label="Business Name"
-							variant="outlined"
-							name="businessName"
-							value={signUpData.businessName}
-							onChange={handleChange}
-							fullWidth
-						/>
-					</Box>
-					<Box mt={2}>
-						<TextField
-							label="Language *"
-							variant="outlined"
-							name="language"
-							value={signUpData.language}
-							onChange={handleChange}
-							fullWidth
-						/>
-					</Box>
-					<Box mt={2}>
-						<TextField
-							label="Profile Image"
-							variant="outlined"
-							name="profileImage"
-							value={signUpData.profileImage}
-							onChange={handleChange}
-							fullWidth
-						/>
-					</Box>
-					<Box mt={2}>
-						<TextField
-							label="Phone Number *"
-							variant="outlined"
-							name="phoneNumber"
-							value={signUpData.phoneNumber}
-							onChange={handleChange}
-							fullWidth
-						/>
-					</Box>
-					<Box mt={2}>
-						<TextField
-							label="Address *"
-							variant="outlined"
-							name="address"
-							value={signUpData.address}
-							onChange={handleChange}
-							fullWidth
-						/>
-					</Box>
-					<Box mt={2}>
-						<TextField
-							label="City *"
-							variant="outlined"
-							name="city"
-							value={signUpData.city}
-							onChange={handleChange}
-							fullWidth
-						/>
-					</Box>
-					<Box mt={2}>
-						<TextField
-							label="Country *"
-							variant="outlined"
-							name="country"
-							value={signUpData.country}
-							onChange={handleChange}
-							fullWidth
-						/>
-					</Box>
-					<Box mt={2}>
-						<TextField
-							label="Profession *"
-							variant="outlined"
-							name="profession"
-							value={signUpData.profession}
-							onChange={handleChange}
-							fullWidth
-						/>
-					</Box>
-					<Box mt={2}>
-						<TextField
-							label="Years of Experience *"
-							variant="outlined"
-							name="yearsOfExperience"
-							value={signUpData.yearsOfExperience}
-							onChange={handleChange}
-							fullWidth
-						/>
-					</Box>
-					<Box mt={2}>
-						<Typography variant="p" gutterBottom>
-							Hourly rate
-						</Typography>
-						<TextField
-							variant="outlined"
-							name="hourlyRate"
-							value={signUpData.hourlyRate}
-							fullWidth
-						/>
-					</Box>
-					<Box mt={2}>
-						<Button
-							type="submit"
-							variant="contained"
-							color="primary"
-							style={{ backgroundColor: "#F3263B" }}
-						>
-							Submit
-						</Button>
-					</Box>
-				</fieldset>
-			</form>
-			) : navigate("/*")
-			}
+						<Box mt={2}>
+							<Typography variant="p" gutterBottom>
+								First Name
+							</Typography>
+							<TextField
+								variant="outlined"
+								name="firstName"
+								value={signUpData.firstName}
+								onChange={handleChange}
+								fullWidth
+							/>
+						</Box>
+						<Box mt={2}>
+							<Typography variant="p" gutterBottom>
+								Surname
+							</Typography>
+							<TextField
+								variant="outlined"
+								name="lastName"
+								value={signUpData.lastName}
+								onChange={handleChange}
+								fullWidth
+							/>
+						</Box>
+						<Box mt={2}>
+							<Typography variant="p" gutterBottom>
+								Email
+							</Typography>
+							<TextField
+								variant="outlined"
+								name="email"
+								value={signUpData.email}
+								onChange={handleChange}
+								disabled
+								fullWidth
+							/>
+						</Box>
+						<Box mt={2}>
+							<TextField
+								label="Business Name"
+								variant="outlined"
+								name="businessName"
+								value={signUpData.businessName}
+								onChange={handleChange}
+								fullWidth
+							/>
+						</Box>
+						<Box mt={2}>
+							<TextField
+								label="Language *"
+								variant="outlined"
+								name="language"
+								value={signUpData.language}
+								onChange={handleChange}
+								fullWidth
+							/>
+						</Box>
+						<Box mt={2}>
+							<TextField
+								label="Profile Image"
+								variant="outlined"
+								name="profileImage"
+								value={signUpData.profileImage}
+								onChange={handleChange}
+								fullWidth
+							/>
+						</Box>
+						<Box mt={2}>
+							<TextField
+								label="Phone Number *"
+								variant="outlined"
+								name="phoneNumber"
+								value={signUpData.phoneNumber}
+								onChange={handleChange}
+								fullWidth
+							/>
+						</Box>
+						<Box mt={2}>
+							<TextField
+								label="Address *"
+								variant="outlined"
+								name="address"
+								value={signUpData.address}
+								onChange={handleChange}
+								fullWidth
+							/>
+						</Box>
+						<Box mt={2}>
+							<TextField
+								label="City *"
+								variant="outlined"
+								name="city"
+								value={signUpData.city}
+								onChange={handleChange}
+								fullWidth
+							/>
+						</Box>
+						<Box mt={2}>
+							<TextField
+								label="Country *"
+								variant="outlined"
+								name="country"
+								value={signUpData.country}
+								onChange={handleChange}
+								fullWidth
+							/>
+						</Box>
+						<Box mt={2}>
+							<TextField
+								label="Profession *"
+								variant="outlined"
+								name="profession"
+								value={signUpData.profession}
+								onChange={handleChange}
+								fullWidth
+							/>
+						</Box>
+						<Box mt={2}>
+							<TextField
+								label="Years of Experience *"
+								variant="outlined"
+								name="yearsOfExperience"
+								value={signUpData.yearsOfExperience}
+								onChange={handleChange}
+								fullWidth
+							/>
+						</Box>
+						<Box mt={2}>
+							<Typography variant="p" gutterBottom>
+								Hourly rate
+							</Typography>
+							<TextField
+								variant="outlined"
+								name="hourlyRate"
+								value={signUpData.hourlyRate}
+								fullWidth
+							/>
+						</Box>
+						<Box mt={2}>
+							<Button
+								type="submit"
+								variant="contained"
+								color="primary"
+								style={{ backgroundColor: "#F3263B" }}
+							>
+								Submit
+							</Button>
+						</Box>
+					</fieldset>
+				</form>
+			) : (
+				navigate("/*")
+			)}
 		</Container>
 	);
 };

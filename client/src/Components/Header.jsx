@@ -7,14 +7,19 @@ import { AppContext } from "../App";
 import Typography from "../Mui-Components/Typography";
 
 const Header = () => {
-
-	const { user, isLoggedIn, isProvider, setIsProvider, providers,isProvidersLoading } =
-		useContext(AppContext);
+	const {
+		user,
+		isLoggedIn,
+		isProvider,
+		setIsProvider,
+		providers,
+		isProvidersLoading,
+	} = useContext(AppContext);
 	const { handleSignUp } = useAuth();
 
 	useEffect(() => {
 		if (isLoggedIn && isProvidersLoading) {
-			if (providers.some((provider)=>provider?.email===user?.email)){
+			if (providers.some((provider) => provider?.email === user?.email)) {
 				setIsProvider(true);
 			} else {
 				setIsProvider(false);

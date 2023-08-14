@@ -22,13 +22,13 @@ const App = () => {
 	const [isProvidersLoading, setIsProvidersLoading] = useState(false);
 
 	useEffect(() => {
-		const fetchProvider=async()=>{
+		const fetchProvider = async () => {
 			try {
 				const response = await axios.get("/api/find");
 				setProviders(response.data);
 				setIsProvidersLoading(true);
 			} catch (error) {
-			console.error(error);
+				console.error(error);
 			}
 		};
 		fetchProvider();

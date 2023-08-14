@@ -14,6 +14,7 @@ const Header = () => {
 
 	useEffect(() => {
 		if (user && providers.filter((provider) => provider.id === user.id)) {
+			console.log(user.id);
 			setIsProvider(true);
 		} else {
 			setIsProvider(false);

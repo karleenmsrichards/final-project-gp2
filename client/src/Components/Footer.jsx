@@ -44,35 +44,35 @@ const Footer = () => {
 				textAlign={{ xs: "left", sm: "right" }}
 			>
 				<MaterialLink
-					href="/contact-us"
+					href="#"
 					underline="none"
 					sx={{ color: "black", fontWeight: "bold" }}
 				>
 					Help
 				</MaterialLink>
 				<MaterialLink
-					href="/contact-us"
+					href="#"
 					underline="none"
 					sx={{ color: "black" }}
 				>
 					FAQ
 				</MaterialLink>
 				<MaterialLink
-					href="/contact-us"
+					href="#"
 					underline="none"
 					sx={{ color: "black" }}
 				>
 					Customer
 				</MaterialLink>
 				<MaterialLink
-					href="/contact-us"
+					href="#"
 					underline="none"
 					sx={{ color: "black" }}
 				>
 					How to guide
 				</MaterialLink>
 				<MaterialLink
-					href="/contact-us"
+					href="#"
 					underline="none"
 					sx={{ color: "black" }}
 				>

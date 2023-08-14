@@ -7,34 +7,25 @@ import { AppContext } from "../App";
 
 const EditForm = () => {
 	const [editData, setEditData] = useState({});
+	const [providerIndex, setProviderIndex] = useState(null);
 	const navigate = useNavigate();
-	const { handleSignOut, getJwtToken } = useAuth();
-	const { user, setIsLoggedIn, isProvider } = useContext(AppContext);
+	const { handleSignOut } = useAuth();
+	const {
+		user,
+		setIsLoggedIn,
+		isProvider,
+		providers,
+		setProviders,
+		isLoggedIn,
+	} = useContext(AppContext);
 
 	const editHandler = async () => {
-		const token = getJwtToken();
-		if (token) {
-			if (isProvider) {
-				try {
-					const response = await fetch("/api/edit", {
-						method: "POST",
-						headers: {
-							"Content-Type": "application/json",
-						},
-						body: JSON.stringify({
-							email: user.email,
-						}),
-					});
-					const data = await response.json();
-					if (response.ok) {
-						setEditData(data);
-					} else {
-						throw new Error("Failed to update");
-					}
-				} catch (error) {
-					console.error(error);
-				}
-			}
+		if (isLoggedIn && isProvider) {
+			const providerInfo=providers.find((provider,index)=>{
+					setProviderIndex(index);
+					return provider.email===user.email;
+			});
+			setEditData(providerInfo);
 		} else {
 			setIsLoggedIn(false);
 			handleSignOut();
@@ -53,6 +44,9 @@ const EditForm = () => {
 				body: JSON.stringify(editData),
 			});
 			const data = await response.json();
+
+			providers.splice(providerIndex,1,editData);
+			setProviders(providers);
 			setEditData({});
 			alert(data.message);
 			navigate("/dashboard");

@@ -13,14 +13,19 @@ import SignOutIcon from "@mui/icons-material/ExitToApp";
 import Avatar from "@mui/material/Avatar";
 import { useNavigate } from "react-router-dom";
 import useAuth from "../customHooks/useAuth";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { AppContext } from "../App";
 
 export default function TemporaryDrawer() {
 	const navigate = useNavigate();
 	const { handleSignOut, handleDeleteProfile } = useAuth();
-	const { user }=useContext(AppContext);
+	const { user } = useContext(AppContext);
 	const [right, setRight] = useState(false);
+	const [picture,setPicture]=useState("");
+
+	useEffect(()=>{
+		setPicture(user?.picture);
+	},[user]);
 
 	function toggleDrawer(open) {
 		return (event) => {
@@ -89,12 +94,12 @@ export default function TemporaryDrawer() {
 	);
 
 	return (
-		<>
+			<>
 			<Avatar
 				onClick={toggleDrawer(true)}
 				alt="profile picture"
 				sx={{ cursor: "pointer" }}
-				src={user.picture}
+				src={picture}
 			/>
 			<Drawer anchor="right" open={right} onClose={toggleDrawer(false)}>
 				{list()}

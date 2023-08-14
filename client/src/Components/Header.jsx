@@ -1,45 +1,26 @@
-import { AppBar, Box, Button, Tab, Tabs } from "@mui/material";
-import { useContext, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { AppBar, Box, Button, MenuItem } from "@mui/material";
+import { useContext, useEffect } from "react";
+import { Link } from "react-router-dom";
 import useAuth from "../customHooks/useAuth";
 import Sidebar from "./Sidebar";
 import { AppContext } from "../App";
+import Typography from "../Mui-Components/Typography";
 
 const Header = () => {
-	const navigate = useNavigate();
-	const { user, isLoggedIn, isProvider, setIsProvider, providers } =
+
+	const { user, isLoggedIn, isProvider, setIsProvider, providers,isProvidersLoading } =
 		useContext(AppContext);
 	const { handleSignUp } = useAuth();
-	const [value, setValue] = useState(0);
 
 	useEffect(() => {
-		if (user && providers.filter((provider) => provider.id === user.id)) {
-			console.log(user.id);
-			setIsProvider(true);
-		} else {
-			setIsProvider(false);
+		if (isLoggedIn && isProvidersLoading) {
+			if (providers.some((provider)=>provider?.email===user?.email)){
+				setIsProvider(true);
+			} else {
+				setIsProvider(false);
+			}
 		}
-	}, [user, providers, setIsProvider]);
-
-	const homePageCode = 0;
-	const findPageCode = 1;
-	const updateProfileCode = 3;
-
-	const handleChange = (e, value) => {
-		if (value === homePageCode) {
-			navigate("/");
-		} else if (value === findPageCode) {
-			navigate("/find");
-		} else if (value === updateProfileCode) {
-			navigate("/edit");
-		} else if (value === "becomeProvider" && !isLoggedIn) {
-			alert("Please sign in to become a provider.");
-		} else if (value === "becomeProvider" && isLoggedIn) {
-			navigate("/sign-up");
-		}
-
-		setValue(value);
-	};
+	}, [user, isLoggedIn, setIsProvider, isProvidersLoading, providers]);
 
 	return (
 		<AppBar sx={{ background: "white", color: "black", position: "static" }}>
@@ -53,40 +34,37 @@ const Header = () => {
 				}}
 				px={{ xs: 2, md: 5 }}
 			>
-				<Tabs
-					value={value}
-					onChange={handleChange}
-					sx={{
-						display: "flex",
-						justifyContent: "space-evenly",
-						borderColor: "divider",
-						flexGrow: 1,
-					}}
-					TabIndicatorProps={{ style: { backgroundColor: "#fff" } }}
-					selectionFollowsFocus
-				>
-					<Tab
-						label="BOOKME"
-						sx={{
-							fontWeight: "bolder",
-							fontSize: 25,
-							color: "#000",
-						}}
-					/>
-					<Tab label="Find" sx={{ color: "#000" }} />
-					<Tab label="Book" sx={{ color: "#000" }} />
+				<Box sx={{ display: "flex", justifyContent: "space-evenly" }}>
+					<MenuItem component={Link} to="/">
+						<Typography
+							variant="h5"
+							sx={{
+								fontWeight: "bolder",
+								cursor: "pointer",
+							}}
+						>
+							BOOKME
+						</Typography>
+					</MenuItem>
+					<MenuItem component={Link} to="/find" fontWeight="bold">
+						<Typography fontWeight="bolder">Find</Typography>
+					</MenuItem>
+					<MenuItem component={Link} to="/find" fontWeight="bold">
+						<Typography fontWeight="bolder">Book</Typography>
+					</MenuItem>
+					{isLoggedIn && (
+						<MenuItem
+							component={Link}
+							to={isProvider ? "/edit" : "/sign-up"}
+							fontWeight="bolder"
+						>
+							<Typography fontWeight="bolder">
+								{isProvider ? "Update Profile" : "Become a Provider"}
+							</Typography>
+						</MenuItem>
+					)}
+				</Box>
 
-					<Tab
-						label={
-							isLoggedIn && isProvider ? "Update Profile" : "Become a Provider"
-						}
-						component="a"
-						sx={{ color: "black" }}
-						value={
-							isLoggedIn && isProvider ? updateProfileCode : "becomeProvider"
-						}
-					/>
-				</Tabs>
 				{!isLoggedIn ? (
 					<Box id="signInDiv" sx={{ mr: 1 }}>
 						<Button variant="contained" onClick={handleSignUp}>

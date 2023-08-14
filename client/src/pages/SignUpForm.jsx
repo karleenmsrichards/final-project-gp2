@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, {  useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import useAuth from "../customHooks/useAuth";
 import axios from "axios";
 import { TextField, Button, Container, Typography, Box } from "@mui/material";
+import { AppContext } from "../App";
 
 const SignUpForm = () => {
 	const navigate = useNavigate();
-	const { user } = useAuth();
+	const { user, setProviders, providers } = useContext(AppContext);
 
 	const [signUpData, setSignUpData] = useState({
 		firstName: null,
@@ -44,6 +44,8 @@ const SignUpForm = () => {
 					hourlyRate: 0,
 					language: null,
 				});
+				providers.push(signUpData);
+				setProviders(providers);
 				alert("You are now a Provider");
 				navigate("/dashboard");
 			}

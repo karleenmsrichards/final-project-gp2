@@ -1,5 +1,5 @@
 import { Box, Button, CardMedia, Grid } from "@mui/material";
-import React, { useContext  } from "react";
+import React, { useContext } from "react";
 import Typography from "../Mui-Components/Typography";
 import { AppContext } from "../App";
 

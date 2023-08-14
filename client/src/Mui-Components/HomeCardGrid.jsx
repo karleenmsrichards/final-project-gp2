@@ -61,7 +61,11 @@ export function HomeCardGrid() {
 									sx={{ borderRadius: "20px" }}
 									component="img"
 									height="140"
-									image={eachProvider.profileImage === null ? "https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png?20150327203541" : eachProvider.profileImage}
+									image={
+										eachProvider.profileImage === null
+											? "https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png?20150327203541"
+											: eachProvider.profileImage
+									}
 									alt={eachProvider.profession}
 								/>
 								<CardContent sx={{ padding: 0 }}>

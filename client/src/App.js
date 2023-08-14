@@ -19,7 +19,6 @@ const App = () => {
 	const [providers, setProviders] = useState([]);
 	const [isProvider, setIsProvider] = useState(false);
 
-
 	useEffect(() => {
 		fetch("/api/find")
 			.then((res) => {

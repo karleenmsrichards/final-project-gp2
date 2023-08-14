@@ -145,4 +145,62 @@ router.get("/find", async (req, res) => {
 	}
 });
 
+router.post("/edit", async (req, res) => {
+	try {
+		const { email } = req.body;
+		const provider = await Provider.findOne({ where: { email } });
+		if (!provider) {
+			res.status(400).json("Not found");
+		} else {
+			res.status(200).json(provider);
+		}
+	} catch (error) {
+		res.status(500).json({ error });
+	}
+});
+router.put("/edit", async (req, res) => {
+	try {
+		const {
+			firstName,
+			lastName,
+			email,
+			businessName,
+			profileImage,
+			phoneNumber,
+			address,
+			city,
+			country,
+			profession,
+			yearsOfExperience,
+			hourlyRate,
+			language,
+		} = req.body;
+		const updatedProviderInfo = {
+			firstName,
+			lastName,
+			email,
+			businessName,
+			profileImage,
+			phoneNumber,
+			address,
+			city,
+			country,
+			profession,
+			yearsOfExperience,
+			hourlyRate,
+			language,
+		};
+		const [count] = await Provider.update(updatedProviderInfo, {
+			where: { email },
+		});
+		if (count === 1) {
+			res.status(200).json({ message: "Your information updated!" });
+		} else {
+			res.status(404).json({ message: "Provider not found" });
+		}
+	} catch (error) {
+		res.status(500).json({ error });
+	}
+});
+
 export default router;

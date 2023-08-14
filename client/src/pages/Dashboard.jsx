@@ -1,11 +1,13 @@
-import { Typography, Box } from "@mui/material";
+import { Typography, Box, Button } from "@mui/material";
 import { useCallback, useContext, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import useAuth from "../customHooks/useAuth";
 import { AppContext } from "../App";
 
+
 const Dashboard = () => {
 	const { user, isLoggedIn, setIsLoggedIn } = useContext(AppContext);
-
+	const navigate = useNavigate();
 	const { handleSignOut, getJwtToken } = useAuth();
 
 	const sendingToken = useCallback(
@@ -51,6 +53,7 @@ const Dashboard = () => {
 			{isLoggedIn ? (
 				<>
 					<Typography variant="h6">Hello {user?.name}</Typography>
+					<Button onClick={() => navigate("/edit")}>Edit</Button>
 				</>
 			) : (
 				<Typography>You need Log In</Typography>

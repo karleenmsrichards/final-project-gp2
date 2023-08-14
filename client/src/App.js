@@ -1,3 +1,4 @@
+import React, { useState, createContext, useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import ContactUs from "./pages/ContactUs";
@@ -6,24 +7,77 @@ import Footer from "./Components/Footer";
 import Dashboard from "./pages/Dashboard";
 import Subscription from "./pages/Subscription";
 import SignUpForm from "./pages/SignUpForm";
-import useAuth from "./customHooks/useAuth";
 import Find from "./pages/Find";
+import axios from "axios";
+import EditForm from "./pages/EditForm";
+
+export const AppContext = createContext(null);
 
 const App = () => {
-	const { isLoggedIn } = useAuth();
+	const [user, setUser] = useState(null);
+	const [clientId, setClientId] = useState(null);
+	const [isLoggedIn, setIsLoggedIn] = useState(false);
+	const [providers, setProviders] = useState([]);
+	const [isProvider, setIsProvider] = useState(false);
+
+	useEffect(() => {
+		fetch("/api/find")
+			.then((res) => {
+				if (!res.ok) {
+					throw new Error(res.message);
+				}
+				return res.json();
+			})
+			.then((data) => {
+				setProviders(data);
+			})
+			.catch((err) => {
+				console.error(err);
+			});
+	}, [isLoggedIn, setProviders]);
+
+	useEffect(() => {
+		async function fetchClientId() {
+			try {
+				const response = await axios.get("/api/clientId");
+				const { clientId } = response.data;
+				setClientId(clientId);
+			} catch (error) {
+				console.error("Error fetching client ID:", error);
+			}
+		}
+		fetchClientId();
+	}, []);
+
+	const contextValue = {
+		user,
+		setUser,
+		clientId,
+		setClientId,
+		isLoggedIn,
+		setIsLoggedIn,
+		providers,
+		setProviders,
+		isProvider,
+		setIsProvider,
+	};
+
 	return (
-		<div>
-			<Header />
-			<Routes>
-				<Route path="/" element={<Home />} />
-				{isLoggedIn && <Route path="/sign-up" element={<SignUpForm />} />}
-				<Route path="/dashboard" element={<Dashboard />} />
-				<Route path="/contact-us" element={<ContactUs />} />
-				<Route path="/subscription" element={<Subscription />} />
-				<Route path="/find" element={<Find />} />
-			</Routes>
-			<Footer />
-		</div>
+		<AppContext.Provider value={contextValue}>
+			<div>
+				<Header />
+				<Routes>
+					<Route path="/" element={<Home />} />
+					<Route path="/sign-up" element={<SignUpForm />} />
+					<Route path="/dashboard" element={<Dashboard />} />
+					<Route path="/contact-us" element={<ContactUs />} />
+					<Route path="/subscription" element={<Subscription />} />
+					<Route path="/find" element={<Find />} />
+					<Route path="/edit" element={<EditForm />} />
+				</Routes>
+				<Footer />
+			</div>
+		</AppContext.Provider>
 	);
 };
 

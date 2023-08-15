@@ -44,7 +44,7 @@ const useAuth = () => {
 	const handleDeleteProfile = async () => {
 		try {
 			const token = getJwtToken();
-			const response = await fetch("/api/delete-profile", {
+			const response = await fetch("/api/profile", {
 				method: "DELETE",
 				headers: {
 					"Content-Type": "application/json",

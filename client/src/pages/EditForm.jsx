@@ -36,7 +36,7 @@ const EditForm = () => {
 	const handleSubmit = async (event) => {
 		event.preventDefault();
 		try {
-			const response = await fetch("/api/edit", {
+			const response = await fetch("/api/provider", {
 				method: "PUT",
 				headers: {
 					"Content-Type": "application/json",

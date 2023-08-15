@@ -1,7 +1,6 @@
 import { useState, createContext, useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
-import ContactUs from "./pages/NotFound";
 import Header from "./Components/Header";
 import Footer from "./Components/Footer";
 import Dashboard from "./pages/Dashboard";
@@ -10,6 +9,7 @@ import SignUpForm from "./pages/SignUpForm";
 import Find from "./pages/Find";
 import axios from "axios";
 import EditForm from "./pages/EditForm";
+import NotFound from "./pages/NotFound";
 
 export const AppContext = createContext(null);
 
@@ -24,7 +24,7 @@ const App = () => {
 	useEffect(() => {
 		const fetchProvider = async () => {
 			try {
-				const response = await axios.get("/api/find");
+				const response = await axios.get("/api/providers");
 				setProviders(response.data);
 				setIsProvidersLoading(true);
 			} catch (error) {
@@ -64,12 +64,11 @@ const App = () => {
 
 	return (
 		<AppContext.Provider value={contextValue}>
-			<div>
 				<Header />
 				<Routes>
 					<Route path="/" element={<Home />} />
 					<Route path="/find" element={<Find />} />
-					<Route path="*" element={<ContactUs />} />
+					<Route path="*" element={<NotFound />} />
 					{isLoggedIn && (
 						<>
 							<Route path="/sign-up" element={<SignUpForm />} />
@@ -80,7 +79,6 @@ const App = () => {
 					)}
 				</Routes>
 				<Footer />
-			</div>
 		</AppContext.Provider>
 	);
 };

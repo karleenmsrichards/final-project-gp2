@@ -1,4 +1,4 @@
-import { AppBar, Box, Button, MenuItem } from "@mui/material";
+import { AppBar, Box, Button, LinearProgress, MenuItem, MenuList } from "@mui/material";
 import { useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
 import useAuth from "../customHooks/useAuth";
@@ -19,67 +19,74 @@ const Header = () => {
 
 	useEffect(() => {
 		if (isLoggedIn && isProvidersLoading) {
-			if (providers.some((provider) => provider?.email === user?.email)) {
-				setIsProvider(true);
-			} else {
-				setIsProvider(false);
-			}
+				setIsProvider(providers.some((provider) => provider?.email === user?.email));
 		}
 	}, [user, isLoggedIn, setIsProvider, isProvidersLoading, providers]);
 
+const updateProfile = (
+	<MenuItem component={Link} to="/edit" fontWeight="bolder">
+		<Typography fontWeight="bolder">Update Profile</Typography>
+	</MenuItem>
+);
+
+const becomeProfile = (
+	<MenuItem component={Link} to="/sign-up" fontWeight="bolder">
+		<Typography fontWeight="bolder">Become a Provider</Typography>
+	</MenuItem>
+);
+
 	return (
 		<AppBar sx={{ background: "white", color: "black", position: "static" }}>
-			<Box
-				sx={{
-					display: "flex",
-					justifyContent: "space-between",
-					alignItems: "center",
-					gap: 5,
-					py: 2,
-				}}
-				px={{ xs: 2, md: 5 }}
-			>
-				<Box sx={{ display: "flex", justifyContent: "space-evenly" }}>
-					<MenuItem component={Link} to="/">
-						<Typography
-							variant="h5"
-							sx={{
-								fontWeight: "bolder",
-								cursor: "pointer",
-							}}
-						>
-							BOOKME
-						</Typography>
-					</MenuItem>
-					<MenuItem component={Link} to="/find" fontWeight="bold">
-						<Typography fontWeight="bolder">Find</Typography>
-					</MenuItem>
-					<MenuItem component={Link} to="/find" fontWeight="bold">
-						<Typography fontWeight="bolder">Book</Typography>
-					</MenuItem>
-					{isLoggedIn && (
+			{!isProvidersLoading ? (
+				<LinearProgress />
+			) : (
+				<Box
+					sx={{
+						display: "flex",
+						flexDirection: { xs: "column", md: "row" },
+						justifyContent: "space-between",
+						alignItems: "center",
+						gap: 5,
+						py: 2,
+					}}
+					px={{ xs: 2, md: 5 }}
+				>
+					<MenuList sx={{ display: "flex", justifyContent: "space-evenly" }}>
 						<MenuItem
 							component={Link}
-							to={isProvider ? "/edit" : "/sign-up"}
-							fontWeight="bolder"
+							to="/"
+							style={{ backgroundColor: "transparent" }}
+							disableRipple
 						>
-							<Typography fontWeight="bolder">
-								{isProvider ? "Update Profile" : "Become a Provider"}
+							<Typography
+								variant="h5"
+								sx={{
+									fontWeight: "bolder",
+									cursor: "pointer",
+								}}
+							>
+								BOOKME
 							</Typography>
 						</MenuItem>
+						<MenuItem component={Link} to="/find" fontWeight="bold">
+							<Typography fontWeight="bolder">Find</Typography>
+						</MenuItem>
+						<MenuItem component={Link} to="/find" fontWeight="bold">
+							<Typography fontWeight="bolder">Book</Typography>
+						</MenuItem>
+						{isLoggedIn && isProvider ? updateProfile : becomeProfile}
+					</MenuList>
+					{!isLoggedIn ? (
+						<Box id="signInDiv" sx={{ mr: 1 }}>
+							<Button variant="contained" onClick={handleSignUp}>
+								Sign Up / Sign In
+							</Button>
+						</Box>
+					) : (
+						<Sidebar />
 					)}
 				</Box>
-
-				{!isLoggedIn ? (
-					<Box id="signInDiv" sx={{ mr: 1 }}>
-						<Button variant="contained" onClick={handleSignUp}>
-							Sign Up / Sign In
-						</Button>
-					</Box>
-				) : (
-					<Sidebar />
-				)}
-			</Box>
+			)}
 		</AppBar>
 	);
 };

@@ -53,7 +53,7 @@ router.post("/validation", async (req, res) => {
 	}
 });
 
-router.delete("/delete-profile", async (req, res) => {
+router.delete("/profile", async (req, res) => {
 	try {
 		const { token } = req.body;
 		if (!token) {
@@ -79,7 +79,7 @@ router.delete("/delete-profile", async (req, res) => {
 	}
 });
 
-router.post("/create-provider", async (req, res) => {
+router.post("/provider", async (req, res) => {
 	const {
 		firstName,
 		lastName,
@@ -136,29 +136,20 @@ router.post("/create-provider", async (req, res) => {
 	}
 });
 
-router.get("/find", async (req, res) => {
+router.get("/providers", async (req, res) => {
 	try {
 		const providers = await Provider.findAll();
-		res.status(200).json(providers);
+		if (!providers) {
+			res.status(400).json("No Provider Found!");
+		} else {
+			res.status(200).json(providers);
+		}
 	} catch (error) {
 		res.status(500).json(error);
 	}
 });
 
-router.post("/edit", async (req, res) => {
-	try {
-		const { email } = req.body;
-		const provider = await Provider.findOne({ where: { email } });
-		if (!provider) {
-			res.status(400).json("Not found");
-		} else {
-			res.status(200).json(provider);
-		}
-	} catch (error) {
-		res.status(500).json({ error });
-	}
-});
-router.put("/edit", async (req, res) => {
+router.put("/provider", async (req, res) => {
 	try {
 		const {
 			firstName,

@@ -3,8 +3,16 @@ import React from "react";
 import Typography from "../Mui-Components/Typography";
 
 const LeftSideCard = ({ eachProvider }) => {
+
+const fullAddress=(eachProvider)=>{
+return `${eachProvider.country} - ${eachProvider.city} - ${eachProvider.address} - ${eachProvider.phoneNumber}`;
+};
+
 	return (
-		<Box sx={{ display: "flex" }} flexDirection={{ xs: "column", sm: "row" }}>
+		<Box
+			sx={{ display: "flex", alignItems: "center" }}
+			flexDirection={{ xs: "column", sm: "row" }}
+		>
 			<CardMedia
 				component="img"
 				sx={{ width: 200, height: 200, borderRadius: "20px" }}
@@ -29,8 +37,7 @@ const LeftSideCard = ({ eachProvider }) => {
 						color="text.secondary"
 						component="div"
 					>
-						{eachProvider.country} - {eachProvider.city} -{" "}
-						{eachProvider.address} - {eachProvider.phoneNumber}
+						{fullAddress(eachProvider)}
 					</Typography>
 					<Typography
 						variant="subtitle2"

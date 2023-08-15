@@ -27,7 +27,7 @@ const SignUpForm = () => {
 		event.preventDefault();
 
 		try {
-			const response = await axios.post("/api/create-provider", signUpData);
+			const response = await axios.post("/api/provider", signUpData);
 
 			if (response) {
 				setSignUpData({

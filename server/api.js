@@ -2,7 +2,7 @@ import { Router } from "express";
 import logger from "./utils/logger";
 const dotenv = require("dotenv");
 const { OAuth2Client } = require("google-auth-library");
-const { Users, Provider, Tokens } = require("./sequelize/models");
+const { Users, Provider, Tokens, Calendar } = require("./sequelize/models");
 const { persistNewProvider } = require("./controller/apiController");
 
 dotenv.config();
@@ -68,6 +68,10 @@ router.delete("/profile", async (req, res) => {
 				});
 				if (provider) {
 					await Provider.destroy({ where: { user_id: latestToken.user_id } });
+					const calendarCode = await Calendar.findOne({ where: {  user_id: latestToken.user_id  } });
+					if (calendarCode) {
+						await Calendar.destroy({ where: { user_id: latestToken.user_id } });
+					}
 				}
 				res.status(200).json({ message: "Your account is deleted!" });
 			}

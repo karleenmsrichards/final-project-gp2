@@ -7,6 +7,7 @@ module.exports = (sequelize, DataTypes) => {
 	Calendar.init(
 		{
 			calendar_id: DataTypes.STRING,
+			user_id: DataTypes.INTEGER,
 		},
 		{
 			sequelize,

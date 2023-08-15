@@ -3,7 +3,6 @@ import { Typography, Box, Container, Button } from "@mui/material";
 import useAuth from "../customHooks/useAuth";
 import { AppContext } from "../App";
 import GoogleCalendarForm from "../Components/GoogleCalendarForm";
-import { Navigate } from "react-router-dom";
 
 const Dashboard = () => {
 	const { user, isLoggedIn, setIsLoggedIn, providers } = useContext(AppContext);

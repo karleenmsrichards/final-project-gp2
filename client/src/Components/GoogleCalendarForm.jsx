@@ -20,12 +20,13 @@ const GoogleCalendarForm = ({ userId }) => {
 		event.preventDefault();
 
 		try {
-			const response = await axios.post("/api/create-calendar", {
-				userId: userId,
+			const response = await axios.post("/api/calendar", {
+				user_id: userId,
 				userEmbedCode: userEmbedCode,
 			});
 
 			if (response.status === 200) {
+				console.log(response.data);
 				setUserEmbedCode("");
 				alert("You have successfully added your Google Calendar Booking Page");
 			}

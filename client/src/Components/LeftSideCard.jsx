@@ -3,10 +3,9 @@ import React from "react";
 import Typography from "../Mui-Components/Typography";
 
 const LeftSideCard = ({ eachProvider }) => {
-
-const fullAddress=(eachProvider)=>{
-return `${eachProvider.country} - ${eachProvider.city} - ${eachProvider.address} - ${eachProvider.phoneNumber}`;
-};
+	const fullAddress = (eachProvider) => {
+		return `${eachProvider.country} - ${eachProvider.city} - ${eachProvider.address} - ${eachProvider.phoneNumber}`;
+	};
 
 	return (
 		<Box

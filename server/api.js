@@ -3,12 +3,7 @@ import logger from "./utils/logger";
 const dotenv = require("dotenv");
 const { OAuth2Client } = require("google-auth-library");
 const { Users, Provider, Tokens } = require("./sequelize/models");
-const {
-	persistNewUser,
-	persistNewToken,
-	persistLatestToken,
-	persistNewProvider,
-} = require("./controller/apiController");
+const { persistNewProvider } = require("./controller/apiController");
 
 dotenv.config();
 
@@ -42,10 +37,13 @@ router.post("/validation", async (req, res) => {
 		const { name, email } = payload;
 		let user = await Users.findOne({ where: { email } });
 		if (!user) {
-			user = persistNewUser(name, email, role);
-			persistNewToken(user.id, token);
+			const newUser = await Users.create({ name, email, role });
+			await Tokens.create({ token, user_id: newUser.id });
 		} else {
-			persistLatestToken(user.id, token);
+			let currentToken = await Tokens.findOne({ where: { token } });
+			if (!currentToken) {
+				await Tokens.create({ token, user_id: user.id });
+			}
 		}
 		res.status(200).json({ message: "success!" });
 	} catch (error) {

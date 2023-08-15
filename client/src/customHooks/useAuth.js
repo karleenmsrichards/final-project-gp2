@@ -4,7 +4,15 @@ import { useNavigate } from "react-router-dom";
 import { AppContext } from "../App";
 
 const useAuth = () => {
-	const { setUser, clientId, setIsLoggedIn } = useContext(AppContext);
+	const {
+		user,
+		setUser,
+		clientId,
+		setIsLoggedIn,
+		providers,
+		setProviders,
+		isProvider,
+	} = useContext(AppContext);
 
 	const navigate = useNavigate();
 
@@ -55,8 +63,15 @@ const useAuth = () => {
 			});
 			const data = await response.json();
 			if (response.ok) {
-				alert(data.message);
+				if (isProvider) {
+					const providerIndex = providers.findIndex(
+						(provider) => provider.email === user.email
+					);
+					providers.splice(providerIndex, 1);
+					setProviders(providers);
+				}
 				handleSignOut();
+				alert(data.message);
 			} else {
 				console.log(data.error);
 			}

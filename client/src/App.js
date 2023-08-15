@@ -64,21 +64,21 @@ const App = () => {
 
 	return (
 		<AppContext.Provider value={contextValue}>
-				<Header />
-				<Routes>
-					<Route path="/" element={<Home />} />
-					<Route path="/find" element={<Find />} />
-					<Route path="*" element={<NotFound />} />
-					{isLoggedIn && (
-						<>
-							<Route path="/sign-up" element={<SignUpForm />} />
-							<Route path="/dashboard" element={<Dashboard />} />
-							<Route path="/subscription" element={<Subscription />} />
-							<Route path="/edit" element={<EditForm />} />
-						</>
-					)}
-				</Routes>
-				<Footer />
+			<Header />
+			<Routes>
+				<Route path="/" element={<Home />} />
+				<Route path="/find" element={<Find />} />
+				<Route path="*" element={<NotFound />} />
+				{isLoggedIn && (
+					<>
+						<Route path="/sign-up" element={<SignUpForm />} />
+						<Route path="/dashboard" element={<Dashboard />} />
+						<Route path="/subscription" element={<Subscription />} />
+						<Route path="/edit" element={<EditForm />} />
+					</>
+				)}
+			</Routes>
+			<Footer />
 		</AppContext.Provider>
 	);
 };

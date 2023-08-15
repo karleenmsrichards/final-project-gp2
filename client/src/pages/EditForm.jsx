@@ -9,15 +9,9 @@ const EditForm = () => {
 	const [editData, setEditData] = useState({});
 	const [providerIndex, setProviderIndex] = useState(null);
 	const navigate = useNavigate();
-	const { handleSignOut } = useAuth();
-	const {
-		user,
-		setIsLoggedIn,
-		isProvider,
-		providers,
-		setProviders,
-		isLoggedIn,
-	} = useContext(AppContext);
+
+	const { user, isProvider, providers, setProviders, isLoggedIn } =
+		useContext(AppContext);
 
 	const editHandler = async () => {
 		if (isLoggedIn && isProvider) {
@@ -26,10 +20,6 @@ const EditForm = () => {
 				return provider.email === user.email;
 			});
 			setEditData(providerInfo);
-		} else {
-			setIsLoggedIn(false);
-			handleSignOut();
-			navigate("/");
 		}
 	};
 

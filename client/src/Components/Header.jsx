@@ -1,4 +1,11 @@
-import { AppBar, Box, Button, LinearProgress, MenuItem, MenuList } from "@mui/material";
+import {
+	AppBar,
+	Box,
+	Button,
+	LinearProgress,
+	MenuItem,
+	MenuList,
+} from "@mui/material";
 import { useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
 import useAuth from "../customHooks/useAuth";
@@ -19,21 +26,13 @@ const Header = () => {
 
 	useEffect(() => {
 		if (isLoggedIn && isProvidersLoading) {
-				setIsProvider(providers.some((provider) => provider?.email === user?.email));
+			if (providers.some((provider) => provider?.email === user?.email)) {
+				setIsProvider(true);
+			} else {
+				setIsProvider(false);
+			}
 		}
 	}, [user, isLoggedIn, setIsProvider, isProvidersLoading, providers]);
-
-const updateProfile = (
-	<MenuItem component={Link} to="/edit" fontWeight="bolder">
-		<Typography fontWeight="bolder">Update Profile</Typography>
-	</MenuItem>
-);
-
-const becomeProfile = (
-	<MenuItem component={Link} to="/sign-up" fontWeight="bolder">
-		<Typography fontWeight="bolder">Become a Provider</Typography>
-	</MenuItem>
-);
 
 	return (
 		<AppBar sx={{ background: "white", color: "black", position: "static" }}>
@@ -74,8 +73,19 @@ const becomeProfile = (
 						<MenuItem component={Link} to="/find" fontWeight="bold">
 							<Typography fontWeight="bolder">Book</Typography>
 						</MenuItem>
-						{isLoggedIn && isProvider ? updateProfile : becomeProfile}
+						{isLoggedIn && (
+							<MenuItem
+								component={Link}
+								to={isProvider ? "/edit" : "/sign-up"}
+								fontWeight="bolder"
+							>
+								<Typography fontWeight="bolder">
+									{isProvider ? "Update Profile" : "Become a Provider"}
+								</Typography>
+							</MenuItem>
+						)}
 					</MenuList>
+
 					{!isLoggedIn ? (
 						<Box id="signInDiv" sx={{ mr: 1 }}>
 							<Button variant="contained" onClick={handleSignUp}>

@@ -3,7 +3,7 @@ import { Box, Link as MaterialLink, Typography } from "@mui/material";
 import CopyrightIcon from "@mui/icons-material/Copyright";
 
 const Footer = () => {
-const defaultSxStyle = { color: "black" };
+	const defaultSxStyle = { color: "black" };
 
 	return (
 		<Box

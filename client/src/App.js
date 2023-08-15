@@ -1,7 +1,6 @@
-import React, { useState, createContext, useEffect } from "react";
+import { useState, createContext, useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
-import ContactUs from "./pages/ContactUs";
 import Header from "./Components/Header";
 import Footer from "./Components/Footer";
 import Dashboard from "./pages/Dashboard";
@@ -10,6 +9,7 @@ import SignUpForm from "./pages/SignUpForm";
 import Find from "./pages/Find";
 import axios from "axios";
 import EditForm from "./pages/EditForm";
+import NotFound from "./pages/NotFound";
 
 export const AppContext = createContext(null);
 
@@ -19,22 +19,20 @@ const App = () => {
 	const [isLoggedIn, setIsLoggedIn] = useState(false);
 	const [providers, setProviders] = useState([]);
 	const [isProvider, setIsProvider] = useState(false);
+	const [isProvidersLoading, setIsProvidersLoading] = useState(false);
 
 	useEffect(() => {
-		fetch("/api/find")
-			.then((res) => {
-				if (!res.ok) {
-					throw new Error(res.message);
-				}
-				return res.json();
-			})
-			.then((data) => {
-				setProviders(data);
-			})
-			.catch((err) => {
-				console.error(err);
-			});
-	}, [isLoggedIn, setProviders]);
+		const fetchProvider = async () => {
+			try {
+				const response = await axios.get("/api/providers");
+				setProviders(response.data);
+				setIsProvidersLoading(true);
+			} catch (error) {
+				console.error(error);
+			}
+		};
+		fetchProvider();
+	}, [setProviders]);
 
 	useEffect(() => {
 		async function fetchClientId() {
@@ -60,23 +58,27 @@ const App = () => {
 		setProviders,
 		isProvider,
 		setIsProvider,
+		isProvidersLoading,
+		setIsProvidersLoading,
 	};
 
 	return (
 		<AppContext.Provider value={contextValue}>
-			<div>
-				<Header />
-				<Routes>
-					<Route path="/" element={<Home />} />
-					<Route path="/sign-up" element={<SignUpForm />} />
-					<Route path="/dashboard" element={<Dashboard />} />
-					<Route path="/contact-us" element={<ContactUs />} />
-					<Route path="/subscription" element={<Subscription />} />
-					<Route path="/find" element={<Find />} />
-					<Route path="/edit" element={<EditForm />} />
-				</Routes>
-				<Footer />
-			</div>
+			<Header />
+			<Routes>
+				<Route path="/" element={<Home />} />
+				<Route path="/find" element={<Find />} />
+				<Route path="*" element={<NotFound />} />
+				{isLoggedIn && (
+					<>
+						<Route path="/sign-up" element={<SignUpForm />} />
+						<Route path="/dashboard" element={<Dashboard />} />
+						<Route path="/subscription" element={<Subscription />} />
+						<Route path="/edit" element={<EditForm />} />
+					</>
+				)}
+			</Routes>
+			<Footer />
 		</AppContext.Provider>
 	);
 };

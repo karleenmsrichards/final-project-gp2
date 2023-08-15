@@ -1,9 +1,9 @@
 import React, { useCallback, useContext, useEffect, useState } from "react";
 import { Typography, Box, Container, Button } from "@mui/material";
-import { useNavigate } from "react-router-dom";
 import useAuth from "../customHooks/useAuth";
 import { AppContext } from "../App";
 import GoogleCalendarForm from "../Components/GoogleCalendarForm";
+import { Navigate } from "react-router-dom";
 
 const Dashboard = () => {
 	const { user, isLoggedIn, setIsLoggedIn, providers } = useContext(AppContext);
@@ -59,13 +59,7 @@ const Dashboard = () => {
 	return (
 		<Container>
 			<Box sx={{ marginX: { xs: 1, sm: 5, md: 10, lg: 15, xl: 20 }, my: 5 }}>
-				{isLoggedIn ? (
-					<>
-						<Typography variant="h6">Hello {user?.name}</Typography>
-					</>
-				) : (
-					<Typography>You need Log In</Typography>
-				)}
+				<Typography variant="h6">Hello {user?.name}</Typography>
 			</Box>
 
 			{loggedInProvider && (

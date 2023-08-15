@@ -2,7 +2,7 @@ import { Box } from "@mui/material";
 import StaticGrid from "../Components/StaticGrid";
 import HomeCardGrid from "../Mui-Components/HomeCardGrid";
 import Hero from "../Components/Hero";
-// import NewsLetter from "../Components/Newsletter";
+import NewsLetter from "../Components/Newsletter";
 
 export function Home() {
 	return (
@@ -10,7 +10,7 @@ export function Home() {
 			<Hero />
 			<StaticGrid />
 			<HomeCardGrid />
-			{/* <NewsLetter /> */}
+			<NewsLetter />
 		</Box>
 	);
 }

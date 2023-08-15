@@ -201,18 +201,17 @@ router.post("/calendar", async (req, res) => {
 	}
 	try {
 		const provider = await Calendar.findOne({ where: { user_id } });
-		if(provider){
+		if (provider) {
 			res.status(400).json({ error: "You Provided it before!" });
 			return;
 		}
 		const srcRight = userEmbedCode.split('src="')[1];
-		const calendar_id=srcRight.split('"')[0];
+		const calendar_id = srcRight.split('"')[0];
 		await Calendar.create({ calendar_id, user_id });
-		res.status(200).json({ message:"success" });
-	}catch(error){
+		res.status(200).json({ message: "success" });
+	} catch (error) {
 		res.status(500).json({ error });
 	}
 });
-
 
 export default router;

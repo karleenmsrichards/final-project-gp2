@@ -3,6 +3,8 @@ import { Box, Link as MaterialLink, Typography } from "@mui/material";
 import CopyrightIcon from "@mui/icons-material/Copyright";
 
 const Footer = () => {
+	const defaultSxStyle = { color: "black" };
+
 	return (
 		<Box
 			sx={{
@@ -44,38 +46,22 @@ const Footer = () => {
 				textAlign={{ xs: "left", sm: "right" }}
 			>
 				<MaterialLink
-					href="/contact-us"
+					href="#"
 					underline="none"
 					sx={{ color: "black", fontWeight: "bold" }}
 				>
 					Help
 				</MaterialLink>
-				<MaterialLink
-					href="/contact-us"
-					underline="none"
-					sx={{ color: "black" }}
-				>
+				<MaterialLink href="#" underline="none" sx={defaultSxStyle}>
 					FAQ
 				</MaterialLink>
-				<MaterialLink
-					href="/contact-us"
-					underline="none"
-					sx={{ color: "black" }}
-				>
+				<MaterialLink href="#" underline="none" sx={defaultSxStyle}>
 					Customer
 				</MaterialLink>
-				<MaterialLink
-					href="/contact-us"
-					underline="none"
-					sx={{ color: "black" }}
-				>
+				<MaterialLink href="#" underline="none" sx={defaultSxStyle}>
 					How to guide
 				</MaterialLink>
-				<MaterialLink
-					href="/contact-us"
-					underline="none"
-					sx={{ color: "black" }}
-				>
+				<MaterialLink href="#" underline="none" sx={defaultSxStyle}>
 					Contact Us
 				</MaterialLink>
 			</Box>

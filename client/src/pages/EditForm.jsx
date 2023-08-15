@@ -1,91 +1,70 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import useAuth from "../customHooks/useAuth";
 import { TextField, Button, Container, Typography, Box } from "@mui/material";
+
 import { AppContext } from "../App";
 
-const SignUpForm = () => {
+const EditForm = () => {
+	const [editData, setEditData] = useState({});
+	const [providerIndex, setProviderIndex] = useState(null);
 	const navigate = useNavigate();
-	const { user, setProviders, providers, isProvider } = useContext(AppContext);
 
-	const [signUpData, setSignUpData] = useState({
-		firstName: null,
-		lastName: null,
-		email: null,
-		businessName: null,
-		phoneNumber: null,
-		address: null,
-		city: null,
-		country: null,
-		profession: null,
-		yearsOfExperience: null,
-		hourlyRate: null,
-		language: null,
-	});
+	const { user, isProvider, providers, setProviders, isLoggedIn } =
+		useContext(AppContext);
+
+	const editHandler = async () => {
+		if (isLoggedIn && isProvider) {
+			const providerInfo = providers.find((provider, index) => {
+				setProviderIndex(index);
+				return provider.email === user.email;
+			});
+			setEditData(providerInfo);
+		}
+	};
 
 	const handleSubmit = async (event) => {
 		event.preventDefault();
-
 		try {
-			const response = await axios.post("/api/provider", signUpData);
+			const response = await fetch("/api/provider", {
+				method: "PUT",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify(editData),
+			});
+			const data = await response.json();
 
-			if (response) {
-				setSignUpData({
-					firstName: user.given_name,
-					lastName: user.family_name,
-					email: user.email,
-					businessName: null,
-					phoneNumber: null,
-					address: null,
-					city: null,
-					country: null,
-					profession: null,
-					yearsOfExperience: null,
-					hourlyRate: 0,
-					language: null,
-				});
-				providers.push(signUpData);
-				setProviders(providers);
-				alert("You are now a Provider");
-				navigate("/dashboard");
-			}
+			providers.splice(providerIndex, 1, editData);
+			setProviders(providers);
+			setEditData({});
+			alert(data.message);
+			navigate("/dashboard");
 		} catch (error) {
-			if (error?.response?.data?.error) {
-				const errorMessage = error.response.data.error;
-				alert(`Error: ${errorMessage}`);
-				navigate("/");
-			} else {
-				alert("An error occurred while submitting the form.");
-			}
-			console.error("Error submitting form:", error);
+			alert(error);
+			navigate("/dashboard");
 		}
 	};
 
 	const handleChange = (event) => {
 		const { name, value } = event.target;
-		setSignUpData((prevData) => ({
+		setEditData((prevData) => ({
 			...prevData,
 			[name]: value,
 		}));
 	};
 
 	useEffect(() => {
-		if (user) {
-			setSignUpData((prevData) => ({
-				...prevData,
-				email: user.email,
-				hourlyRate: 0,
-			}));
-		}
+		editHandler();
 	}, [user]);
 
 	return (
 		<Container maxWidth="sm" style={{ margin: "100px auto" }}>
-			{!isProvider ? (
+			{isProvider ? (
 				<form onSubmit={handleSubmit}>
 					<fieldset>
 						<Typography variant="h5" gutterBottom>
-							Sign Up as a Provider
+							Edit Your Information.
 						</Typography>
 						<Box mt={2}>
 							<Typography variant="p" gutterBottom>
@@ -94,8 +73,9 @@ const SignUpForm = () => {
 							<TextField
 								variant="outlined"
 								name="firstName"
-								value={signUpData.firstName}
+								value={editData.firstName}
 								onChange={handleChange}
+								disabled
 								fullWidth
 							/>
 						</Box>
@@ -106,8 +86,9 @@ const SignUpForm = () => {
 							<TextField
 								variant="outlined"
 								name="lastName"
-								value={signUpData.lastName}
+								value={editData.lastName}
 								onChange={handleChange}
+								disabled
 								fullWidth
 							/>
 						</Box>
@@ -118,7 +99,7 @@ const SignUpForm = () => {
 							<TextField
 								variant="outlined"
 								name="email"
-								value={signUpData.email}
+								value={editData.email}
 								onChange={handleChange}
 								disabled
 								fullWidth
@@ -126,102 +107,110 @@ const SignUpForm = () => {
 						</Box>
 						<Box mt={2}>
 							<TextField
+								InputLabelProps={{ shrink: true }}
 								label="Business Name"
 								variant="outlined"
 								name="businessName"
-								value={signUpData.businessName}
+								value={editData.businessName}
 								onChange={handleChange}
 								fullWidth
 							/>
 						</Box>
 						<Box mt={2}>
 							<TextField
+								InputLabelProps={{ shrink: true }}
 								label="Language *"
 								variant="outlined"
 								name="language"
-								value={signUpData.language}
+								value={editData.language}
 								onChange={handleChange}
 								fullWidth
 							/>
 						</Box>
 						<Box mt={2}>
 							<TextField
+								InputLabelProps={{ shrink: true }}
 								label="Profile Image"
 								variant="outlined"
 								name="profileImage"
-								value={signUpData.profileImage}
+								value={editData.profileImage}
 								onChange={handleChange}
 								fullWidth
 							/>
 						</Box>
 						<Box mt={2}>
 							<TextField
+								InputLabelProps={{ shrink: true }}
 								label="Phone Number *"
 								variant="outlined"
 								name="phoneNumber"
-								value={signUpData.phoneNumber}
+								value={editData.phoneNumber}
 								onChange={handleChange}
 								fullWidth
 							/>
 						</Box>
 						<Box mt={2}>
 							<TextField
+								InputLabelProps={{ shrink: true }}
 								label="Address *"
 								variant="outlined"
 								name="address"
-								value={signUpData.address}
+								value={editData.address}
 								onChange={handleChange}
 								fullWidth
 							/>
 						</Box>
 						<Box mt={2}>
 							<TextField
+								InputLabelProps={{ shrink: true }}
 								label="City *"
 								variant="outlined"
 								name="city"
-								value={signUpData.city}
+								value={editData.city}
 								onChange={handleChange}
 								fullWidth
 							/>
 						</Box>
 						<Box mt={2}>
 							<TextField
+								InputLabelProps={{ shrink: true }}
 								label="Country *"
 								variant="outlined"
 								name="country"
-								value={signUpData.country}
+								value={editData.country}
 								onChange={handleChange}
 								fullWidth
 							/>
 						</Box>
 						<Box mt={2}>
 							<TextField
+								InputLabelProps={{ shrink: true }}
 								label="Profession *"
 								variant="outlined"
 								name="profession"
-								value={signUpData.profession}
+								value={editData.profession}
 								onChange={handleChange}
 								fullWidth
 							/>
 						</Box>
 						<Box mt={2}>
 							<TextField
+								InputLabelProps={{ shrink: true }}
 								label="Years of Experience *"
 								variant="outlined"
 								name="yearsOfExperience"
-								value={signUpData.yearsOfExperience}
+								value={editData.yearsOfExperience}
 								onChange={handleChange}
 								fullWidth
 							/>
 						</Box>
 						<Box mt={2}>
-							<Typography variant="p" gutterBottom>
-								Hourly rate
-							</Typography>
 							<TextField
+								InputLabelProps={{ shrink: true }}
 								variant="outlined"
-								name="hourlyRate"
-								value={signUpData.hourlyRate}
+								label="hourlyRate"
+								value={editData.hourlyRate}
+								disabled
 								fullWidth
 							/>
 						</Box>
@@ -244,4 +233,4 @@ const SignUpForm = () => {
 	);
 };
 
-export default SignUpForm;
+export default EditForm;

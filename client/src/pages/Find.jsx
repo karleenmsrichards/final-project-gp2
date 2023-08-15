@@ -1,7 +1,8 @@
-import { Box, Button, CardMedia, Grid } from "@mui/material";
+import { Box, Grid, Paper } from "@mui/material";
 import React, { useContext } from "react";
-import Typography from "../Mui-Components/Typography";
 import { AppContext } from "../App";
+import LeftSideCard from "../Components/LeftSideCard";
+import RightSideCard from "../Components/RightSideCard";
 
 const Find = () => {
 	const { providers } = useContext(AppContext);
@@ -9,155 +10,27 @@ const Find = () => {
 	return (
 		<Box sx={{ marginX: { xs: 1, sm: 5, md: 10, lg: 15, xl: 20 }, my: 5 }}>
 			<Grid container spacing={3}>
-				{providers.map((eachProvider, index) => (
+				{providers?.map((eachProvider, index) => (
 					<Grid id={eachProvider.id} key={index} item xs={12}>
-						<Box
+						<Paper
 							sx={{
 								display: "flex",
 								borderRadius: "20px",
 								justifyContent: "space-between",
+								px: { xs: 1, sm: 3, md: 5, lg: 5, xl: 10 },
 								border: 1,
 								borderColor: "gray",
-								boxShadow: "5px 5px 5px lightgray",
+								flexDirection: { xs: "column", md: "row" },
 								py: 3,
 								"&:hover": {
 									backgroundColor: "#f2f2f2",
 								},
 							}}
-							flexDirection={{ xs: "column", md: "row" }}
-							paddingX={{ xs: 1, sm: 3, md: 5, lg: 5, xl: 10 }}
+							elevation={8}
 						>
-							<Box
-								sx={{ display: "flex" }}
-								flexDirection={{ xs: "column", sm: "row" }}
-							>
-								<CardMedia
-									component="img"
-									sx={{ width: 200, height: 200, borderRadius: "20px" }}
-									image={eachProvider.profileImage}
-									alt={eachProvider.profession}
-								/>
-								<Box
-									sx={{
-										display: "flex",
-										flexDirection: "column",
-										justifyContent: "space-between",
-										pl: { xs: 1, sm: 3, md: 5 },
-										pt: { xs: 5, sm: 0 },
-									}}
-								>
-									<Box>
-										<Typography component="div" variant="h6">
-											Provider {eachProvider.firstName} {eachProvider.lastName}
-										</Typography>
-										<Typography
-											variant="subtitle2"
-											color="text.secondary"
-											component="div"
-										>
-											{eachProvider.country} - {eachProvider.city} -{" "}
-											{eachProvider.address} - {eachProvider.phoneNumber}
-										</Typography>
-										<Typography
-											variant="subtitle2"
-											color="text.secondary"
-											component="div"
-										>
-											Language: {eachProvider.language}
-										</Typography>
-									</Box>
-									<Box>
-										<Typography component="div" variant="body1">
-											Expertise: {eachProvider.profession}
-										</Typography>
-										<Typography
-											component="div"
-											variant="subtitle2"
-											color="text.secondary"
-										>
-											Experience: +{eachProvider.yearsOfExperience} years
-										</Typography>
-									</Box>
-									<Box>
-										<Box sx={{ display: "flex" }}>
-											<Typography
-												variant="subtitle2"
-												sx={{
-													p: 1,
-													border: 1,
-													borderRadius: "15px",
-													mr: 2,
-												}}
-											>
-												#Hot Deal
-											</Typography>
-											<Typography
-												variant="subtitle2"
-												sx={{
-													p: 1,
-													border: 1,
-													borderRadius: "15px",
-												}}
-											>
-												#Popular
-											</Typography>
-										</Box>
-									</Box>
-								</Box>
-							</Box>
-							<Box
-								sx={{
-									display: "flex",
-									flexDirection: "column",
-									justifyContent: "space-between",
-									minWidth: 200,
-									pt: { xs: 3, sm: 0 },
-									direction: "rtl",
-								}}
-							>
-								<Box sx={{ display: "flex" }}>
-									<Typography
-										variant="subtitle2"
-										sx={{
-											px: 2,
-											py: 1,
-											backgroundColor: "#F3263B",
-											color: "#fff",
-											borderRadius: "15px",
-										}}
-									>
-										96
-									</Typography>
-									<Typography component="div" variant="body1" sx={{ pr: 2 }}>
-										{eachProvider.businessName}
-									</Typography>
-								</Box>
-								<Box>
-									<Typography
-										component="div"
-										variant="h5"
-										sx={{ direction: "ltr", textAlign: "right" }}
-									>
-										£{eachProvider.hourlyRate}/hr
-									</Typography>
-									<Button
-										variant="contained"
-										sx={{
-											backgroundColor: "#F3263B",
-											color: "#fff",
-											px: 3,
-											py: 1,
-											borderRadius: "15px",
-											"&:hover": {
-												backgroundColor: "#cc0000",
-											},
-										}}
-									>
-										See booking options
-									</Button>
-								</Box>
-							</Box>
-						</Box>
+							<LeftSideCard eachProvider={eachProvider} />
+							<RightSideCard eachProvider={eachProvider} />
+						</Paper>
 					</Grid>
 				))}
 			</Grid>

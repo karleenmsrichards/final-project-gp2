@@ -1,20 +1,4 @@
-const { Users, Tokens, Provider } = require("../sequelize/models");
-
-export async function persistNewUser(name, email, role) {
-	const newUser = await Users.create({ name, email, role });
-	return newUser;
-}
-
-export async function persistNewToken(user_id, token) {
-	await Tokens.create({ token, user_id });
-}
-
-export async function persistLatestToken(user_id, token) {
-	let currentToken = await Tokens.findOne({ where: { token } });
-	if (!currentToken) {
-		persistNewToken(user_id, token);
-	}
-}
+const { Users, Provider } = require("../sequelize/models");
 
 export async function persistNewProvider({
 	user_id,

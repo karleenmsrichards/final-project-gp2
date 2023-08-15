@@ -1,4 +1,3 @@
-import * as React from "react";
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
 import List from "@mui/material/List";
@@ -14,11 +13,19 @@ import SignOutIcon from "@mui/icons-material/ExitToApp";
 import Avatar from "@mui/material/Avatar";
 import { useNavigate } from "react-router-dom";
 import useAuth from "../customHooks/useAuth";
+import { useContext, useEffect, useState } from "react";
+import { AppContext } from "../App";
 
 export default function TemporaryDrawer() {
 	const navigate = useNavigate();
 	const { handleSignOut, handleDeleteProfile } = useAuth();
-	const [right, setRight] = React.useState(false);
+	const { user } = useContext(AppContext);
+	const [right, setRight] = useState(false);
+	const [picture, setPicture] = useState(null);
+
+	useEffect(() => {
+		setPicture(user?.picture);
+	}, [user]);
 
 	function toggleDrawer(open) {
 		return (event) => {
@@ -28,7 +35,6 @@ export default function TemporaryDrawer() {
 			) {
 				return;
 			}
-
 			setRight(open);
 		};
 	}
@@ -92,7 +98,15 @@ export default function TemporaryDrawer() {
 			<Avatar
 				onClick={toggleDrawer(true)}
 				alt="profile picture"
-				sx={{ cursor: "pointer" }}
+				sx={{
+					cursor: "pointer",
+					width: 50,
+					height: 50,
+					"&:hover": {
+						boxShadow: "0 0 0 5px #D3D3D3",
+					},
+				}}
+				src={picture}
 			/>
 			<Drawer anchor="right" open={right} onClose={toggleDrawer(false)}>
 				{list()}

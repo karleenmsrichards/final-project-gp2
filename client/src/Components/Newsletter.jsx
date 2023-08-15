@@ -237,7 +237,7 @@ function NewsletterSignup() {
 									<path d="M6.23 20.23 8 22l10-10L8 2 6.23 3.77 14.46 12z" />
 								</svg>
 							)}
-							sx={{ mr: 5, ml:8, fontSize: "2rem", verticalAlign: "middle" }}
+							sx={{ mr: 5, ml: 8, fontSize: "2rem", verticalAlign: "middle" }}
 						/>
 					</Typography>
 					<Typography variant="body1" align="left" sx={{ mb: 2 }}>

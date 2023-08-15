@@ -2,7 +2,7 @@ import { useContext, useEffect } from "react";
 import jwtDecode from "jwt-decode";
 import { useNavigate } from "react-router-dom";
 import { AppContext } from "../App";
-import axios from "axios"; // Import Axios
+import axios from "axios";
 
 const useAuth = () => {
 	const {

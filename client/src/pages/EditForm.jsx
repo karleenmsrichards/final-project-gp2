@@ -1,6 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import useAuth from "../customHooks/useAuth";
 import { TextField, Button, Container, Typography, Box } from "@mui/material";
 
 import { AppContext } from "../App";
@@ -75,7 +74,6 @@ const EditForm = () => {
 								name="firstName"
 								value={editData.firstName}
 								onChange={handleChange}
-								disabled
 								fullWidth
 							/>
 						</Box>
@@ -88,7 +86,6 @@ const EditForm = () => {
 								name="lastName"
 								value={editData.lastName}
 								onChange={handleChange}
-								disabled
 								fullWidth
 							/>
 						</Box>

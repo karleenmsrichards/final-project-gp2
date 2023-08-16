@@ -10,7 +10,8 @@ module.exports = {
 				type: Sequelize.INTEGER,
 			},
 			calendar_id: {
-				type: Sequelize.STRING,
+				type: Sequelize.TEXT,
+				allowNull: false,
 			},
 			user_id: {
 				type: Sequelize.INTEGER,
@@ -19,6 +20,8 @@ module.exports = {
 					model: "Users",
 					key: "id",
 				},
+				onUpdate: "CASCADE",
+				onDelete: "CASCADE",
 			},
 			createdAt: {
 				allowNull: false,

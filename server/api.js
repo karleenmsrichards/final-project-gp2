@@ -69,6 +69,12 @@ router.delete("/profile", async (req, res) => {
 				});
 				if (provider) {
 					await Provider.destroy({ where: { user_id: latestToken.user_id } });
+					const calendarCode = await Calendar.findOne({
+						where: { user_id: latestToken.user_id },
+					});
+					if (calendarCode) {
+						await Calendar.destroy({ where: { user_id: latestToken.user_id } });
+					}
 				}
 				res.status(200).json({ message: "Your account is deleted!" });
 			}
@@ -211,6 +217,19 @@ router.post("/calendar", async (req, res) => {
 		res.status(200).json({ message: "success" });
 	} catch (error) {
 		res.status(500).json({ error });
+	}
+});
+
+router.get("/calendars", async (_, res) => {
+	try {
+		const calendars = await Calendar.findAll();
+		if (!calendars) {
+			res.status(400).json({ error: "No Calendars Found!" });
+		} else {
+			res.status(200).json(calendars);
+		}
+	} catch (error) {
+		res.status(500).json(error);
 	}
 });
 

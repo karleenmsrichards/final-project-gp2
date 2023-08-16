@@ -2,6 +2,7 @@ import { useContext, useEffect } from "react";
 import jwtDecode from "jwt-decode";
 import { useNavigate } from "react-router-dom";
 import { AppContext } from "../App";
+import axios from "axios";
 
 const useAuth = () => {
 	const {
@@ -39,7 +40,7 @@ const useAuth = () => {
 		navigate("/");
 	};
 
-	function handleCallbackResponse(response) {
+	const handleCallbackResponse = (response) => {
 		if (response && response.credential) {
 			localStorage.setItem("jwtToken", response.credential);
 			setIsLoggedIn(true);
@@ -48,21 +49,28 @@ const useAuth = () => {
 		} else {
 			console.error("Error handling callback response:", response);
 		}
-	}
+	};
+
 	const handleDeleteProfile = async () => {
 		try {
+			const confirmed = window.confirm(
+				"Are you sure you want to delete your profile? "
+			);
+			if (!confirmed) {
+				return;
+			}
+
 			const token = getJwtToken();
-			const response = await fetch("/api/profile", {
-				method: "DELETE",
+			const response = await axios.delete("/api/profile", {
 				headers: {
 					"Content-Type": "application/json",
 				},
-				body: JSON.stringify({
+				data: {
 					token,
-				}),
+				},
 			});
-			const data = await response.json();
-			if (response.ok) {
+			const data = response.data;
+			if (response.status === 200) {
 				if (isProvider) {
 					const providerIndex = providers.findIndex(
 						(provider) => provider.email === user.email

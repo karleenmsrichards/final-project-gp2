@@ -1,5 +1,12 @@
 import React, { useCallback, useContext, useEffect, useState } from "react";
-import { Typography, Box, Paper, Container, Button,CardMedia } from "@mui/material";
+import {
+	Typography,
+	Box,
+	Paper,
+	Container,
+	Button,
+	CardMedia,
+} from "@mui/material";
 import useAuth from "../customHooks/useAuth";
 import { AppContext } from "../App";
 import GoogleCalendarForm from "../Components/GoogleCalendarForm";
@@ -7,7 +14,8 @@ import LeftSideCard from "../Components/LeftSideCard";
 import RightSideCard from "../Components/RightSideCard";
 
 const Dashboard = () => {
-	const { user, isLoggedIn, setIsLoggedIn, providers, isProvider } = useContext(AppContext);
+	const { user, isLoggedIn, setIsLoggedIn, providers, isProvider } =
+		useContext(AppContext);
 	const { handleSignOut, getJwtToken } = useAuth();
 	const [showGoogleCalendarForm, setShowGoogleCalendarForm] = useState(false);
 
@@ -58,27 +66,39 @@ const Dashboard = () => {
 	}, [isLoggedIn, setIsLoggedIn, getJwtToken, sendingToken]);
 
 	return (
-		<Container >
-			<Box sx={{ my: 5  }}>
-				<CardMedia image={user?.picture} sx={{ height: 70, width:70 }} />
+		<Container>
+			<Box sx={{ my: 5 }}>
+				<CardMedia image={user?.picture} sx={{ height: 70, width: 70 }} />
 				<Typography variant="h6">Hello {user?.name}</Typography>
 				<Typography variant="h6">Logged In As: {user?.email}</Typography>
 				{isProvider && (
-					<Paper  sx={{
-						px: { xs: 1, sm: 3, md: 5, lg: 5, xl: 10 },
-						border: 1,
-						borderColor: "gray",
-						borderRadius: "20px",
-						py: 3,
-						mt:5,
-						"&:hover": {
-							backgroundColor: "#f2f2f2",
-					} }}>
-						<Box sx={{ display:"flex", justifyContent: "space-between",flexDirection: { xs: "column", md: "row" } }}>
+					<Paper
+						sx={{
+							px: { xs: 1, sm: 3, md: 5, lg: 5, xl: 10 },
+							border: 1,
+							borderColor: "gray",
+							borderRadius: "20px",
+							py: 3,
+							mt: 5,
+							"&:hover": {
+								backgroundColor: "#f2f2f2",
+							},
+						}}
+					>
+						<Box
+							sx={{
+								display: "flex",
+								justifyContent: "space-between",
+								flexDirection: { xs: "column", md: "row" },
+							}}
+						>
 							<LeftSideCard eachProvider={loggedInProvider} />
 							<RightSideCard eachProvider={loggedInProvider} />
 						</Box>
-						<Box sx={{ display:"flex",  direction: "rtl" }} mt={showGoogleCalendarForm ? 10 : 2}>
+						<Box
+							sx={{ display: "flex", direction: "rtl" }}
+							mt={showGoogleCalendarForm ? 10 : 2}
+						>
 							<Button
 								type="button"
 								variant="contained"
@@ -87,15 +107,16 @@ const Dashboard = () => {
 									borderRadius: "15px",
 									"&:hover": {
 										backgroundColor: "#cc0000",
-								} }}
+									},
+								}}
 								onClick={handleToggleForm}
 							>
 								{showGoogleCalendarForm ? "Close" : "Add Google Calendar"}
-								</Button>
-								{showGoogleCalendarForm && (
-									<GoogleCalendarForm userId={loggedInProvider.user_id} />
-								)}
-							</Box>
+							</Button>
+							{showGoogleCalendarForm && (
+								<GoogleCalendarForm userId={loggedInProvider.user_id} />
+							)}
+						</Box>
 					</Paper>
 				)}
 			</Box>

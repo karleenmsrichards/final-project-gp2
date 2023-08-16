@@ -233,6 +233,4 @@ router.get("/calendars", async (_, res) => {
 	}
 });
 
-
-
 export default router;

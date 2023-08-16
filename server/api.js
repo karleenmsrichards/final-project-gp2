@@ -69,7 +69,9 @@ router.delete("/profile", async (req, res) => {
 				});
 				if (provider) {
 					await Provider.destroy({ where: { user_id: latestToken.user_id } });
-					const calendarCode = await Calendar.findOne({ where: {  user_id: latestToken.user_id  } });
+					const calendarCode = await Calendar.findOne({
+						where: { user_id: latestToken.user_id },
+					});
 					if (calendarCode) {
 						await Calendar.destroy({ where: { user_id: latestToken.user_id } });
 					}

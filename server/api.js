@@ -25,7 +25,8 @@ router.get("/clientId", (_, res) => {
 router.post("/validation", async (req, res) => {
 	const { token, role } = req.body;
 	if (!token) {
-		res.status(400).json({ message: "Missing token!" });
+		res.status(400).json({ error: "Missing token!" });
+		return;
 	}
 	try {
 		const client = new OAuth2Client();
@@ -55,7 +56,7 @@ router.delete("/profile", async (req, res) => {
 	try {
 		const { token } = req.body;
 		if (!token) {
-			res.status(400).json({ error: "userId is required" });
+			res.status(400).json({ error: "Missing token!" });
 		} else {
 			const latestToken = await Tokens.findOne({ where: { token } });
 			if (!latestToken) {
@@ -138,11 +139,11 @@ router.post("/provider", async (req, res) => {
 	}
 });
 
-router.get("/providers", async (req, res) => {
+router.get("/providers", async (_, res) => {
 	try {
 		const providers = await Provider.findAll();
 		if (!providers) {
-			res.status(400).json("No Provider Found!");
+			res.status(400).json({ error: "No Provider Found!" });
 		} else {
 			res.status(200).json(providers);
 		}
@@ -191,6 +192,27 @@ router.put("/provider", async (req, res) => {
 		} else {
 			res.status(404).json({ message: "Provider not found" });
 		}
+	} catch (error) {
+		res.status(500).json({ error });
+	}
+});
+
+router.post("/calendar", async (req, res) => {
+	const { user_id, userEmbedCode } = req.body;
+	if (!user_id || !userEmbedCode) {
+		res.status(400).json({ error: "Missing requirements!" });
+		return;
+	}
+	try {
+		const provider = await Calendar.findOne({ where: { user_id } });
+		if (provider) {
+			res.status(400).json({ error: "You Provided it before!" });
+			return;
+		}
+		const srcRight = userEmbedCode.split('src="')[1];
+		const calendar_id = srcRight.split('"')[0];
+		await Calendar.create({ calendar_id, user_id });
+		res.status(200).json({ message: "success" });
 	} catch (error) {
 		res.status(500).json({ error });
 	}

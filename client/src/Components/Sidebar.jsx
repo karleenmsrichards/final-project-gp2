@@ -21,11 +21,6 @@ export default function TemporaryDrawer() {
 	const { handleSignOut, handleDeleteProfile } = useAuth();
 	const { user } = useContext(AppContext);
 	const [right, setRight] = useState(false);
-	const [picture, setPicture] = useState(null);
-
-	useEffect(() => {
-		setPicture(user?.picture);
-	}, [user]);
 
 	function toggleDrawer(open) {
 		return (event) => {
@@ -106,7 +101,7 @@ export default function TemporaryDrawer() {
 						boxShadow: "0 0 0 5px #D3D3D3",
 					},
 				}}
-				src={picture}
+				src={user?.picture}
 			/>
 			<Drawer anchor="right" open={right} onClose={toggleDrawer(false)}>
 				{list()}

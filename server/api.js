@@ -220,4 +220,17 @@ router.post("/calendar", async (req, res) => {
 	}
 });
 
+router.get("/calendars", async (_, res) => {
+	try {
+		const calendars = await Calendar.findAll();
+		if (!calendars) {
+			res.status(400).json({ error: "No Calendars Found!" });
+		} else {
+			res.status(200).json(calendars);
+		}
+	} catch (error) {
+		res.status(500).json(error);
+	}
+});
+
 export default router;

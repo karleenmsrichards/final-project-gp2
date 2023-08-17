@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import {
 	TextField,
 	Button,
@@ -8,12 +8,14 @@ import {
 	Link,
 } from "@mui/material";
 import axios from "axios";
+import { AppContext } from "../App";
 
-const GoogleCalendarForm = ({ userId }) => {
-	const [userEmbedCode, setUserEmbedCode] = useState("");
+const GoogleCalendarForm = ({ email }) => {
+	const [userCalendarLink, setUserCalendarLink] = useState("");
+	const { providers, setProviders } = useContext(AppContext);
 
-	const handleEmbedCodeChange = (event) => {
-		setUserEmbedCode(event.target.value);
+	const handleCalendarLinkChange = (event) => {
+		setUserCalendarLink(event.target.value);
 	};
 
 	const handleSubmit = async (event) => {
@@ -21,13 +23,20 @@ const GoogleCalendarForm = ({ userId }) => {
 
 		try {
 			const response = await axios.post("/api/calendar", {
-				user_id: userId,
-				userEmbedCode: userEmbedCode,
+				email,
+				calendar_link: userCalendarLink,
 			});
 
 			if (response.status === 200) {
-				console.log(response.data);
-				setUserEmbedCode("");
+				console.log(response.data.calendar);
+				const newCalendar = response.data;
+				const updatedProviders = providers.map((provider) =>
+					provider.email === email
+						? { ...provider, Calendar: newCalendar }
+						: provider
+				);
+				setProviders(updatedProviders);
+				setUserCalendarLink("");
 				alert("You have successfully added your Google Calendar Booking Page");
 			}
 		} catch (error) {
@@ -40,7 +49,10 @@ const GoogleCalendarForm = ({ userId }) => {
 	};
 
 	return (
-		<Container maxWidth="sm" sx={{ margin: "0 auto 100px auto" }}>
+		<Container
+			maxWidth="sm"
+			sx={{ margin: "auto auto 20px auto", direction: "ltr" }}
+		>
 			<Typography variant="h5" align="left" gutterBottom>
 				Add Your Google Calendar Booking Page
 			</Typography>
@@ -58,34 +70,34 @@ const GoogleCalendarForm = ({ userId }) => {
 			</Box>
 			<Box mt={4}>
 				<Typography variant="subtitle1" gutterBottom>
-					Step 2: Find your Booking Page Embed Code
+					Step 2: Find your Booking Page Link
 				</Typography>
 				<Link
 					href="https://support.google.com/calendar/answer/10733297?hl=en&co=GENIE.Platform%3DDesktop"
 					target="_blank"
 					rel="noopener noreferrer"
 				>
-					Learn how to find your Booking Page Embed Code
+					Learn how to find your Booking Page Link
 				</Link>
 			</Box>
 			<Box mt={4}>
 				<Typography variant="subtitle1" gutterBottom>
-					Step 3: Add your Inline Booking Page Embed Code
+					Step 3: Add your Booking Page Link
 				</Typography>
 			</Box>
 			<form onSubmit={handleSubmit}>
 				<Box mt={3}>
 					<TextField
-						label="Inline Booking Page Embed Code"
+						label="Booking page link"
 						variant="outlined"
-						name="userEmbedCode"
-						value={userEmbedCode}
-						onChange={handleEmbedCodeChange}
+						name="userCalendarLink"
+						value={userCalendarLink}
+						onChange={handleCalendarLinkChange}
 						fullWidth
 						multiline
 						rows={4}
 						required
-						aria-label="Inline Booking Page Embed Code"
+						aria-label="Booking page link"
 					/>
 				</Box>
 				<Box mt={2}>

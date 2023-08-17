@@ -72,11 +72,12 @@ const useAuth = () => {
 			const data = response.data;
 			if (response.status === 200) {
 				if (isProvider) {
-					const providerIndex = providers.findIndex(
-						(provider) => provider.email === user.email
-					);
-					providers.splice(providerIndex, 1);
-					setProviders(providers);
+					const providerIndex = providers.findIndex((provider) => provider.email === user.email);
+					if (providerIndex !== -1) {
+						const updatedProviders = [...providers];
+						updatedProviders.splice(providerIndex, 1);
+						setProviders(updatedProviders);
+					}
 				}
 				handleSignOut();
 				alert(data.message);

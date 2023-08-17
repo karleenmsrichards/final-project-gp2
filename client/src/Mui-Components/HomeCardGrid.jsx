@@ -12,6 +12,7 @@ import { AppContext } from "../App";
 export function HomeCardGrid() {
 	const { providers } = useContext(AppContext);
 	const navigate = useNavigate();
+	const experts = providers?.slice(0, 5);
 
 	return (
 		<Container>
@@ -19,7 +20,7 @@ export function HomeCardGrid() {
 				Experts loved by customers
 			</Typography>
 			<Grid container spacing={2}>
-				{providers.map((eachProvider, index) => (
+				{experts.map((eachProvider, index) => (
 					<Grid key={index} item xs={12} sm={6} md={3} lg={2.4} xl={2}>
 						<Card sx={{ maxWidth: 300, borderRadius: "20px" }}>
 							<CardActionArea sx={{ padding: "10px" }}>

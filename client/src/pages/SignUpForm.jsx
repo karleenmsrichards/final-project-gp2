@@ -44,8 +44,10 @@ const SignUpForm = () => {
 					hourlyRate: 0,
 					language: null,
 				});
-				providers.push(signUpData);
-				setProviders(providers);
+				setProviders((prevProviders) => [
+					...prevProviders,
+					response.data.provider,
+				]);
 				alert("You are now a Provider");
 				navigate("/dashboard");
 			}

@@ -1,12 +1,21 @@
 import React, { useCallback, useContext, useEffect, useState } from "react";
-import { Typography, Box, Container, Button } from "@mui/material";
+import {
+	Typography,
+	Box,
+	Paper,
+	Container,
+	Button,
+	CardMedia,
+} from "@mui/material";
 import useAuth from "../customHooks/useAuth";
 import { AppContext } from "../App";
 import GoogleCalendarForm from "../Components/GoogleCalendarForm";
-import { Navigate } from "react-router-dom";
+import LeftSideCard from "../Components/LeftSideCard";
+import RightSideCard from "../Components/RightSideCard";
 
 const Dashboard = () => {
-	const { user, isLoggedIn, setIsLoggedIn, providers } = useContext(AppContext);
+	const { user, isLoggedIn, setIsLoggedIn, providers, isProvider } =
+		useContext(AppContext);
 	const { handleSignOut, getJwtToken } = useAuth();
 	const [showGoogleCalendarForm, setShowGoogleCalendarForm] = useState(false);
 
@@ -58,27 +67,59 @@ const Dashboard = () => {
 
 	return (
 		<Container>
-			<Box sx={{ marginX: { xs: 1, sm: 5, md: 10, lg: 15, xl: 20 }, my: 5 }}>
+			<Box sx={{ my: 5 }}>
+				<CardMedia image={user?.picture} sx={{ height: 70, width: 70 }} />
 				<Typography variant="h6">Hello {user?.name}</Typography>
-			</Box>
-
-			{loggedInProvider && (
-				<Box mt={2}>
-					<Button
-						type="button"
-						variant="contained"
-						color="primary"
-						style={{ backgroundColor: "#F3263B" }}
-						onClick={handleToggleForm}
+				<Typography variant="h6">Logged In As: {user?.email}</Typography>
+				{isProvider && (
+					<Paper
+						sx={{
+							px: { xs: 1, sm: 3, md: 5, lg: 5, xl: 10 },
+							border: 1,
+							borderColor: "gray",
+							borderRadius: "20px",
+							py: 3,
+							mt: 5,
+							"&:hover": {
+								backgroundColor: "#f2f2f2",
+							},
+						}}
 					>
-						{showGoogleCalendarForm ? "Close" : "Add Google Calendar"}
-					</Button>
-				</Box>
-			)}
-
-			{showGoogleCalendarForm && (
-				<GoogleCalendarForm userId={loggedInProvider.user_id} />
-			)}
+						<Box
+							sx={{
+								display: "flex",
+								justifyContent: "space-between",
+								flexDirection: { xs: "column", md: "row" },
+							}}
+						>
+							<LeftSideCard eachProvider={loggedInProvider} />
+							<RightSideCard eachProvider={loggedInProvider} noButton={true} />
+						</Box>
+						<Box
+							sx={{ display: "flex", direction: "rtl" }}
+							mt={showGoogleCalendarForm ? 10 : 2}
+						>
+							<Button
+								type="button"
+								variant="contained"
+								sx={{
+									backgroundColor: "#F3263B",
+									borderRadius: "15px",
+									"&:hover": {
+										backgroundColor: "#cc0000",
+									},
+								}}
+								onClick={handleToggleForm}
+							>
+								{showGoogleCalendarForm ? "Close" : "Add Google Calendar"}
+							</Button>
+							{showGoogleCalendarForm && (
+								<GoogleCalendarForm email={loggedInProvider.email} />
+							)}
+						</Box>
+					</Paper>
+				)}
+			</Box>
 		</Container>
 	);
 };

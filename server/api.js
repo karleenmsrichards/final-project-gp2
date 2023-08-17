@@ -2,7 +2,7 @@ import { Router } from "express";
 import logger from "./utils/logger";
 const dotenv = require("dotenv");
 const { OAuth2Client } = require("google-auth-library");
-const { Users, Provider, Tokens } = require("./sequelize/models");
+const { Users, Provider, Tokens, Calendar } = require("./sequelize/models");
 const { persistNewProvider } = require("./controller/apiController");
 
 dotenv.config();
@@ -25,7 +25,8 @@ router.get("/clientId", (_, res) => {
 router.post("/validation", async (req, res) => {
 	const { token, role } = req.body;
 	if (!token) {
-		res.status(400).json({ message: "Missing token!" });
+		res.status(400).json({ error: "Missing token!" });
+		return;
 	}
 	try {
 		const client = new OAuth2Client();
@@ -55,7 +56,7 @@ router.delete("/profile", async (req, res) => {
 	try {
 		const { token } = req.body;
 		if (!token) {
-			res.status(400).json({ error: "userId is required" });
+			res.status(400).json({ error: "Missing token!" });
 		} else {
 			const latestToken = await Tokens.findOne({ where: { token } });
 			if (!latestToken) {
@@ -68,6 +69,12 @@ router.delete("/profile", async (req, res) => {
 				});
 				if (provider) {
 					await Provider.destroy({ where: { user_id: latestToken.user_id } });
+					const calendarCode = await Calendar.findOne({
+						where: { user_id: latestToken.user_id },
+					});
+					if (calendarCode) {
+						await Calendar.destroy({ where: { user_id: latestToken.user_id } });
+					}
 				}
 				res.status(200).json({ message: "Your account is deleted!" });
 			}
@@ -134,11 +141,11 @@ router.post("/provider", async (req, res) => {
 	}
 });
 
-router.get("/providers", async (req, res) => {
+router.get("/providers", async (_, res) => {
 	try {
-		const providers = await Provider.findAll();
-		if (!providers) {
-			res.status(400).json("No Provider Found!");
+		const providers = await Provider.findAll({ include: Calendar });
+		if (providers.length === 0) {
+			res.status(400).json({ error: "No Provider Found!" });
 		} else {
 			res.status(200).json(providers);
 		}
@@ -187,6 +194,31 @@ router.put("/provider", async (req, res) => {
 		} else {
 			res.status(404).json({ message: "Provider not found" });
 		}
+	} catch (error) {
+		res.status(500).json({ error });
+	}
+});
+
+router.post("/calendar", async (req, res) => {
+	const { email, calendar_link } = req.body;
+	if (!calendar_link) {
+		res.status(400).json({ error: "Missing Calendar Link!" });
+		return;
+	}
+	try {
+		const provider = await Provider.findOne({ where: { email } });
+		const providerCalendar = await Calendar.findOne({
+			where: { provider_id: provider.id },
+		});
+		if (providerCalendar) {
+			res.status(400).json({ error: "You Provided it before!" });
+			return;
+		}
+		const calendar = await Calendar.create({
+			calendar_link,
+			provider_id: provider.id,
+		});
+		res.status(200).json({ message: "success", calendar });
 	} catch (error) {
 		res.status(500).json({ error });
 	}

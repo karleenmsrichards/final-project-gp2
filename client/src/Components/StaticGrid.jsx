@@ -58,7 +58,6 @@ const Home = () => {
 					gridColumn: { xs: "1 / span 1", sm: "1 / span 1", md: "1 / span 1" },
 					gridRow: { xs: "1 / span 3", sm: "1 / span 3", md: "1 / span 3" },
 				}}
-				s
 			>
 				<CategoryCard
 					title="Makeup"

@@ -1,4 +1,5 @@
 "use strict";
+
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
 	async up(queryInterface, Sequelize) {
@@ -9,16 +10,19 @@ module.exports = {
 				primaryKey: true,
 				type: Sequelize.INTEGER,
 			},
-			calendar_id: {
+			calendar_link: {
 				type: Sequelize.STRING,
+				allowNull: false,
 			},
-			user_id: {
+			provider_id: {
 				type: Sequelize.INTEGER,
 				allowNull: false,
 				references: {
-					model: "Users",
+					model: "Providers",
 					key: "id",
 				},
+				onUpdate: "CASCADE",
+				onDelete: "CASCADE",
 			},
 			createdAt: {
 				allowNull: false,
@@ -30,6 +34,7 @@ module.exports = {
 			},
 		});
 	},
+
 	async down(queryInterface, Sequelize) {
 		await queryInterface.dropTable("Calendars");
 	},

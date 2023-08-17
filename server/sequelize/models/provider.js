@@ -4,7 +4,10 @@ const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
 	class Provider extends Model {
 		/* eslint-disable-next-line */
-		static associate(models) {}
+		static associate(models) {
+			Provider.belongsTo(models.Users, { foreignKey: "user_id" });
+			Provider.hasOne(models.Calendar, { foreignKey: 'provider_id' });
+		}
 	}
 	Provider.init(
 		{

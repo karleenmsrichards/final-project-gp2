@@ -6,7 +6,7 @@ module.exports = (sequelize, DataTypes) => {
 		/* eslint-disable-next-line */
 		static associate(models) {
 			Provider.belongsTo(models.Users, { foreignKey: "user_id" });
-			Provider.hasOne(models.Calendar, { foreignKey: 'provider_id' });
+			Provider.hasOne(models.Calendar, { foreignKey: "provider_id" });
 		}
 	}
 	Provider.init(

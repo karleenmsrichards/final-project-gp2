@@ -72,7 +72,9 @@ const useAuth = () => {
 			const data = response.data;
 			if (response.status === 200) {
 				if (isProvider) {
-					const providerIndex = providers.findIndex((provider) => provider.email === user.email);
+					const providerIndex = providers.findIndex(
+						(provider) => provider.email === user.email
+					);
 					if (providerIndex !== -1) {
 						const updatedProviders = [...providers];
 						updatedProviders.splice(providerIndex, 1);

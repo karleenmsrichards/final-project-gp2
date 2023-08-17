@@ -12,7 +12,7 @@ import { AppContext } from "../App";
 export function HomeCardGrid() {
 	const { providers } = useContext(AppContext);
 	const navigate = useNavigate();
-	const experts = providers?.slice(0,5);
+	const experts = providers?.slice(0, 5);
 
 	return (
 		<Container>

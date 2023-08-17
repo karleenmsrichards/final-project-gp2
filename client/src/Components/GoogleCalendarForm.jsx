@@ -12,7 +12,7 @@ import { AppContext } from "../App";
 
 const GoogleCalendarForm = ({ email }) => {
 	const [userCalendarLink, setUserCalendarLink] = useState("");
-	const{ providers, setProviders }=useContext(AppContext);
+	const { providers, setProviders } = useContext(AppContext);
 
 	const handleCalendarLinkChange = (event) => {
 		setUserCalendarLink(event.target.value);
@@ -28,9 +28,8 @@ const GoogleCalendarForm = ({ email }) => {
 			});
 
 			if (response.status === 200) {
-
 				console.log(response.data.calendar);
-				const newCalendar=response.data;
+				const newCalendar = response.data;
 				const updatedProviders = providers.map((provider) =>
 					provider.email === email
 						? { ...provider, Calendar: newCalendar }

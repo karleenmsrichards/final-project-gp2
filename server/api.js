@@ -207,12 +207,17 @@ router.post("/calendar", async (req, res) => {
 	}
 	try {
 		const provider = await Provider.findOne({ where: { email } });
-		const providerCalendar = await Calendar.findOne({ where: { provider_id: provider.id } });
+		const providerCalendar = await Calendar.findOne({
+			where: { provider_id: provider.id },
+		});
 		if (providerCalendar) {
 			res.status(400).json({ error: "You Provided it before!" });
 			return;
 		}
-		const calendar = await Calendar.create({ calendar_link, provider_id: provider.id });
+		const calendar = await Calendar.create({
+			calendar_link,
+			provider_id: provider.id,
+		});
 		res.status(200).json({ message: "success", calendar });
 	} catch (error) {
 		res.status(500).json({ error });

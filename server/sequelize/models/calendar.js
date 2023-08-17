@@ -3,7 +3,7 @@ const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
 	class Calendar extends Model {
 		static associate(models) {
-			Calendar.belongsTo(models.Provider, { foreignKey: 'provider_id' });
+			Calendar.belongsTo(models.Provider, { foreignKey: "provider_id" });
 		}
 	}
 	Calendar.init(

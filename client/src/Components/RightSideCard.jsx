@@ -1,7 +1,16 @@
 import { Box, Button } from "@mui/material";
 import Typography from "../Mui-Components/Typography";
 
-const RightSideCard = ({ eachProvider }) => {
+const RightSideCard = ({ eachProvider, noButton }) => {
+	const handleCalendar = () => {
+		const url = eachProvider?.Calendar?.calendar_link;
+		if (url) {
+			window.open(url, "_blank", "width=800,height=600,left=200,top=100");
+		} else {
+			alert("No calendar link available for this provider.");
+		}
+	};
+
 	return (
 		<Box
 			sx={{
@@ -38,21 +47,25 @@ const RightSideCard = ({ eachProvider }) => {
 				>
 					£{eachProvider.hourlyRate}/hr
 				</Typography>
-				<Button
-					variant="contained"
-					sx={{
-						backgroundColor: "#F3263B",
-						color: "#fff",
-						px: 3,
-						py: 1,
-						borderRadius: "15px",
-						"&:hover": {
-							backgroundColor: "#cc0000",
-						},
-					}}
-				>
-					See booking options
-				</Button>
+				{!noButton && (
+					<Button
+						variant="contained"
+						onClick={handleCalendar}
+						sx={{
+							backgroundColor: "#F3263B",
+							color: "#fff",
+							px: 3,
+							py: 1,
+							borderRadius: "15px",
+							"&:hover": {
+								backgroundColor: "#cc0000",
+							},
+						}}
+					>
+						See booking options
+					</Button>
+				)}
+				<Box id="scheduling-button-container"></Box>
 			</Box>
 		</Box>
 	);

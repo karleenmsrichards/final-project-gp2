@@ -143,8 +143,8 @@ router.post("/provider", async (req, res) => {
 
 router.get("/providers", async (_, res) => {
 	try {
-		const providers = await Provider.findAll();
-		if (!providers) {
+		const providers = await Provider.findAll({ include: Calendar });
+		if (providers.length === 0) {
 			res.status(400).json({ error: "No Provider Found!" });
 		} else {
 			res.status(200).json(providers);
@@ -200,36 +200,22 @@ router.put("/provider", async (req, res) => {
 });
 
 router.post("/calendar", async (req, res) => {
-	const { user_id, userEmbedCode } = req.body;
-	if (!user_id || !userEmbedCode) {
-		res.status(400).json({ error: "Missing requirements!" });
+	const { email, calendar_link } = req.body;
+	if (!calendar_link) {
+		res.status(400).json({ error: "Missing Calendar Link!" });
 		return;
 	}
 	try {
-		const provider = await Calendar.findOne({ where: { user_id } });
-		if (provider) {
+		const provider = await Provider.findOne({ where: { email } });
+		const providerCalendar = await Calendar.findOne({ where: { provider_id: provider.id } });
+		if (providerCalendar) {
 			res.status(400).json({ error: "You Provided it before!" });
 			return;
 		}
-		const srcRight = userEmbedCode.split('src="')[1];
-		const calendar_id = srcRight.split('"')[0];
-		await Calendar.create({ calendar_id, user_id });
-		res.status(200).json({ message: "success" });
+		const calendar = await Calendar.create({ calendar_link, provider_id: provider.id });
+		res.status(200).json({ message: "success", calendar });
 	} catch (error) {
 		res.status(500).json({ error });
-	}
-});
-
-router.get("/calendars", async (_, res) => {
-	try {
-		const calendars = await Calendar.findAll();
-		if (!calendars) {
-			res.status(400).json({ error: "No Calendars Found!" });
-		} else {
-			res.status(200).json(calendars);
-		}
-	} catch (error) {
-		res.status(500).json(error);
 	}
 });
 

@@ -93,7 +93,7 @@ const Dashboard = () => {
 							}}
 						>
 							<LeftSideCard eachProvider={loggedInProvider} />
-							<RightSideCard eachProvider={loggedInProvider} />
+							<RightSideCard eachProvider={loggedInProvider} noButton={true} />
 						</Box>
 						<Box
 							sx={{ display: "flex", direction: "rtl" }}
@@ -114,7 +114,7 @@ const Dashboard = () => {
 								{showGoogleCalendarForm ? "Close" : "Add Google Calendar"}
 							</Button>
 							{showGoogleCalendarForm && (
-								<GoogleCalendarForm userId={loggedInProvider.user_id} />
+								<GoogleCalendarForm email={loggedInProvider.email} />
 							)}
 						</Box>
 					</Paper>

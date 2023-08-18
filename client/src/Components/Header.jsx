@@ -13,7 +13,6 @@ import useAuth from "../customHooks/useAuth";
 import Sidebar from "./Sidebar";
 import { AppContext } from "../App";
 
-
 const Header = () => {
 	const {
 		user,

@@ -7,7 +7,6 @@ import {
 	Container,
 	Typography,
 	Box,
-	FormHelperText,
 } from "@mui/material";
 import { AppContext } from "../App";
 
@@ -33,17 +32,29 @@ const SignUpForm = () => {
 	const validateNumber = (number) => {
 		return /^\d{11}$/.test(number);
 	};
-	const validateText = (address) => {
-		return address.length >= 5;
+	const validateTextShort = (text) => {
+		return text.length >= 3;
+	};
+	const validateTextLong = (text) => {
+		return text.length >= 5;
 	};
 
 	const validateForm = () => {
 		const errors = {};
-		if (!signUpData.phoneNumber || !validateNumber(signUpData.phoneNumber)) {
-			errors.phoneNumber = "Invalid phone number format";
+		if (!signUpData.firstName|| !validateTextShort(signUpData.firstName)) {
+			errors.firstName = true;
 		}
-		if (!signUpData.address || !validateText(signUpData.address)) {
-			errors.address = "Address must be at least 5 characters";
+		if (!signUpData.lastName || !validateTextShort(signUpData.lastName)) {
+			errors.lastName = true;
+		}
+		if (!signUpData.language || !validateTextShort(signUpData.language)) {
+			errors.language = true;
+		}
+		if (!signUpData.phoneNumber || !validateNumber(signUpData.phoneNumber)) {
+			errors.phoneNumber = true;
+		}
+		if (!signUpData.address || !validateTextLong(signUpData.address)) {
+			errors.address = true;
 		}
 		return errors;
 	};
@@ -125,6 +136,8 @@ const SignUpForm = () => {
 								value={signUpData.firstName}
 								onChange={handleChange}
 								fullWidth
+								error={formErrors.firstName}
+								helperText={formErrors.firstName ? "Fill in the firstName field (min 3 charcters)" : ""}
 							/>
 						</Box>
 						<Box mt={2}>
@@ -135,6 +148,8 @@ const SignUpForm = () => {
 								value={signUpData.lastName}
 								onChange={handleChange}
 								fullWidth
+								error={formErrors.lastName}
+								helperText={formErrors.lastName ? "Fill in the SurName field (min 3 charcters)" : ""}
 							/>
 						</Box>
 						<Box mt={2}>
@@ -168,6 +183,8 @@ const SignUpForm = () => {
 								value={signUpData.language}
 								onChange={handleChange}
 								fullWidth
+								error={formErrors.language}
+								helperText={formErrors.language ? "Fill in the language field (min 3 characters)" : ""}
 							/>
 						</Box>
 						<Box mt={2}>
@@ -188,6 +205,8 @@ const SignUpForm = () => {
 								value={signUpData.phoneNumber}
 								onChange={handleChange}
 								fullWidth
+								error={formErrors.phoneNumber}
+								helperText={formErrors.phoneNumber ? "Fill in the phonNumber field (11 Numbers)" : ""}
 							/>
 						</Box>
 						<Box mt={2}>
@@ -198,6 +217,8 @@ const SignUpForm = () => {
 								value={signUpData.address}
 								onChange={handleChange}
 								fullWidth
+								error={formErrors.address}
+								helperText={formErrors.address ? "Fill in the address field (min 5 characters)" : ""}
 							/>
 						</Box>
 						<Box mt={2}>
@@ -251,11 +272,6 @@ const SignUpForm = () => {
 								fullWidth
 							/>
 						</Box>
-						{Object.keys(formErrors).map((fieldName) => (
-							<FormHelperText key={fieldName} error>
-								{formErrors[fieldName]}
-							</FormHelperText>
-						))}
 						<Box mt={2}>
 							<Button
 								type="submit"

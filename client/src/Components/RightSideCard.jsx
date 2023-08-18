@@ -4,17 +4,17 @@ import { AppContext } from "../App";
 import { useContext } from "react";
 
 const RightSideCard = ({ eachProvider, noButton }) => {
-	const { isLoggedIn }=useContext(AppContext);
+	const { isLoggedIn } = useContext(AppContext);
 
 	const handleCalendar = () => {
-		if(isLoggedIn){
+		if (isLoggedIn) {
 			const url = eachProvider?.Calendar?.calendar_link;
 			if (url) {
 				window.open(url, "_blank", "width=800,height=600,left=200,top=100");
 			} else {
 				alert("No calendar link available for this provider.");
 			}
-		}else{
+		} else {
 			alert("You need to login first!");
 		}
 	};

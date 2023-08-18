@@ -83,7 +83,7 @@ const Dashboard = () => {
 					<Box component="span" fontWeight="bold">
 						{user?.email}
 					</Box>
-					</Typography>
+				</Typography>
 				{isProvider && (
 					<Paper
 						sx={{

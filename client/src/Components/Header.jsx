@@ -88,14 +88,16 @@ const Header = () => {
 
 					{!isLoggedIn ? (
 						<Box id="signInDiv" sx={{ mr: 1 }}>
-							<Button variant="contained"
+							<Button
+								variant="contained"
 								sx={{
 									backgroundColor: "#F3263B",
 									"&:hover": {
 										backgroundColor: "#cc0000",
 									},
 								}}
-								onClick={handleSignUp}>
+								onClick={handleSignUp}
+							>
 								Sign Up / Sign In
 							</Button>
 						</Box>

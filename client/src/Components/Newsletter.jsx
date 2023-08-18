@@ -1,14 +1,11 @@
-import * as React from "react";
+import { Button, Snackbar, TextField, Typography } from "@mui/material";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
-import Typography from "../Mui-Components/Typography";
-import Snackbar from "../Mui-Components/Snackbar";
-import Button from "../Mui-Components/Buttons";
-import TextField from "../Mui-Components/TextField";
 import SvgIcon from "@mui/material/SvgIcon";
+import { useState } from "react";
 
 function NewsletterSignup() {
-	const [open, setOpen] = React.useState(false);
+	const [open, setOpen] = useState(false);
 
 	const handleSubmit = (event) => {
 		event.preventDefault();
@@ -57,7 +54,6 @@ function NewsletterSignup() {
 					}}
 				>
 					<TextField
-						noBorder
 						placeholder="Your email"
 						variant="standard"
 						sx={{ flex: 1, mr: 2 }}

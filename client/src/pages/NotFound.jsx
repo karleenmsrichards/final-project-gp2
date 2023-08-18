@@ -1,5 +1,4 @@
-import { Box } from "@mui/material";
-import Typography from "../Mui-Components/Typography";
+import { Box, Typography } from "@mui/material";
 
 const NotFound = () => {
 	return (

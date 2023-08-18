@@ -5,13 +5,13 @@ import {
 	LinearProgress,
 	MenuItem,
 	MenuList,
+	Typography,
 } from "@mui/material";
 import { useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
 import useAuth from "../customHooks/useAuth";
 import Sidebar from "./Sidebar";
 import { AppContext } from "../App";
-import Typography from "../Mui-Components/Typography";
 
 const Header = () => {
 	const {

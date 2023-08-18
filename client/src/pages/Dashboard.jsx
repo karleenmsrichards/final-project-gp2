@@ -68,9 +68,22 @@ const Dashboard = () => {
 	return (
 		<Container>
 			<Box sx={{ my: 5 }}>
-				<CardMedia image={user?.picture} sx={{ height: 70, width: 70 }} />
-				<Typography variant="h6">Hello {user?.name}</Typography>
-				<Typography variant="h6">Logged In As: {user?.email}</Typography>
+				<CardMedia
+					image={user?.picture}
+					sx={{ height: 70, width: 70, mb: 2 }}
+				/>
+				<Typography>
+					Hello{" "}
+					<Box component="span" fontWeight="bold">
+						{user?.name}
+					</Box>
+				</Typography>
+				<Typography>
+					Logged In As:{" "}
+					<Box component="span" fontWeight="bold">
+						{user?.email}
+					</Box>
+				</Typography>
 				{isProvider && (
 					<Paper
 						sx={{

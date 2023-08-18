@@ -1,5 +1,4 @@
-import { Box, Button } from "@mui/material";
-import Typography from "../Mui-Components/Typography";
+import { Box, Button, Typography } from "@mui/material";
 import { AppContext } from "../App";
 import { useContext } from "react";
 

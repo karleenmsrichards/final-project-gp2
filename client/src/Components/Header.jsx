@@ -5,13 +5,13 @@ import {
 	LinearProgress,
 	MenuItem,
 	MenuList,
+	Typography,
 } from "@mui/material";
 import { useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
 import useAuth from "../customHooks/useAuth";
 import Sidebar from "./Sidebar";
 import { AppContext } from "../App";
-import Typography from "../Mui-Components/Typography";
 
 const Header = () => {
 	const {
@@ -88,7 +88,16 @@ const Header = () => {
 
 					{!isLoggedIn ? (
 						<Box id="signInDiv" sx={{ mr: 1 }}>
-							<Button variant="contained" onClick={handleSignUp}>
+							<Button
+								variant="contained"
+								sx={{
+									backgroundColor: "#F3263B",
+									"&:hover": {
+										backgroundColor: "#cc0000",
+									},
+								}}
+								onClick={handleSignUp}
+							>
 								Sign Up / Sign In
 							</Button>
 						</Box>

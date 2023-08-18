@@ -13,7 +13,7 @@ import SignOutIcon from "@mui/icons-material/ExitToApp";
 import Avatar from "@mui/material/Avatar";
 import { useNavigate } from "react-router-dom";
 import useAuth from "../customHooks/useAuth";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { AppContext } from "../App";
 
 export default function TemporaryDrawer() {

@@ -2,7 +2,7 @@ import { Box, Button, Typography } from "@mui/material";
 import { AppContext } from "../App";
 import { useContext } from "react";
 
-const RightSideCard = ({ eachProvider, noButton }) => {
+const RightSideCard = ({ eachProvider }) => {
 	const { isLoggedIn } = useContext(AppContext);
 
 	const handleCalendar = () => {
@@ -50,28 +50,26 @@ const RightSideCard = ({ eachProvider, noButton }) => {
 				<Typography
 					component="div"
 					variant="h5"
-					sx={{ direction: "ltr", textAlign: "right" }}
+					sx={{ direction: "ltr", textAlign: "right", mb: 2 }}
 				>
 					£{eachProvider.hourlyRate}/hr
 				</Typography>
-				{!noButton && (
-					<Button
-						variant="contained"
-						onClick={handleCalendar}
-						sx={{
-							backgroundColor: "#F3263B",
-							color: "#fff",
-							px: 3,
-							py: 1,
-							borderRadius: "15px",
-							"&:hover": {
-								backgroundColor: "#cc0000",
-							},
-						}}
-					>
-						See booking options
-					</Button>
-				)}
+				<Button
+					variant="contained"
+					onClick={handleCalendar}
+					sx={{
+						backgroundColor: "#F3263B",
+						color: "#fff",
+						px: 2,
+						py: 1,
+						borderRadius: "10px",
+						"&:hover": {
+							backgroundColor: "#cc0000",
+						},
+					}}
+				>
+					See booking options
+				</Button>
 				<Box id="scheduling-button-container"></Box>
 			</Box>
 		</Box>

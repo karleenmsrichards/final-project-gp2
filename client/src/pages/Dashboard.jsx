@@ -12,6 +12,7 @@ import { AppContext } from "../App";
 import GoogleCalendarForm from "../Components/GoogleCalendarForm";
 import LeftSideCard from "../Components/LeftSideCard";
 import RightSideCard from "../Components/RightSideCard";
+import CloseIcon from "@mui/icons-material/Close";
 
 const Dashboard = () => {
 	const { user, isLoggedIn, setIsLoggedIn, providers, isProvider } =
@@ -69,6 +70,7 @@ const Dashboard = () => {
 		<Container>
 			<Box sx={{ my: 5 }}>
 				<CardMedia
+					component="img"
 					image={user?.picture}
 					sx={{ height: 70, width: 70, mb: 2 }}
 				/>
@@ -106,25 +108,24 @@ const Dashboard = () => {
 							}}
 						>
 							<LeftSideCard eachProvider={loggedInProvider} />
-							<RightSideCard eachProvider={loggedInProvider} noButton={true} />
+							<RightSideCard eachProvider={loggedInProvider} />
 						</Box>
-						<Box
-							sx={{ display: "flex", direction: "rtl" }}
-							mt={showGoogleCalendarForm ? 10 : 2}
-						>
+						<Box sx={{ direction: "rtl" }} mt={2}>
 							<Button
 								type="button"
 								variant="contained"
 								sx={{
 									backgroundColor: "#F3263B",
-									borderRadius: "15px",
+									color: "#fff",
+									py: 1,
+									borderRadius: "10px",
 									"&:hover": {
 										backgroundColor: "#cc0000",
 									},
 								}}
 								onClick={handleToggleForm}
 							>
-								{showGoogleCalendarForm ? "Close" : "Add Google Calendar"}
+								{showGoogleCalendarForm ? <CloseIcon /> : "Add Google Calendar"}
 							</Button>
 							{showGoogleCalendarForm && (
 								<GoogleCalendarForm email={loggedInProvider.email} />

@@ -25,6 +25,10 @@ function NewsletterSignup() {
 					justifyContent: "space-between",
 					border: "1px solid #ccc",
 					borderRadius: "20px",
+					background:
+						"linear-gradient(90deg, rgba(4,2,0,1) 7%, rgba(106,45,16,1) 20%, rgba(163,94,63,1) 47%, rgba(191,169,159,1) 65%, rgba(208,206,201,1) 87%, rgba(254,255,255,1) 100%)",
+					fontWeight: "bolder",
+					color: "#fff",
 				}}
 			>
 				<Box sx={{ flex: 1, p: 2 }}>
@@ -46,7 +50,7 @@ function NewsletterSignup() {
 
 				<Box
 					sx={{
-						borderLeft: "1px solid #ccc",
+						borderLeft: "1px solid #fff",
 						pl: 2,
 						display: "flex",
 						flexDirection: "row",
@@ -56,7 +60,14 @@ function NewsletterSignup() {
 					<TextField
 						placeholder="Your email"
 						variant="standard"
-						sx={{ flex: 1, mr: 2 }}
+						sx={{
+							flex: 1,
+							mr: 2,
+							fontWeight: "bolder",
+							"&:hover": {
+								backgroundColor: "#fff",
+							},
+						}}
 					/>
 					<Button
 						type="submit"
@@ -64,7 +75,10 @@ function NewsletterSignup() {
 						variant="contained"
 						sx={{
 							backgroundColor: "#F3263B",
-							borderRadius: "20px",
+							color: "#fff",
+							px: 3,
+							py: 1,
+							borderRadius: "10px",
 							"&:hover": {
 								backgroundColor: "#cc0000",
 							},

@@ -18,7 +18,6 @@ export default function ProductHero() {
 				top: 0,
 				bottom: 0,
 				backgroundRepeat: "no-repeat",
-				zIndex: -2,
 				color: "white",
 				position: "relative",
 				display: "flex",
@@ -26,7 +25,7 @@ export default function ProductHero() {
 				justifyContent: "center",
 				minHeight: "80vh",
 				maxHeight: 1300,
-				backgroundImage: `url(${backgroundImage})`,
+				backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${backgroundImage})`,
 				backgroundSize: "cover",
 				backgroundPosition: "center center",
 				backgroundColor: "#7FC7D9",
@@ -61,6 +60,10 @@ export default function ProductHero() {
 					sx={{
 						minWidth: 200,
 						backgroundColor: "#F3263B",
+						color: "#fff",
+						px: 3,
+						py: 1,
+						borderRadius: "10px",
 						"&:hover": {
 							backgroundColor: "#cc0000",
 						},

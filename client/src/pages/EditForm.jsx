@@ -1,26 +1,27 @@
 import React, { useEffect, useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { TextField, Button, Container, Typography, Box } from "@mui/material";
-
 import { AppContext } from "../App";
 
 const EditForm = () => {
-	const [editData, setEditData] = useState({});
 	const [providerIndex, setProviderIndex] = useState(null);
 	const navigate = useNavigate();
+	const { user, isProvider, providers, setProviders, isLoggedIn } =useContext(AppContext);
 
-	const { user, isProvider, providers, setProviders, isLoggedIn } =
-		useContext(AppContext);
-
-	const editHandler = async () => {
-		if (isLoggedIn && isProvider) {
-			const providerInfo = providers.find((provider, index) => {
-				setProviderIndex(index);
-				return provider.email === user.email;
-			});
-			setEditData(providerInfo);
-		}
-	};
+	const [editData, setEditData] = useState({
+		firstName: "",
+		lastName: "",
+		email: user?.email,
+		businessName: "",
+		phoneNumber: "",
+		address: "",
+		city: "",
+		country: "",
+		profession: "",
+		yearsOfExperience: "",
+		language: "",
+		hourlyRate: 0,
+	});
 
 	const handleSubmit = async (event) => {
 		event.preventDefault();
@@ -55,6 +56,15 @@ const EditForm = () => {
 	};
 
 	useEffect(() => {
+	const editHandler = async () => {
+		if (isLoggedIn && isProvider) {
+			const providerInfo = providers.find((provider, index) => {
+				setProviderIndex(index);
+				return provider.email === user?.email;
+			});
+			setEditData(providerInfo);
+		}
+	};
 		editHandler();
 	}, [user, isLoggedIn, isProvider, providers]);
 
@@ -67,10 +77,9 @@ const EditForm = () => {
 							Edit Your Information.
 						</Typography>
 						<Box mt={2}>
-							<Typography variant="p" gutterBottom>
-								First Name
-							</Typography>
 							<TextField
+								InputLabelProps={{ shrink: true }}
+								label="First Name"
 								variant="outlined"
 								name="firstName"
 								value={editData.firstName}
@@ -79,10 +88,9 @@ const EditForm = () => {
 							/>
 						</Box>
 						<Box mt={2}>
-							<Typography variant="p" gutterBottom>
-								Surname
-							</Typography>
 							<TextField
+								InputLabelProps={{ shrink: true }}
+								label="Surname"
 								variant="outlined"
 								name="lastName"
 								value={editData.lastName}
@@ -91,10 +99,9 @@ const EditForm = () => {
 							/>
 						</Box>
 						<Box mt={2}>
-							<Typography variant="p" gutterBottom>
-								Email
-							</Typography>
 							<TextField
+								InputLabelProps={{ shrink: true }}
+								label="Email"
 								variant="outlined"
 								name="email"
 								value={editData.email}

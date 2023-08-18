@@ -17,7 +17,7 @@ const SignUpForm = () => {
 	const [signUpData, setSignUpData] = useState({
 		firstName: "",
 		lastName: "",
-		email: user.email,
+		email: user?.email,
 		businessName: "",
 		phoneNumber: "",
 		address: "",
@@ -30,6 +30,9 @@ const SignUpForm = () => {
 	});
 
 	const validateNumber = (number) => {
+		return /^\d{1}$/.test(number);
+	};
+	const validatePhoneNumber = (number) => {
 		return /^\d{11}$/.test(number);
 	};
 	const validateTextShort = (text) => {
@@ -50,11 +53,23 @@ const SignUpForm = () => {
 		if (!signUpData.language || !validateTextShort(signUpData.language)) {
 			errors.language = true;
 		}
-		if (!signUpData.phoneNumber || !validateNumber(signUpData.phoneNumber)) {
+		if (!signUpData.phoneNumber || !validatePhoneNumber(signUpData.phoneNumber)) {
 			errors.phoneNumber = true;
 		}
 		if (!signUpData.address || !validateTextLong(signUpData.address)) {
 			errors.address = true;
+		}
+		if (!signUpData.city || !validateTextShort(signUpData.city)) {
+			errors.city = true;
+		}
+		if (!signUpData.country || !validateTextShort(signUpData.country)) {
+			errors.country= true;
+		}
+		if (!signUpData.profession|| !validateTextShort(signUpData.profession)) {
+			errors.profession = true;
+		}
+		if (!signUpData.yearsOfExperience || !validateNumber(signUpData.yearsOfExperience)) {
+			errors.yearsOfExperience = true;
 		}
 		return errors;
 	};
@@ -69,7 +84,7 @@ const SignUpForm = () => {
 					setSignUpData({
 						firstName: "",
 						lastName: "",
-						email: user.email,
+						email: user?.email,
 						businessName: "",
 						phoneNumber: "",
 						address: "",
@@ -114,7 +129,7 @@ const SignUpForm = () => {
 		if (user) {
 			setSignUpData((prevData) => ({
 				...prevData,
-				email: user.email,
+				email: user?.email,
 				hourlyRate: 0,
 			}));
 		}
@@ -137,7 +152,7 @@ const SignUpForm = () => {
 								onChange={handleChange}
 								fullWidth
 								error={formErrors.firstName}
-								helperText={formErrors.firstName ? "Fill in the firstName field (min 3 charcters)" : ""}
+								helperText={formErrors.firstName ? "Fill in the first name field (min 3 charcters)" : ""}
 							/>
 						</Box>
 						<Box mt={2}>
@@ -149,7 +164,7 @@ const SignUpForm = () => {
 								onChange={handleChange}
 								fullWidth
 								error={formErrors.lastName}
-								helperText={formErrors.lastName ? "Fill in the SurName field (min 3 charcters)" : ""}
+								helperText={formErrors.lastName ? "Fill in the surname field (min 3 charcters)" : ""}
 							/>
 						</Box>
 						<Box mt={2}>
@@ -206,7 +221,7 @@ const SignUpForm = () => {
 								onChange={handleChange}
 								fullWidth
 								error={formErrors.phoneNumber}
-								helperText={formErrors.phoneNumber ? "Fill in the phonNumber field (11 Numbers)" : ""}
+								helperText={formErrors.phoneNumber ? "Fill in the phonNumber field (11 numbers)" : ""}
 							/>
 						</Box>
 						<Box mt={2}>
@@ -229,6 +244,8 @@ const SignUpForm = () => {
 								value={signUpData.city}
 								onChange={handleChange}
 								fullWidth
+								error={formErrors.city}
+								helperText={formErrors.city ? "Fill in the city field (min 3 characters)" : ""}
 							/>
 						</Box>
 						<Box mt={2}>
@@ -239,6 +256,8 @@ const SignUpForm = () => {
 								value={signUpData.country}
 								onChange={handleChange}
 								fullWidth
+								error={formErrors.country}
+								helperText={formErrors.country? "Fill in the country field (min 3 characters)" : ""}
 							/>
 						</Box>
 						<Box mt={2}>
@@ -249,6 +268,8 @@ const SignUpForm = () => {
 								value={signUpData.profession}
 								onChange={handleChange}
 								fullWidth
+								error={formErrors.profession}
+								helperText={formErrors.profession? "Fill in the profession field (min 3 characters)" : ""}
 							/>
 						</Box>
 						<Box mt={2}>
@@ -259,6 +280,8 @@ const SignUpForm = () => {
 								value={signUpData.yearsOfExperience}
 								onChange={handleChange}
 								fullWidth
+								error={formErrors.yearsOfExperience}
+								helperText={formErrors.address ? "Fill in the years of experience field (min 1 number)" : ""}
 							/>
 						</Box>
 						<Box mt={2}>
@@ -270,6 +293,9 @@ const SignUpForm = () => {
 								name="hourlyRate"
 								value={signUpData.hourlyRate}
 								fullWidth
+								error={formErrors.hourlyRate}
+								helperText={formErrors.hourlyRate ? "Fill in the hourly rate field (min 1 number)" : ""}
+								disabled
 							/>
 						</Box>
 						<Box mt={2}>

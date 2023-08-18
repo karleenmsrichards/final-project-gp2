@@ -64,7 +64,10 @@ function NewsletterSignup() {
 						variant="contained"
 						sx={{
 							backgroundColor: "#F3263B",
-							borderRadius: "20px",
+							color: "#fff",
+							px: 3,
+							py: 1,
+							borderRadius: "10px",
 							"&:hover": {
 								backgroundColor: "#cc0000",
 							},

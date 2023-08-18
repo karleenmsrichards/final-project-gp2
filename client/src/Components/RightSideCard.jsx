@@ -63,7 +63,7 @@ const RightSideCard = ({ eachProvider, noButton }) => {
 							color: "#fff",
 							px: 3,
 							py: 1,
-							borderRadius: "15px",
+							borderRadius: "10px",
 							"&:hover": {
 								backgroundColor: "#cc0000",
 							},

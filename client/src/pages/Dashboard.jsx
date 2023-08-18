@@ -69,6 +69,7 @@ const Dashboard = () => {
 		<Container>
 			<Box sx={{ my: 5 }}>
 				<CardMedia
+					component="img" 
 					image={user?.picture}
 					sx={{ height: 70, width: 70, mb: 2 }}
 				/>

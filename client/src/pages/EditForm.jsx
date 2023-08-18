@@ -6,7 +6,8 @@ import { AppContext } from "../App";
 const EditForm = () => {
 	const [providerIndex, setProviderIndex] = useState(null);
 	const navigate = useNavigate();
-	const { user, isProvider, providers, setProviders, isLoggedIn } =useContext(AppContext);
+	const { user, isProvider, providers, setProviders, isLoggedIn } =
+		useContext(AppContext);
 
 	const [editData, setEditData] = useState({
 		firstName: "",
@@ -56,15 +57,15 @@ const EditForm = () => {
 	};
 
 	useEffect(() => {
-	const editHandler = async () => {
-		if (isLoggedIn && isProvider) {
-			const providerInfo = providers.find((provider, index) => {
-				setProviderIndex(index);
-				return provider.email === user?.email;
-			});
-			setEditData(providerInfo);
-		}
-	};
+		const editHandler = async () => {
+			if (isLoggedIn && isProvider) {
+				const providerInfo = providers.find((provider, index) => {
+					setProviderIndex(index);
+					return provider.email === user?.email;
+				});
+				setEditData(providerInfo);
+			}
+		};
 		editHandler();
 	}, [user, isLoggedIn, isProvider, providers]);
 
@@ -223,8 +224,16 @@ const EditForm = () => {
 							<Button
 								type="submit"
 								variant="contained"
-								color="primary"
-								style={{ backgroundColor: "#F3263B" }}
+								sx={{
+									backgroundColor: "#F3263B",
+									color: "#fff",
+									px: 3,
+									py: 1,
+									borderRadius: "10px",
+									"&:hover": {
+										backgroundColor: "#cc0000",
+									},
+								}}
 							>
 								Submit
 							</Button>

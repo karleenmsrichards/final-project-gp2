@@ -1,13 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import {
-	TextField,
-	Button,
-	Container,
-	Typography,
-	Box,
-} from "@mui/material";
+import { TextField, Button, Container, Typography, Box } from "@mui/material";
 import { AppContext } from "../App";
 
 const SignUpForm = () => {
@@ -30,7 +24,7 @@ const SignUpForm = () => {
 	});
 
 	const validateNumber = (number) => {
-		return /^\d{1}$/.test(number);
+		return /^\d+$/.test(number);
 	};
 	const validatePhoneNumber = (number) => {
 		return /^\d{11}$/.test(number);
@@ -44,7 +38,7 @@ const SignUpForm = () => {
 
 	const validateForm = () => {
 		const errors = {};
-		if (!signUpData.firstName|| !validateTextShort(signUpData.firstName)) {
+		if (!signUpData.firstName || !validateTextShort(signUpData.firstName)) {
 			errors.firstName = true;
 		}
 		if (!signUpData.lastName || !validateTextShort(signUpData.lastName)) {
@@ -53,7 +47,10 @@ const SignUpForm = () => {
 		if (!signUpData.language || !validateTextShort(signUpData.language)) {
 			errors.language = true;
 		}
-		if (!signUpData.phoneNumber || !validatePhoneNumber(signUpData.phoneNumber)) {
+		if (
+			!signUpData.phoneNumber ||
+			!validatePhoneNumber(signUpData.phoneNumber)
+		) {
 			errors.phoneNumber = true;
 		}
 		if (!signUpData.address || !validateTextLong(signUpData.address)) {
@@ -63,12 +60,15 @@ const SignUpForm = () => {
 			errors.city = true;
 		}
 		if (!signUpData.country || !validateTextShort(signUpData.country)) {
-			errors.country= true;
+			errors.country = true;
 		}
-		if (!signUpData.profession|| !validateTextShort(signUpData.profession)) {
+		if (!signUpData.profession || !validateTextShort(signUpData.profession)) {
 			errors.profession = true;
 		}
-		if (!signUpData.yearsOfExperience || !validateNumber(signUpData.yearsOfExperience)) {
+		if (
+			!signUpData.yearsOfExperience ||
+			!validateNumber(signUpData.yearsOfExperience)
+		) {
 			errors.yearsOfExperience = true;
 		}
 		return errors;
@@ -152,7 +152,11 @@ const SignUpForm = () => {
 								onChange={handleChange}
 								fullWidth
 								error={formErrors.firstName}
-								helperText={formErrors.firstName ? "Fill in the first name field (min 3 charcters)" : ""}
+								helperText={
+									formErrors.firstName
+										? "Fill in the first name field (min 3 charcters)"
+										: ""
+								}
 							/>
 						</Box>
 						<Box mt={2}>
@@ -164,7 +168,11 @@ const SignUpForm = () => {
 								onChange={handleChange}
 								fullWidth
 								error={formErrors.lastName}
-								helperText={formErrors.lastName ? "Fill in the surname field (min 3 charcters)" : ""}
+								helperText={
+									formErrors.lastName
+										? "Fill in the surname field (min 3 charcters)"
+										: ""
+								}
 							/>
 						</Box>
 						<Box mt={2}>
@@ -199,7 +207,11 @@ const SignUpForm = () => {
 								onChange={handleChange}
 								fullWidth
 								error={formErrors.language}
-								helperText={formErrors.language ? "Fill in the language field (min 3 characters)" : ""}
+								helperText={
+									formErrors.language
+										? "Fill in the language field (min 3 characters)"
+										: ""
+								}
 							/>
 						</Box>
 						<Box mt={2}>
@@ -221,7 +233,11 @@ const SignUpForm = () => {
 								onChange={handleChange}
 								fullWidth
 								error={formErrors.phoneNumber}
-								helperText={formErrors.phoneNumber ? "Fill in the phonNumber field (11 numbers)" : ""}
+								helperText={
+									formErrors.phoneNumber
+										? "Fill in the phonNumber field (11 numbers)"
+										: ""
+								}
 							/>
 						</Box>
 						<Box mt={2}>
@@ -233,7 +249,11 @@ const SignUpForm = () => {
 								onChange={handleChange}
 								fullWidth
 								error={formErrors.address}
-								helperText={formErrors.address ? "Fill in the address field (min 5 characters)" : ""}
+								helperText={
+									formErrors.address
+										? "Fill in the address field (min 5 characters)"
+										: ""
+								}
 							/>
 						</Box>
 						<Box mt={2}>
@@ -245,7 +265,11 @@ const SignUpForm = () => {
 								onChange={handleChange}
 								fullWidth
 								error={formErrors.city}
-								helperText={formErrors.city ? "Fill in the city field (min 3 characters)" : ""}
+								helperText={
+									formErrors.city
+										? "Fill in the city field (min 3 characters)"
+										: ""
+								}
 							/>
 						</Box>
 						<Box mt={2}>
@@ -257,7 +281,11 @@ const SignUpForm = () => {
 								onChange={handleChange}
 								fullWidth
 								error={formErrors.country}
-								helperText={formErrors.country? "Fill in the country field (min 3 characters)" : ""}
+								helperText={
+									formErrors.country
+										? "Fill in the country field (min 3 characters)"
+										: ""
+								}
 							/>
 						</Box>
 						<Box mt={2}>
@@ -269,7 +297,11 @@ const SignUpForm = () => {
 								onChange={handleChange}
 								fullWidth
 								error={formErrors.profession}
-								helperText={formErrors.profession? "Fill in the profession field (min 3 characters)" : ""}
+								helperText={
+									formErrors.profession
+										? "Fill in the profession field (min 3 characters)"
+										: ""
+								}
 							/>
 						</Box>
 						<Box mt={2}>
@@ -281,7 +313,11 @@ const SignUpForm = () => {
 								onChange={handleChange}
 								fullWidth
 								error={formErrors.yearsOfExperience}
-								helperText={formErrors.address ? "Fill in the years of experience field (min 1 number)" : ""}
+								helperText={
+									formErrors.address
+										? "Fill in the years of experience field (min 1 number)"
+										: ""
+								}
 							/>
 						</Box>
 						<Box mt={2}>
@@ -294,7 +330,11 @@ const SignUpForm = () => {
 								value={signUpData.hourlyRate}
 								fullWidth
 								error={formErrors.hourlyRate}
-								helperText={formErrors.hourlyRate ? "Fill in the hourly rate field (min 1 number)" : ""}
+								helperText={
+									formErrors.hourlyRate
+										? "Fill in the hourly rate field (min 1 number)"
+										: ""
+								}
 								disabled
 							/>
 						</Box>
@@ -302,8 +342,16 @@ const SignUpForm = () => {
 							<Button
 								type="submit"
 								variant="contained"
-								color="primary"
-								style={{ backgroundColor: "#F3263B" }}
+								sx={{
+									backgroundColor: "#F3263B",
+									color: "#fff",
+									px: 3,
+									py: 1,
+									borderRadius: "10px",
+									"&:hover": {
+										backgroundColor: "#cc0000",
+									},
+								}}
 							>
 								Submit
 							</Button>

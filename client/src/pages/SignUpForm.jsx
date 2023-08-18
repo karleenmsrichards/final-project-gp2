@@ -118,24 +118,20 @@ const SignUpForm = () => {
 							Sign Up as a Provider
 						</Typography>
 						<Box mt={2}>
-							<Typography variant="p" gutterBottom>
-								First Name
-							</Typography>
 							<TextField
 								variant="outlined"
 								name="firstName"
+								label="First Name *"
 								value={signUpData.firstName}
 								onChange={handleChange}
 								fullWidth
 							/>
 						</Box>
 						<Box mt={2}>
-							<Typography variant="p" gutterBottom>
-								Surname
-							</Typography>
 							<TextField
 								variant="outlined"
 								name="lastName"
+								label="	Surname *"
 								value={signUpData.lastName}
 								onChange={handleChange}
 								fullWidth

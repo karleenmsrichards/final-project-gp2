@@ -1,6 +1,5 @@
-import { Box, CardMedia } from "@mui/material";
+import { Box, CardMedia, Typography } from "@mui/material";
 import React from "react";
-import Typography from "../Mui-Components/Typography";
 
 const LeftSideCard = ({ eachProvider }) => {
 	const fullAddress = (eachProvider) => {

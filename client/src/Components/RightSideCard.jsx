@@ -1,13 +1,21 @@
 import { Box, Button } from "@mui/material";
 import Typography from "../Mui-Components/Typography";
+import { AppContext } from "../App";
+import { useContext } from "react";
 
 const RightSideCard = ({ eachProvider, noButton }) => {
+	const { isLoggedIn } = useContext(AppContext);
+
 	const handleCalendar = () => {
-		const url = eachProvider?.Calendar?.calendar_link;
-		if (url) {
-			window.open(url, "_blank", "width=800,height=600,left=200,top=100");
+		if (isLoggedIn) {
+			const url = eachProvider?.Calendar?.calendar_link;
+			if (url) {
+				window.open(url, "_blank", "width=800,height=600,left=200,top=100");
+			} else {
+				alert("No calendar link available for this provider.");
+			}
 		} else {
-			alert("No calendar link available for this provider.");
+			alert("You need to login first!");
 		}
 	};
 

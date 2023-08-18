@@ -66,7 +66,7 @@ export function HomeCardGrid() {
 										component="img"
 										height="140"
 										image={
-											!eachProvider.profileImage
+											!eachProvider?.profileImage
 												? "https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png?20150327203541"
 												: eachProvider?.profileImage
 										}

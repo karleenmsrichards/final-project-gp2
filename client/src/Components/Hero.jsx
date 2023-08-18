@@ -74,40 +74,6 @@ export default function ProductHero() {
 				<Typography variant="body2" color="inherit" sx={{ mt: 2 }}>
 					Discover the BookMe experience
 				</Typography>
-
-				<Box
-					sx={{
-						position: "absolute",
-						left: 0,
-						right: 0,
-						top: 0,
-						bottom: 0,
-						backgroundColor: "common.black",
-						opacity: 0.5,
-						zIndex: -1,
-					}}
-				/>
-
-				<Box
-					sx={{
-						position: "absolute",
-						left: 0,
-						right: 0,
-						top: 0,
-						bottom: 0,
-						backgroundSize: "cover",
-						backgroundRepeat: "no-repeat",
-						zIndex: -2,
-					}}
-				></Box>
-				<Box
-					component="img"
-					src="#"
-					height="16"
-					width="12"
-					alt=""
-					sx={{ position: "absolute", bottom: 32 }}
-				/>
 			</Container>
 		</Box>
 	);

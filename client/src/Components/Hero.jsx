@@ -1,10 +1,14 @@
+import React, { useContext } from "react";
 import { Box, Button, Container, Typography } from "@mui/material";
 import useAuth from "../customHooks/useAuth";
+import { AppContext } from "../App";
+
 
 const backgroundImage =
 	"https://images.unsplash.com/photo-1553484771-11998c592b9c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1770&q=80";
 
 export default function ProductHero() {
+	const {isLoggedIn} = useContext(AppContext);
 	const { handleSignUp } = useAuth();
 
 	return (
@@ -51,12 +55,17 @@ export default function ProductHero() {
 					Specialists in All Areas
 				</Typography>
 				<Button
-					color="secondary"
 					variant="contained"
 					size="large"
 					component="a"
-					onClick={handleSignUp}
-					sx={{ minWidth: 200 }}
+					onClick={!isLoggedIn ? handleSignUp : null}
+					sx={{
+						minWidth: 200,
+						backgroundColor: "#F3263B",
+						"&:hover": {
+							backgroundColor: "#cc0000",
+						},
+					}}
 				>
 					Register
 				</Button>
@@ -89,7 +98,6 @@ export default function ProductHero() {
 						zIndex: -2,
 					}}
 				></Box>
-				{/* <Background sx={sxBackground} /> */}
 				<Box
 					component="img"
 					src="#"

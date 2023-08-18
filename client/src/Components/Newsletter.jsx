@@ -65,6 +65,9 @@ function NewsletterSignup() {
 						sx={{
 							backgroundColor: "#F3263B",
 							borderRadius: "20px",
+							"&:hover": {
+								backgroundColor: "#cc0000",
+							},
 						}}
 						onClick={handleSubmit}
 					>

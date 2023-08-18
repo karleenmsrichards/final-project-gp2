@@ -91,11 +91,9 @@ export default function Pricing() {
 							Choose a Subscription that fits your business.
 						</Typography>
 					</Container>
-					{/* End hero unit */}
 					<Container maxWidth="md" component="main" sx={{ mb: 5 }}>
 						<Grid container spacing={5} alignItems="flex-end">
 							{tiers.map((tier) => (
-								// Enterprise card is full width at sm breakpoint
 								<Grid
 									item
 									key={tier.title}

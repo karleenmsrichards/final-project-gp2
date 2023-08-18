@@ -60,8 +60,8 @@ const Home = () => {
 				}}
 			>
 				<CategoryCard
-					title="Makeup"
-					imageSrc="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTwdb3tqETTXFY3ZtrBhAH4Psat7uB-vL9J5Q&usqp=CAU"
+					title="Accountant"
+					imageSrc="https://www.theaccountant-online.com/wp-content/uploads/sites/10/2023/02/shutterstock_566737549.jpg"
 				/>
 			</Box>
 			<Box
@@ -72,7 +72,7 @@ const Home = () => {
 			>
 				<CategoryCard
 					title="Tutor"
-					imageSrc="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSIGAHIawIX8iiPNUWk10u_tIMA7lsOvDjrSQ&usqp=CAU"
+					imageSrc="https://www.greatschools.org/gk/wp-content/uploads/2010/01/Looking-for-a-tutor.jpg"
 				/>
 			</Box>
 			<Box
@@ -82,8 +82,8 @@ const Home = () => {
 				}}
 			>
 				<CategoryCard
-					title="Mechanic"
-					imageSrc="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQTJTd75laxbm7xGUkvuw-NRmHXwUlFzFBYhQ&usqp=CAU"
+					title="Doctor"
+					imageSrc="https://www.bmj.com/sites/default/files/sites/defautl/files/attachments/bmj-article/2023/08/junior_doctor_apprentice_istock-1279681388.jpg"
 				/>
 			</Box>
 			<Box
@@ -93,8 +93,8 @@ const Home = () => {
 				}}
 			>
 				<CategoryCard
-					title="Cleaner"
-					imageSrc="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ6xIvQYejYu_TCg8Q2M6PdDMcmDbEhvB4neA&usqp=CAU"
+					title="Lawyer"
+					imageSrc="https://www.yelu.uk/img/cats/lawyers.jpg"
 				/>
 			</Box>
 			<Box
@@ -104,8 +104,8 @@ const Home = () => {
 				}}
 			>
 				<CategoryCard
-					title="Chef"
-					imageSrc="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQAHIqHWdig3tyYm7BOlIQjy4i2wFGJsr5uAg&usqp=CAU"
+					title="Business Coach"
+					imageSrc="https://s3.amazonaws.com/media.briantracy.com/blog/wp-content/uploads/2018/06/08085837/business-coach.jpeg"
 				/>
 			</Box>
 			<Box
@@ -116,7 +116,7 @@ const Home = () => {
 			>
 				<CategoryCard
 					title="Photograph"
-					imageSrc="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR1O__fsQeoJPQM6hVRIlViN6SF3tnqHo_W4w&usqp=CAU"
+					imageSrc="https://hrdailyadvisor.blr.com/app/uploads/sites/3/2019/05/Recruiter.jpg"
 				/>
 			</Box>
 		</Box>

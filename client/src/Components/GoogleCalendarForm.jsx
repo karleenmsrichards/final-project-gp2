@@ -28,8 +28,7 @@ const GoogleCalendarForm = ({ email }) => {
 			});
 
 			if (response.status === 200) {
-				console.log(response.data.calendar);
-				const newCalendar = response.data;
+				const newCalendar = response.data.calendar;
 				const updatedProviders = providers.map((provider) =>
 					provider.email === email
 						? { ...provider, Calendar: newCalendar }
@@ -104,8 +103,16 @@ const GoogleCalendarForm = ({ email }) => {
 					<Button
 						type="submit"
 						variant="contained"
-						color="primary"
-						sx={{ backgroundColor: "#F3263B" }}
+						sx={{
+							backgroundColor: "#F3263B",
+							color: "#fff",
+							px: 3,
+							py: 1,
+							borderRadius: "10px",
+							"&:hover": {
+								backgroundColor: "#cc0000",
+							},
+						}}
 					>
 						Submit
 					</Button>

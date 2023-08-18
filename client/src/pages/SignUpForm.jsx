@@ -6,60 +6,114 @@ import { AppContext } from "../App";
 
 const SignUpForm = () => {
 	const navigate = useNavigate();
-	const { user, setProviders, providers, isProvider } = useContext(AppContext);
-
+	const { user, setProviders, isProvider } = useContext(AppContext);
+	const [formErrors, setFormErrors] = useState({});
 	const [signUpData, setSignUpData] = useState({
-		firstName: null,
-		lastName: null,
-		email: null,
-		businessName: null,
-		phoneNumber: null,
-		address: null,
-		city: null,
-		country: null,
-		profession: null,
-		yearsOfExperience: null,
-		hourlyRate: null,
-		language: null,
+		firstName: "",
+		lastName: "",
+		email: user?.email,
+		businessName: "",
+		phoneNumber: "",
+		address: "",
+		city: "",
+		country: "",
+		profession: "",
+		yearsOfExperience: "",
+		hourlyRate: 0,
+		language: "",
 	});
+
+	const validateNumber = (number) => {
+		return /^\d+$/.test(number);
+	};
+	const validatePhoneNumber = (number) => {
+		return /^\d{11}$/.test(number);
+	};
+	const validateTextShort = (text) => {
+		return text.length >= 3;
+	};
+	const validateTextLong = (text) => {
+		return text.length >= 5;
+	};
+
+	const validateForm = () => {
+		const errors = {};
+		if (!signUpData.firstName || !validateTextShort(signUpData.firstName)) {
+			errors.firstName = true;
+		}
+		if (!signUpData.lastName || !validateTextShort(signUpData.lastName)) {
+			errors.lastName = true;
+		}
+		if (!signUpData.language || !validateTextShort(signUpData.language)) {
+			errors.language = true;
+		}
+		if (
+			!signUpData.phoneNumber ||
+			!validatePhoneNumber(signUpData.phoneNumber)
+		) {
+			errors.phoneNumber = true;
+		}
+		if (!signUpData.address || !validateTextLong(signUpData.address)) {
+			errors.address = true;
+		}
+		if (!signUpData.city || !validateTextShort(signUpData.city)) {
+			errors.city = true;
+		}
+		if (!signUpData.country || !validateTextShort(signUpData.country)) {
+			errors.country = true;
+		}
+		if (!signUpData.profession || !validateTextShort(signUpData.profession)) {
+			errors.profession = true;
+		}
+		if (
+			!signUpData.yearsOfExperience ||
+			!validateNumber(signUpData.yearsOfExperience)
+		) {
+			errors.yearsOfExperience = true;
+		}
+		return errors;
+	};
 
 	const handleSubmit = async (event) => {
 		event.preventDefault();
-
-		try {
-			const response = await axios.post("/api/provider", signUpData);
-
-			if (response) {
-				setSignUpData({
-					firstName: user.given_name,
-					lastName: user.family_name,
-					email: user.email,
-					businessName: null,
-					phoneNumber: null,
-					address: null,
-					city: null,
-					country: null,
-					profession: null,
-					yearsOfExperience: null,
-					hourlyRate: 0,
-					language: null,
-				});
-				setProviders((prevProviders) => [
-					...prevProviders,
-					response.data.provider,
-				]);
-				alert("You are now a Provider");
-				navigate("/dashboard");
+		const errors = validateForm();
+		if (Object.keys(errors).length === 0) {
+			try {
+				const response = await axios.post("/api/provider", signUpData);
+				if (response) {
+					setSignUpData({
+						firstName: "",
+						lastName: "",
+						email: user?.email,
+						businessName: "",
+						phoneNumber: "",
+						address: "",
+						city: "",
+						country: "",
+						profession: "",
+						yearsOfExperience: 0,
+						hourlyRate: 0,
+						language: "",
+					});
+					setProviders((prevProviders) => [
+						...prevProviders,
+						response.data.provider,
+					]);
+					alert("You are now a Provider");
+					navigate("/dashboard");
+				}
+			} catch (error) {
+				if (error?.response?.data?.error) {
+					const errorMessage = error.response.data.error;
+					alert(`Error: ${errorMessage}`);
+					navigate("/");
+				} else {
+					alert("An error occurred while submitting the form.");
+				}
+				console.error("Error submitting form:", error);
 			}
-		} catch (error) {
-			if (error?.response?.data?.error) {
-				const errorMessage = error.response.data.error;
-				alert(`Error: ${errorMessage}`);
-				navigate("/");
-			} else {
-				alert("An error occurred while submitting the form.");
-			}
-			console.error("Error submitting form:", error);
+		} else {
+			setFormErrors(errors);
 		}
 	};
 
@@ -75,7 +129,7 @@ const SignUpForm = () => {
 		if (user) {
 			setSignUpData((prevData) => ({
 				...prevData,
-				email: user.email,
+				email: user?.email,
 				hourlyRate: 0,
 			}));
 		}
@@ -90,27 +144,35 @@ const SignUpForm = () => {
 							Sign Up as a Provider
 						</Typography>
 						<Box mt={2}>
-							<Typography variant="p" gutterBottom>
-								First Name
-							</Typography>
 							<TextField
 								variant="outlined"
 								name="firstName"
+								label="First Name *"
 								value={signUpData.firstName}
 								onChange={handleChange}
 								fullWidth
+								error={formErrors.firstName}
+								helperText={
+									formErrors.firstName
+										? "Fill in the first name field (min 3 charcters)"
+										: ""
+								}
 							/>
 						</Box>
 						<Box mt={2}>
-							<Typography variant="p" gutterBottom>
-								Surname
-							</Typography>
 							<TextField
 								variant="outlined"
 								name="lastName"
+								label="	Surname *"
 								value={signUpData.lastName}
 								onChange={handleChange}
 								fullWidth
+								error={formErrors.lastName}
+								helperText={
+									formErrors.lastName
+										? "Fill in the surname field (min 3 charcters)"
+										: ""
+								}
 							/>
 						</Box>
 						<Box mt={2}>
@@ -144,6 +206,12 @@ const SignUpForm = () => {
 								value={signUpData.language}
 								onChange={handleChange}
 								fullWidth
+								error={formErrors.language}
+								helperText={
+									formErrors.language
+										? "Fill in the language field (min 3 characters)"
+										: ""
+								}
 							/>
 						</Box>
 						<Box mt={2}>
@@ -164,6 +232,12 @@ const SignUpForm = () => {
 								value={signUpData.phoneNumber}
 								onChange={handleChange}
 								fullWidth
+								error={formErrors.phoneNumber}
+								helperText={
+									formErrors.phoneNumber
+										? "Fill in the phonNumber field (11 numbers)"
+										: ""
+								}
 							/>
 						</Box>
 						<Box mt={2}>
@@ -174,6 +248,12 @@ const SignUpForm = () => {
 								value={signUpData.address}
 								onChange={handleChange}
 								fullWidth
+								error={formErrors.address}
+								helperText={
+									formErrors.address
+										? "Fill in the address field (min 5 characters)"
+										: ""
+								}
 							/>
 						</Box>
 						<Box mt={2}>
@@ -184,6 +264,12 @@ const SignUpForm = () => {
 								value={signUpData.city}
 								onChange={handleChange}
 								fullWidth
+								error={formErrors.city}
+								helperText={
+									formErrors.city
+										? "Fill in the city field (min 3 characters)"
+										: ""
+								}
 							/>
 						</Box>
 						<Box mt={2}>
@@ -194,6 +280,12 @@ const SignUpForm = () => {
 								value={signUpData.country}
 								onChange={handleChange}
 								fullWidth
+								error={formErrors.country}
+								helperText={
+									formErrors.country
+										? "Fill in the country field (min 3 characters)"
+										: ""
+								}
 							/>
 						</Box>
 						<Box mt={2}>
@@ -204,6 +296,12 @@ const SignUpForm = () => {
 								value={signUpData.profession}
 								onChange={handleChange}
 								fullWidth
+								error={formErrors.profession}
+								helperText={
+									formErrors.profession
+										? "Fill in the profession field (min 3 characters)"
+										: ""
+								}
 							/>
 						</Box>
 						<Box mt={2}>
@@ -214,6 +312,12 @@ const SignUpForm = () => {
 								value={signUpData.yearsOfExperience}
 								onChange={handleChange}
 								fullWidth
+								error={formErrors.yearsOfExperience}
+								helperText={
+									formErrors.address
+										? "Fill in the years of experience field (min 1 number)"
+										: ""
+								}
 							/>
 						</Box>
 						<Box mt={2}>
@@ -225,14 +329,29 @@ const SignUpForm = () => {
 								name="hourlyRate"
 								value={signUpData.hourlyRate}
 								fullWidth
+								error={formErrors.hourlyRate}
+								helperText={
+									formErrors.hourlyRate
+										? "Fill in the hourly rate field (min 1 number)"
+										: ""
+								}
+								disabled
 							/>
 						</Box>
 						<Box mt={2}>
 							<Button
 								type="submit"
 								variant="contained"
-								color="primary"
-								style={{ backgroundColor: "#F3263B" }}
+								sx={{
+									backgroundColor: "#F3263B",
+									color: "#fff",
+									px: 3,
+									py: 1,
+									borderRadius: "10px",
+									"&:hover": {
+										backgroundColor: "#cc0000",
+									},
+								}}
 							>
 								Submit
 							</Button>

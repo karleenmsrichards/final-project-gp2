@@ -13,7 +13,7 @@ const CategoryCard = ({ title, imageSrc }) => (
 		<Typography
 			sx={{
 				position: "absolute",
-				bottom: "5px",
+				bottom: "10px",
 				left: "10px",
 				backgroundColor: "white",
 				p: "5px 20px",
@@ -115,7 +115,7 @@ const Home = () => {
 				}}
 			>
 				<CategoryCard
-					title="Photograph"
+					title="recruiter"
 					imageSrc="https://hrdailyadvisor.blr.com/app/uploads/sites/3/2019/05/Recruiter.jpg"
 				/>
 			</Box>

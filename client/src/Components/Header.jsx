@@ -76,7 +76,7 @@ const Header = () => {
 						{isLoggedIn && (
 							<MenuItem
 								component={Link}
-								to={isProvider ? "/edit" : "/sign-up"}
+								to={isProvider ? "/edit" : "/subscription"}
 								fontWeight="bolder"
 							>
 								<Typography fontWeight="bolder">

@@ -3,13 +3,8 @@ import { Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import Header from "./Components/Header";
 import Footer from "./Components/Footer";
-import Dashboard from "./pages/Dashboard";
-import Subscription from "./pages/Subscription";
-import SignUpForm from "./pages/SignUpForm";
-import Find from "./pages/Find";
+import MyProfile from "./pages/MyProfile";
 import axios from "axios";
-import EditForm from "./pages/EditForm";
-import NotFound from "./pages/NotFound";
 
 export const AppContext = createContext(null);
 
@@ -17,10 +12,6 @@ const App = () => {
 	const [user, setUser] = useState(null);
 	const [clientId, setClientId] = useState(null);
 	const [isLoggedIn, setIsLoggedIn] = useState(false);
-	const [providers, setProviders] = useState([]);
-	const [isProvider, setIsProvider] = useState(false);
-	const [isProvidersLoading, setIsProvidersLoading] = useState(false);
-
 
 
 	useEffect(() => {
@@ -50,15 +41,7 @@ const App = () => {
 			<Header />
 			<Routes>
 				<Route path="/" element={<Home />} />
-				<Route path="/find" element={<Find />} />
-				<Route path="*" element={<NotFound />} />
-				{isLoggedIn && (
-					<>
-						<Route path="/sign-up" element={<SignUpForm />} />
-						<Route path="/dashboard" element={<Dashboard />} />
-						<Route path="/edit" element={<EditForm />} />
-					</>
-				)}
+				{isLoggedIn && <Route path="/profile" element={<MyProfile />} />}
 			</Routes>
 			<Footer />
 		</AppContext.Provider>

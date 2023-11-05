@@ -21,18 +21,7 @@ const App = () => {
 	const [isProvider, setIsProvider] = useState(false);
 	const [isProvidersLoading, setIsProvidersLoading] = useState(false);
 
-	useEffect(() => {
-		const fetchProvider = async () => {
-			try {
-				const response = await axios.get("/api/providers");
-				setProviders(response.data);
-				setIsProvidersLoading(true);
-			} catch (error) {
-				console.error(error);
-			}
-		};
-		fetchProvider();
-	}, [setProviders]);
+
 
 	useEffect(() => {
 		async function fetchClientId() {
@@ -54,12 +43,6 @@ const App = () => {
 		setClientId,
 		isLoggedIn,
 		setIsLoggedIn,
-		providers,
-		setProviders,
-		isProvider,
-		setIsProvider,
-		isProvidersLoading,
-		setIsProvidersLoading,
 	};
 
 	return (
@@ -73,7 +56,6 @@ const App = () => {
 					<>
 						<Route path="/sign-up" element={<SignUpForm />} />
 						<Route path="/dashboard" element={<Dashboard />} />
-						<Route path="/subscription" element={<Subscription />} />
 						<Route path="/edit" element={<EditForm />} />
 					</>
 				)}

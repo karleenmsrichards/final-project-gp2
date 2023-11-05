@@ -44,7 +44,7 @@ const useAuth = () => {
 		if (response && response.credential) {
 			localStorage.setItem("jwtToken", response.credential);
 			setIsLoggedIn(true);
-			document.getElementById("signInDiv").hidden = true;
+//			document.getElementById("signInDiv").hidden = true;
 			navigate("/dashboard");
 		} else {
 			console.error("Error handling callback response:", response);

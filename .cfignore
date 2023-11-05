@@ -1,7 +1,0 @@
-.github/
-.idea/
-.vscode/
-client/
-node_modules/
-server/
-cf

@@ -8,9 +8,6 @@ export function Home() {
 	return (
 		<Box sx={{ py: 2 }}>
 			<Hero />
-			<StaticGrid />
-			<HomeCardGrid />
-			<NewsLetter />
 		</Box>
 	);
 }

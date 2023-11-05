@@ -27,13 +27,13 @@ const Footer = () => {
 				}}
 			>
 				<Typography variant="h5" sx={{ fontWeight: "bolder" }}>
-					BOOKME
+					blah
 				</Typography>
 				<Typography sx={{ fontSize: 15, pb: 5 }}>
-					Your favourite appointnent booking experience since 1997!
+					blah
 				</Typography>
 				<Typography sx={{ fontSize: 15 }}>
-					BookME <CopyrightIcon sx={{ fontSize: 12 }}></CopyrightIcon> 2022
+					blah <CopyrightIcon sx={{ fontSize: 12 }}></CopyrightIcon> 2023
 				</Typography>
 			</Box>
 			<Box
@@ -51,18 +51,6 @@ const Footer = () => {
 					sx={{ color: "black", fontWeight: "bold" }}
 				>
 					Help
-				</MaterialLink>
-				<MaterialLink href="#" underline="none" sx={defaultSxStyle}>
-					FAQ
-				</MaterialLink>
-				<MaterialLink href="#" underline="none" sx={defaultSxStyle}>
-					Customer
-				</MaterialLink>
-				<MaterialLink href="#" underline="none" sx={defaultSxStyle}>
-					How to guide
-				</MaterialLink>
-				<MaterialLink href="#" underline="none" sx={defaultSxStyle}>
-					Contact Us
 				</MaterialLink>
 			</Box>
 		</Box>

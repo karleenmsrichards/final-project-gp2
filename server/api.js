@@ -2,12 +2,23 @@ import { Router } from "express";
 import logger from "./utils/logger";
 const dotenv = require("dotenv");
 const { OAuth2Client } = require("google-auth-library");
-const { Users, Provider, Tokens, Calendar } = require("./sequelize/models");
-const { persistNewProvider } = require("./controller/apiController");
+const { Users, Tokens } = require("./models");
 
 dotenv.config();
 
 const router = Router();
+
+router.get("/health", (_, res) => {
+	try {
+		let serverOk = true;
+		let dbOk = false;
+
+		res.json({ serverOk, dbOk }).status(200);
+	} catch (error) {
+		logger.error("Error fetching clientId:", error.message);
+		res.status(500).json({ error });
+	}
+});
 
 router.get("/clientId", (_, res) => {
 	try {
@@ -48,6 +59,7 @@ router.post("/validation", async (req, res) => {
 		}
 		res.status(200).json({ message: "success!" });
 	} catch (error) {
+	    console.log(error)
 		res.status(500).json({ message: "Invalid token!" });
 	}
 });
@@ -79,146 +91,6 @@ router.delete("/profile", async (req, res) => {
 				res.status(200).json({ message: "Your account is deleted!" });
 			}
 		}
-	} catch (error) {
-		res.status(500).json({ error });
-	}
-});
-
-router.post("/provider", async (req, res) => {
-	const {
-		firstName,
-		lastName,
-		email,
-		businessName,
-		profileImage,
-		phoneNumber,
-		address,
-		city,
-		country,
-		profession,
-		yearsOfExperience,
-		hourlyRate,
-		language,
-	} = req.body;
-
-	try {
-		const user = await Users.findOne({ where: { email } });
-
-		if (!user) {
-			return res.status(400).json({ error: "User not found" });
-		}
-
-		const providerExists = await Provider.findOne({
-			where: { user_id: user.id },
-		});
-
-		if (providerExists) {
-			return res.status(400).json({ error: "User is already a Provider" });
-		}
-
-		const result = await persistNewProvider({
-			user_id: user.id,
-			firstName,
-			lastName,
-			email,
-			businessName,
-			profileImage,
-			phoneNumber,
-			address,
-			city,
-			country,
-			profession,
-			yearsOfExperience,
-			hourlyRate,
-			language,
-		});
-
-		res.status(201).json(result);
-	} catch (error) {
-		/* eslint-disable-next-line */
-		console.log(error);
-		res.status(500).json({ error: error });
-	}
-});
-
-router.get("/providers", async (_, res) => {
-	try {
-		const providers = await Provider.findAll({ include: Calendar });
-		if (providers.length === 0) {
-			res.status(400).json({ error: "No Provider Found!" });
-		} else {
-			res.status(200).json(providers);
-		}
-	} catch (error) {
-		res.status(500).json(error);
-	}
-});
-
-router.put("/provider", async (req, res) => {
-	try {
-		const {
-			firstName,
-			lastName,
-			email,
-			businessName,
-			profileImage,
-			phoneNumber,
-			address,
-			city,
-			country,
-			profession,
-			yearsOfExperience,
-			hourlyRate,
-			language,
-		} = req.body;
-		const updatedProviderInfo = {
-			firstName,
-			lastName,
-			email,
-			businessName,
-			profileImage,
-			phoneNumber,
-			address,
-			city,
-			country,
-			profession,
-			yearsOfExperience,
-			hourlyRate,
-			language,
-		};
-		const [count] = await Provider.update(updatedProviderInfo, {
-			where: { email },
-		});
-		if (count === 1) {
-			res.status(200).json({ message: "Your information updated!" });
-		} else {
-			res.status(404).json({ message: "Provider not found" });
-		}
-	} catch (error) {
-		res.status(500).json({ error });
-	}
-});
-
-router.post("/calendar", async (req, res) => {
-	const { email, calendar_link } = req.body;
-	if (!calendar_link) {
-		res.status(400).json({ error: "Missing Calendar Link!" });
-		return;
-	}
-	try {
-		const provider = await Provider.findOne({ where: { email } });
-		const providerCalendar = await Calendar.findOne({
-			where: { provider_id: provider.id },
-		});
-		if (providerCalendar) {
-			res.status(400).json({ error: "You Provided it before!" });
-			return;
-		}
-		const calendar = await Calendar.create({
-			calendar_link,
-			provider_id: provider.id,
-		});
-		res.status(200).json({ message: "success", calendar });
 	} catch (error) {
 		res.status(500).json({ error });
 	}

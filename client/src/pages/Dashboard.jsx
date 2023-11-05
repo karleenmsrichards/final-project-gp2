@@ -24,9 +24,6 @@ const Dashboard = () => {
 		setShowGoogleCalendarForm((prevState) => !prevState);
 	};
 
-	const loggedInProvider = providers.find(
-		(provider) => provider.email === user?.email
-	);
 
 	const sendingToken = useCallback(
 		async (token) => {
